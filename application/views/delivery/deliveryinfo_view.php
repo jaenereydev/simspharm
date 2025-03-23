@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
-<div class="col-md-10" >
+<div class="col-md-8 main" style="margin-top:60px;" >
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
@@ -8,62 +8,16 @@
             </h3>            
         </div> <!-- end of panel heading -->        
         
-        <form onsubmit="return updatedeliveryform(this);" role="form" method="post" action="<?=site_url('Deliveryinfo_con/updatedelivery')?>">             
-        <div class="panel-body">  
-
-            <div class="row">
-
-                <div class="col-md-12">
-                    <div class="form-group row row-offcanvas">
-                        <label class="col-sm-1 control-label">Date</label>
-                        <div class="col-sm-2">
-                            <input id="mbirthday" class="form-control input-sm " type="text" name="date" value="<?php echo date_format(date_create($del[0]->date), 'm/d/Y');?>" autocomplete="off" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?>/>
-                        </div>                            
-                   
-                        <label class="col-sm-1 control-label">Ref.No.</label>
-                        <div class="col-sm-2">
-                            <input class="form-control input-sm " type="text" name="refno" value="<?php echo $del[0]->ref_no;?>" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> />
-                        </div>   
-
-                        <label class="col-sm-2 control-label">Supplier Name</label>
-                        <div class="col-sm-4">
-                            <button style="text-transform: capitalize" class="form-control input-sm"  type="button" data-toggle="modal" data-target="#changesupplier"<?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> ><strong><?php echo $del[0]->name;?>...</strong ></button>
-                        </div>  
-                                          
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="form-group row row-offcanvas">
-                        
-                        <label class="col-sm-2 control-label">Discount Amount</label>
-                        <div class="col-sm-3">
-                             <button style="text-transform: capitalize" class="form-control input-sm"  type="button" data-toggle="modal" data-target="#updatediscount" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?>><strong><?php echo number_format((float)$del[0]->discount,2,'.',',');?></strong></button>
-                        </div> 
-
-                        <label class="col-sm-2 control-label">Total Amount</label>
-                        <div class="col-sm-3">
-                            <p <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> class="form-control input-sm text-center" type="text" ><?php echo number_format((float)$del[0]->totalamount,2,'.',',');?> </p>
-                        </div>   
-
-                        <?php if($del[0]->post == 'YES'){}else { ?>
-                            <div class="col-sm-2">
-                                <button type="button" data-toggle="modal" data-target="#addproduct" class="btn btn-warning" >INSERT PRODUCT</button> 
-                            </div>  
-                        <?php } ?>
-                    </div>
-                </div>
-
-            </div>            
-
+        <div class="panel-body"> 
             <table class="table table-hover table-responsive table-bordered table-striped info" > 
                 <thead>
                     <tr class="info">  
                         <?php if($del[0]->post == 'YES'){}else { ?>                                           
                             <td class="text-center"><strong>Action</strong></td>    
                         <?php } ?>                        
-                        <td class="text-center"><strong>Barcode</strong></td> 
-                        <td class="text-center"><strong>Name</strong></td>                        
+                        <td class="text-center"><strong>Barcode/Name</strong></td>          
+                        <td class="text-center"><strong>Lot No.</strong></td>    
+                        <td class="text-center"><strong>Exp. Date</strong></td>                  
                         <td class="text-center"><strong>Unit Cost</strong></td> 
                         <td class="text-center"><strong>QTY</strong></td> 
                         <td class="text-center"><strong>Amount</strong></td>   
@@ -72,55 +26,148 @@
                 <tbody>
                       <?php if(sizeof($delline)):  foreach ($delline as $key => $item): ?>                      
                     <tr>     
-                        <?php if($del[0]->post == 'YES'){}else { ?> 
+                        <?php if($del[0]->post == 'YES'){}else { 
+                            if($item->expiration_date == null){
+                                $expdate = '';
+                            }else{
+                                $expdate = date_format(date_create($item->expiration_date), 'm/d/Y');
+                            } ?> 
                             <td class="text-center" style="text-transform: capitalize">
-                                <a title="Edit QTY" 
-                                data-dlno="<?php echo $item->dl_no;?>"                                
-                                data-name="<?php echo $item->name;?>"
-                                data-unitcost="<?php echo $item->unitcost;?>"
-                                data-qty="<?php echo $item->qty;?>"
-                                data-toggle="modal" data-target="#editqty" 
-                                class="glyphicon glyphicon-pencil btn btn-info editqty"
-                                data-backdrop="static" data-keyboard="false"></a>
+                                <a 
+                                    title="Edit QTY" 
+                                    data-dlno="<?php echo $item->dl_no;?>"                                
+                                    data-name="<?php echo $item->name;?>"
+                                    data-unitcost="<?php echo $item->unitcost;?>"
+                                    data-lotnumber="<?php echo $item->lot_number;?>"
+                                    data-expdate="<?php echo  $expdate ?>" 
+                                    data-qty="<?php echo $item->qty;?>"
+                                    data-toggle="modal" data-target="#editqty" 
+                                    class="glyphicon glyphicon-pencil btn btn-info btn-sm editqty"
+                                    data-backdrop="static" data-keyboard="false">
+                                </a>
 
-                                <a title="Edit" href="<?=site_url('Deliveryinfo_con/deletedeliveryline/'.$item->dl_no)?>" class="glyphicon glyphicon-trash btn btn-danger" onclick="return confirm('Do you want to delete this product');"></a>
+                                <a title="Edit" 
+                                    href="<?=site_url('Deliveryinfo_con/deletedeliveryline/'.$item->dl_no)?>" 
+                                    class="glyphicon glyphicon-trash btn btn-danger btn-sm" 
+                                    onclick="return confirm('Do you want to delete this product');">
+                                </a>
                             </td>
                         <?php } ?>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?> </td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?> </td>
+                        <td class="" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name ?> </td>
+                        <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>
+                        <td class="" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',',') ?></td>
                     </tr>
                     <?php endforeach; else: ?>
                         <tr class="text-center">
-                          <td colspan="4">There are no Data</td>
+                          <td colspan="6">There are no Data</td>
                         </tr>
                     <?php endif?> 
                 </tbody>
             </table>
-             <div class="row">
-
-                <div class="col-md-12">
-                    <div class="form-group row row-offcanvas">                    
-                        <label class="col-sm-2 control-label">Remarks</label>
-                        <div class="col-sm-10">
-                            <input class="form-control input-sm " type="textarea" name="remarks" value="<?php echo $del[0]->remarks;?>" autocomplete="off" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?>  />
-                        </div>                                   
-                    </div>
-                </div>               
-            </div>
+             
         </div> <!-- end of panel body -->
-        <div class="modal-footer">
-            <a title="Close" href="<?=site_url('delivery_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>
-            <?php if($del[0]->post == 'YES'){}else { ?> 
-            <input type="submit" class="btn btn-primary" name="updatedeliverybtn" value="SUBMIT">
-        <?php } ?>
-        </div>
-    </form>
+       
     </div> <!-- end of panel div -->
 </div> <!-- end of main div -->
-        
+   
+<div class="col-md-4" style="margin-top:60px;" >    
+    <div class="panel panel-default">
+        <div class="panel-heading ">                
+            <div class="panel-toolbar text-right" >               
+                <?php if($del[0]->post == 'YES'){}else { ?>
+                    <button type="button" data-toggle="modal" data-target="#addproduct" class="btn btn-sm btn-info text-center" >INSERT PRODUCT</button> 
+                <?php } ?>
+            </div>
+        </div> <!-- end of panel heading -->  
+        <form onsubmit="return updatedeliveryform(this);" role="form" method="post" action="<?=site_url('Deliveryinfo_con/updatedelivery')?>">             
+            <div class="panel-body">  
+
+                    <div class="col-md-12">
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-2 control-label">Date</label>
+                            <div class="col-sm-10 ">
+                                <input 
+                                    id="mbirthday" 
+                                    class="form-control input-sm text-center" 
+                                    type="text" 
+                                    name="date" 
+                                    value="<?php echo date_format(date_create($del[0]->date), 'm/d/Y');?>" 
+                                    autocomplete="off" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?>/>
+                            </div>     
+                        </div>      
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row row-offcanvas">     
+                            <label class="col-sm-2 control-label">Ref.No.</label>
+                            <div class="col-sm-10">
+                                <input 
+                                    class="form-control input-sm text-center" 
+                                    type="text" name="refno" 
+                                    value="<?php echo $del[0]->ref_no;?>" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> />
+                            </div>   
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row row-offcanvas">    
+                            <label class="col-sm-2 control-label">Supplier Name</label>
+                            <div class="col-sm-10">
+                                <button style="text-transform: capitalize" 
+                                class="form-control input-sm"  
+                                type="button" 
+                                data-toggle="modal" 
+                                data-target="#changesupplier"<?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> >
+                                    <strong><?php echo $del[0]->name;?>...</strong >
+                                </button>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-2 control-label">Discount Amount</label>
+                            <div class="col-sm-10">
+                                <button style="text-transform: capitalize" class="form-control input-sm"  type="button" data-toggle="modal" data-target="#updatediscount" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?>><strong><?php echo number_format((float)$del[0]->discount,2,'.',',');?></strong></button>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-2 control-label">Total Amount</label>
+                            <div class="col-sm-10">
+                                <p <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> class="form-control input-sm text-center" type="text" ><?php echo number_format((float)$del[0]->totalamount,2,'.',',');?> </p>
+                            </div>   
+
+                           
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="form-group row row-offcanvas">                    
+                            <label class="col-sm-2 control-label">Remarks</label>
+                            <div class="col-sm-10">
+                                <input class="form-control input-sm text-center" type="textarea" name="remarks" value="<?php echo $del[0]->remarks;?>" autocomplete="off" <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?>  />
+                            </div>                                   
+                        </div>
+                    </div>      
+
+            </div>            
+            <div class="modal-footer">
+                <a title="Close" href="<?=site_url('delivery_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>
+                <?php if($del[0]->post == 'YES'){}else { ?> 
+                    <input type="submit" class="btn btn-primary" name="updatedeliverybtn" value="SUBMIT">
+                <?php } ?>
+            </div>    
+            </div>
+        </form>
+    </div>
+</div>
 <!-- Modal -->
 <div id="changesupplier" class="modal fade" role="dialog">
   <div class="modal-dialog modal-md"> 
@@ -157,7 +204,7 @@
 
 <!-- Modal -->
 <div id="addproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+  <div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -199,7 +246,7 @@
 
 <!-- Modal -->
 <div id="addqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm"> 
+  <div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -208,30 +255,43 @@
         </div>
                
         <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Deliveryinfo_con/insertdeliveryline')?>">             
-        <div class="modal-body">            
+            <div class="modal-body">            
 
-            <input id="pno" class="form-control input-sm hide" type="text" name="pno" />
-            <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
-          
-            <div class="form-group row row-offcanvas">                                                        
-                <label class="col-sm-6 control-label">Product Name</label>
-                <div class="col-sm-6">
-                    <input id="name" class="form-control input-sm " type="text" name="name" disabled />
-                </div>   
+                <input id="pno" class="form-control input-sm hide" type="text" name="pno" />
+                <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
+            
+                <div class="form-group row row-offcanvas">                                                        
+                    <label class="col-sm-4 control-label">Product Name</label>
+                    <div class="col-sm-8">
+                        <input id="name" class="form-control input-sm " type="text" name="name" disabled />
+                    </div>   
+                </div>
+
+                <div class="form-group row row-offcanvas">                                       
+                    <label class="col-sm-4 control-label">Qty</label>
+                    <div class="col-sm-8">
+                        <input id="qty" class="form-control input-sm " type="number" step="any" name="qty" required autocomplete="off" />
+                    </div>   
+                </div>
+
+                <div class="form-group row row-offcanvas">                                       
+                    <label class="col-sm-4 control-label">LOT No.</label>
+                    <div class="col-sm-8">
+                        <input id="lot_number" class="form-control input-sm " type="text" name="lot_number" autocomplete="off" />
+                    </div>   
+                </div>
+
+                <div class="form-group row row-offcanvas">                                       
+                    <label class="col-sm-4 control-label">Expiration Date</label>
+                    <div class="col-sm-8">
+                        <input id="fbirthday" class="form-control input-sm" type="text" name="expiration_date" autocomplete="off" />
+                    </div>   
+                </div>
+            
             </div>
 
-            <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-6 control-label">Qty</label>
-                <div class="col-sm-6">
-                    <input id="qty" class="form-control input-sm " type="text" name="qty" required autocomplete="off" />
-                </div>   
-
-            </div>
-        
-        </div>
-        <div class="modal-footer">
-                <a title="Close" href="<?=site_url('Deliveryinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-              <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
             </div>
         </form>
 
@@ -242,7 +302,7 @@
 
 <!-- Modal -->
 <div id="editqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm"> 
+  <div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -257,23 +317,35 @@
             <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
           
             <div class="form-group row row-offcanvas">                                                        
-                <label class="col-sm-6 control-label">Product Name</label>
-                <div class="col-sm-6">
+                <label class="col-sm-4 control-label">Product Name</label>
+                <div class="col-sm-8">
                     <input id="name" class="form-control input-sm " type="text" name="name" disabled />
                 </div>   
             </div>
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-6 control-label">Qty</label>
-                <div class="col-sm-6">
-                    <input id="qty" class="form-control input-sm " type="text" name="qty" required autocomplete="off" />
+                <label class="col-sm-4 control-label">Qty</label>
+                <div class="col-sm-8">
+                    <input id="qty" class="form-control input-sm " type="number" step="any" name="qty" required autocomplete="off" />
                 </div>   
-
             </div>
         
+            <div class="form-group row row-offcanvas">                                       
+                <label class="col-sm-4 control-label">LOT No.</label>
+                <div class="col-sm-8">
+                    <input id="lotnumber" class="form-control input-sm " type="text" name="lot_number" autocomplete="off" />
+                </div>   
+            </div>
+
+            <div class="form-group row row-offcanvas">                                       
+                <label class="col-sm-4 control-label">Expiration Date</label>
+                <div class="col-sm-8">
+                    <input id="to" class="form-control input-sm" type="text" name="expiration_date" autocomplete="off" />
+                </div>   
+            </div>
+
         </div>
         <div class="modal-footer">
-                <a title="Close" href="<?=site_url('Deliveryinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
               <input type="submit" class="btn btn-primary" name="qtyeditbtn" value="submit">
             </div>
         </form>
@@ -363,10 +435,14 @@ window.onload = function()
             var name = $(this).data('name');
             var unitcost = $(this).data('unitcost');
             var qty = $(this).data('qty');
+            var lotnumber = $(this).data('lotnumber');
+            var expdate = $(this).data('expdate');
             $(".modal-body #dlno").val( dlno );
             $(".modal-body #name").val( name );
             $(".modal-body #unitcost").val( unitcost );
             $(".modal-body #qty").val( qty );
+            $(".modal-body #lotnumber").val( lotnumber );
+            $(".modal-body #to").val( expdate );
         });
     });
 }

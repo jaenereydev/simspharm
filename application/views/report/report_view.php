@@ -26,11 +26,11 @@
                     </div>  
                 </div>
 
-                <div class="col-sm-4">
+                <!-- <div class="col-sm-4">
                     <div class="form-group row"> 
                         <a type="button" href="<?=site_url('Duedate_con')?>" class="btn btn-default col-sm-12" >Due Dates</a>
                     </div>  
-                </div>
+                </div> -->
 
                 <div class="col-sm-4">
                     <div class="form-group row"> 

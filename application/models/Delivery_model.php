@@ -13,7 +13,8 @@ class Delivery_model extends CI_Model
             join supplier s on s.s_no = d.supplier_s_no 
             where d.date = CURDATE() 
             or d.date is null 
-            or d.post = 'NO'";
+            or d.post = 'NO'
+            Order by d.d_no DESC";
     $query = $this->db->query($sql);
     return $query->result();
   }

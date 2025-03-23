@@ -44,7 +44,7 @@ class Deliveryinfo_con extends MY_Controller
             $this->data['sup'] = $this->Supplier_model->get_supplier();     
             $this->data['prod'] = $this->Product_model->get_product();     
 
-            $this->render_html('delivery/deliveryinfo_view', true); 
+            $this->render_html('delivery/deliveryinfo_view', false); 
         }
     }
     
@@ -64,7 +64,15 @@ class Deliveryinfo_con extends MY_Controller
 
      public function insertdeliveryline()
     {                    
+        if($this->input->post('expiration_date') == null)
+        {
+            $expdate = null;
+        }else {
+            $expdate = date_format(date_create($this->input->post('expiration_date')), 'Y/m/d');
+        }
          $dl = array(
+            'lot_number' => $this->input->post(lot_number),
+            'expiration_date' => $expdate,
             'unitcost' => $this->input->post('unitcost'),
             'qty' => $this->input->post('qty'),
             'discount' => '0',
@@ -80,8 +88,16 @@ class Deliveryinfo_con extends MY_Controller
     // //--------------------------------------------------------------------------
 
     public function updatedeliveryline()
-    {                    
+    {       
+        if($this->input->post('expiration_date') == null)
+        {
+            $expdate = null;
+        }else {
+            $expdate = date_format(date_create($this->input->post('expiration_date')), 'Y/m/d');
+        }             
          $dl = array(
+            'lot_number' => $this->input->post(lot_number),
+            'expiration_date' => $expdate,
             'unitcost' => $this->input->post('unitcost'),
             'qty' => $this->input->post('qty'),
             'discount' => '0',

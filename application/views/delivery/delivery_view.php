@@ -7,9 +7,6 @@
                 <span class="glyphicon glyphicon-list-alt" ></span> Delvery List
             </h3>     
             
-               
-           
-
         <button type="button" data-toggle="modal" data-target="#adddelivery" class="btn btn-info pull-right" >New</button>               
         </div> <!-- end of panel heading -->        
         
@@ -20,48 +17,55 @@
                     <div class="form-stack has-icon col-sm-4">
                         <input type="text" name="search" class="form-control input-sm" placeholder="Search Document" autofocus required>                                     
                     </div>
-                     <button type="submit" class="btn btn-sm btn-info">Search</button>   
+                     <button type="submit" class="btn btn-sm btn-info">Search</button>  
                 </form>
             </div>
             <hr>
-            <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
-                <thead>
-                    <tr class="info">                                             
-                        <td class="text-center"><strong>Action</strong></td>
-                        <td class="text-center"><strong>#</strong></td>   
-                        <td class="text-center"><strong>Date</strong></td>   
-                        <td class="text-center"><strong>Ref. No.</strong></td>                         
-                        <td class="text-center"><strong>Supplier</strong></td>   
-                        <td class="text-center"><strong>Posted</strong></td>   
-                    </tr> 
-                </thead>
-                <tbody>
-                      <?php foreach ($delivery as $key => $item): ?>                      
-                    <tr> 
-                        <td class="text-center info">     
+                <table class="table table-hover table-responsive table-bordered table-striped info" > 
+                    <thead>
+                        <tr class="info">           
+                            
+                            <td class="text-center"><strong>Action</strong></td>                
+                            <td class="text-center"><strong>#</strong></td>   
+                            <td class="text-center"><strong>Date</strong></td>   
+                            <td class="text-center"><strong>Ref. No.</strong></td>                         
+                            <td class="text-center"><strong>Supplier</strong></td>   
+                            <td class="text-center"><strong>Posted</strong></td>   
+                        </tr> 
+                    </thead>
+                    <tbody>
+                        <?php foreach ($delivery as $key => $item): ?>                      
+                        <tr> 
+                            <td class="text-center">     
 
-                        <a title="Edit" href="<?=site_url('delivery_con/deliveryinfo/'.$item->d_no)?>" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                            <a title="Edit" href="<?=site_url('delivery_con/deliveryinfo/'.$item->d_no)?>" class="glyphicon glyphicon-pencil btn btn-info"></a>
 
-                        <?php if($item->post == 'YES') {}else{ ?>
-                        <a type="button" title="Delete" href="<?=site_url('delivery_con/deletedelivery/'. $item->d_no)?>" onclick="return confirm('Do you want to delete this Delivery File?');" class="glyphicon glyphicon-trash btn btn-danger"></a> 
-                        <?php } ?>  
+                            <?php if($item->post == 'YES') {}else{ ?>
+                                <a 
+                                type="button" 
+                                title="Delete" 
+                                href="<?=site_url('delivery_con/deletedelivery/'. $item->d_no)?>" 
+                                onclick="return confirm('Do you want to delete this Delivery File?');" 
+                                class="glyphicon glyphicon-trash btn btn-danger"></a> 
+                            <?php } ?>  
 
-                        <?php if($item->totalamount < 1 || $item->totalamount == null || $item->post == 'YES') {}else{ ?>
-                            <a title="Edit" href="<?=site_url('delivery_con/postdelivery/'.$item->d_no)?>" 
-                                onclick="return confirm('Do you want to Post this file? This will update the Product Qty');"
-                                class="btn btn-success">POST</a>
-                        <?php } ?>
+                            <?php if($item->totalamount < 1 || $item->totalamount == null || $item->post == 'YES') {}else{ ?>
+                                <a title="Edit" href="<?=site_url('delivery_con/postdelivery/'.$item->d_no)?>" 
+                                    onclick="return confirm('Do you want to Post this file? This will update the Product Qty');"
+                                    class="btn btn-success">POST</a>
+                            <?php } ?>
 
-                        </td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->d_no ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo date_format(date_create($item->date), 'm/d/Y');?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->post ?></td>
-                    </tr>
-                     <?php endforeach;  ?>     
-                </tbody>
-            </table>
+                            </td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->d_no ?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo date_format(date_create($item->date), 'm/d/Y');?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no ?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->post ?></td>
+                            
+                        </tr>
+                        <?php endforeach;  ?>     
+                    </tbody>
+                </table>
         </div> <!-- end of panel body -->
     </div> <!-- end of panel div -->
 </div> <!-- end of main div -->

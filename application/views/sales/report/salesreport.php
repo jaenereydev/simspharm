@@ -51,7 +51,13 @@
                 <tr>
                     <td style="border: 0px ;float: right;"><img style="width: 70px;" class="logo"  src="<?=base_url($com[0]->imglink);?>"></td>
                     <td style="border: 0px ;text-align: center;"><?php echo $com[0]->name; ?><br><span style="font-size: 12pt;">SALES REPORT</span></td>
-                    <td style="border: 0px ;text-align: right; font-size: 12pt;"><strong>Date <span style="text-align:right;text-decoration: underline;"><?php echo date_format(date_create($cohinfo[0]->date), 'm/d/Y'); ?></span></strong></td>
+                    <td style="border: 0px ;text-align: right; font-size: 12pt;">
+                        <strong>Date 
+                            <span style="text-align:right;text-decoration: underline;">
+                                <?php if($cohinfo == null){ echo "no date"; }else { echo date_format(date_create($cohinfo[0]->date), 'm/d/Y'); } ?>
+                            </span>
+                        </strong>
+                    </td>
                 </tr>
             </table> 
             <div class="row">
