@@ -5,7 +5,7 @@
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                <span class="glyphicon glyphicon-barcode" ></span> Product List / Supplier
+                <span class="glyphicon glyphicon-barcode" ></span> Supplier
             </h3>        
         <div class="panel-toolbar text-right">  
             <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info " >New</button> 

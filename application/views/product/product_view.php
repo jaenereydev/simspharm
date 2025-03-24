@@ -7,10 +7,15 @@
                 <span class="glyphicon glyphicon-barcode" ></span> Product List
             </h3>        
         <div class="panel-toolbar text-right">  
-            <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info " >New</button> 
+            <button 
+                type="button" 
+                data-toggle="modal" 
+                data-target="#myModal" 
+                class="btn btn-info " 
+                data-backdrop="static" 
+                data-keyboard="false">New</button> 
             <a href="<?php echo site_url('Inventory_con') ?>" type="button" class="btn btn-default " >Inventory</a> 
             <a href="<?php echo site_url('category_con') ?>" type="button" class="btn btn-warning " >Category</a> 
-            <a href="<?php echo site_url('supplier_con') ?>" type="button" class="btn btn-success" style="padding-right: 5px;" >Supplier</a>
         </div>
 
         </div> <!-- end of panel heading -->        
@@ -183,7 +188,6 @@
             </div>
             
             <div class="modal-footer">
-                <a title="Close" href="<?=site_url('product_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
                 <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
             </div>
         </form>

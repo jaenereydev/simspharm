@@ -90,6 +90,7 @@ class Customer_con extends MY_Controller
                 'name' => $this->input->post('name'),
                 'address' => $this->input->post('address'),
                 'telno' => $this->input->post('telno'),
+                'tin_number' => $this->input->post('tin_number'),
                 'credit_limit' => $this->input->post('creditlimit'),
                 'balance' => $this->input->post('balance'),
                 'terms' => $this->input->post('terms'),
@@ -162,24 +163,28 @@ class Customer_con extends MY_Controller
             'name' => $this->input->post('name'),
             'address' => $this->input->post('address'),
             'telno' => $this->input->post('telno'),
+            'tin_number' => $this->input->post('tin_number'),
             'credit_limit' => $this->input->post('creditlimit'),
             'terms' => $this->input->post('terms'),
             'user_id' => $this->session->userdata('id'),
             'customer_category_cc_no' => $this->input->post('ccno'),
         );
         $this->Customer_model->updatecustomer($this->input->post('c_no'), $customer);
-        redirect('customer_con/customersave');
+        $message = 'Customer successfully saved!';
+        $alert = 1;
+        $this->customerinfo($this->input->post('c_no'), $alert, $message);
     }
     
     //--------------------------------------------------------------------------
 
-    public function customerinfo($c)
-    {                                
+    public function customerinfo($c, $alert = null, $message = null)
+    {    
+        $this->data['alert'] = $alert;   
+        $this->data['message'] = $message;                        
         $this->data['cus'] = $this->Customer_model->customerinfo($c);
         $this->data['cussaleshistory'] = $this->Customer_model->customersaleshistory($c);
         $this->data['cuscredithistory'] = $this->Customer_model->customercredithistory($c);
         $this->data['cat'] = $this->Category_model->get_customercategory();
-        $this->data['cllist'] = $this->Creditloan_model->get_customercreditloan($c); 
         $this->render_html('customer/customerinfo_view', true); 
     }
     

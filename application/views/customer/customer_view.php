@@ -7,11 +7,15 @@
                 <span class="glyphicon glyphicon-user" ></span> Customer List
             </h3>         
             <div class="panel-toolbar text-right">
-                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info" data-backdrop="static" data-keyboard="false">New</button>       
+                <button 
+                    type="button" 
+                    data-toggle="modal" 
+                    data-target="#myModal" 
+                    class="btn btn-info" 
+                    data-backdrop="static" 
+                    data-keyboard="false">New</button>       
                 <a href="<?php echo site_url('Customercategory_con') ?>" type="button" class="btn btn-warning " >Customer Category</a>  
 
-                <!--  <a href="<?php echo site_url('Customer_con/customerdepositlist') ?>" type="button" class="btn btn-success " >Customer Deposit</a>   -->
-                <!-- <a  title="Print" type="button" data-toggle="modal" data-target="#report" class="btn btn-default glyphicon glyphicon-print pull-right" style="margin-right: 5px" ></a>    -->
             </div>
         </div> <!-- end of panel heading -->        
         
@@ -139,7 +143,14 @@
                             <div class="col-sm-5">
                                 <input class="form-control input-sm" type="number" name="telno" placeholder="Telephone Number" autocomplete="off">
                             </div>
-                        </div>                                                                                
+                        </div> 
+                        
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-3 control-label">Tin Number</label>
+                            <div class="col-sm-5">
+                                <input class="form-control input-sm" type="number" name="tin_number" placeholder="Tin Number" autocomplete="off">
+                            </div>
+                        </div> 
                         
                         <legend>Credit Information</legend>
                         
@@ -178,7 +189,6 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <a title="Close" href="<?=site_url('customer_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
                       <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
                     </div>
                 </form>

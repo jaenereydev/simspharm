@@ -7,6 +7,7 @@
                 <a title="Customer" class="list-group-item" href="<?php echo site_url('customer_con') ?>"><span class="glyphicon glyphicon-user"></span> Customer</a>
 
                 <a title="Product" class="list-group-item" href="<?php echo site_url('product_con') ?>"><span class="glyphicon glyphicon-barcode"></span> Product</a>
+                <a title="Supplier" class="list-group-item" href="<?php echo site_url('supplier_con') ?>"><span class="glyphicon glyphicon-credit-card"></span> Supplier</a>
 
                 <?php if($users[0]->position == "Cashier"){}else { ?>
                     <a title="Delivery" class="list-group-item" href="<?php echo site_url('Delivery_con') ?>"><span class="	glyphicon glyphicon-qrcode"></span> Delivery</a>

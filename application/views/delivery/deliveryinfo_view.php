@@ -55,7 +55,7 @@
                         <?php } ?>
                         <td class="" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name ?> </td>
                         <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>
-                        <td class="" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',',') ?></td>

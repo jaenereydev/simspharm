@@ -1,7 +1,3 @@
-<script type="text/javascript">
-
-</script>
-
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
 <div class="col-md-10 main" >
@@ -14,13 +10,16 @@
         
         <ul class="nav nav-tabs">
             <li role="presentation" class="<?php if($active == "1") { echo "active";} ?>"><a href="#customerdetails" data-toggle="tab">Customer Details</a></li>
-            <li role="presentation" class="<?php if($active == "4") { echo "active";} ?>"><a href="#customercreditloan" data-toggle="tab">Credit Loan</a></li>
             <li role="presentation" class="<?php if($active == "2") { echo "active";} ?>"><a href="#customersaleshistory" data-toggle="tab">Sales History</a></li>
             <li role="presentation" class="<?php if($active == "3") { echo "active";} ?>"><a href="#customercredithistory" data-toggle="tab">Credit History</a></li>        
         </ul>
         
         <div class="panel-body">  
-            
+            <?php if($alert == null){}else { ?>
+                <div class="form-group row row-offcanvas" id="message">
+                    <label style="font-size: 30px" class="col-sm-12 control-label text-danger text-center"><?php echo $message; ?></label>                          
+                </div>  
+            <?php } ?>
                 <div class=" tab-content">
                     
                     <div class="tab-pane <?php if($active == "1") { echo "active";} ?>" id="customerdetails">
@@ -44,7 +43,7 @@
 
                             <div class="form-group row row-offcanvas">
                                 <label class="col-sm-3 control-label">Address</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-5">
                                     <input style="text-transform: capitalize;"  class="form-control input-sm" type="text" name="address" placeholder="Address" value="<?php echo $cus[0]->address; ?>" required autocomplete="off">
                                 </div>                            
                             </div>                                                                               
@@ -52,7 +51,14 @@
                             <div class="form-group row row-offcanvas">
                                 <label class="col-sm-3 control-label">Tel No.</label>
                                 <div class="col-sm-5">
-                                    <input class="form-control input-sm" type="text" name="telno" placeholder="Telephone Number" value="<?php echo $cus[0]->telno; ?>" autocomplete="off">
+                                    <input class="form-control input-sm" type="number" name="telno" placeholder="Telephone Number" value="<?php echo $cus[0]->telno; ?>" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="form-group row row-offcanvas">
+                                <label class="col-sm-3 control-label">Tin Number</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control input-sm" type="number" name="tin_number" placeholder="Tin Number" value="<?php echo $cus[0]->tin_number; ?>" autocomplete="off">
                                 </div>
                             </div>
                             
@@ -94,8 +100,8 @@
                         </div><!-- end of body -->
 
                         <div class="modal-footer">
-                          <a title="Close" href="<?=site_url('customer_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-                          <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                          <a title="Close" href="<?=site_url('customer_con')?>" onclick="return confirm('Do you want to cancel?');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" > BACK</a>
+                          <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" onclick="return confirm('Do you want to save?');"> SAVE</button>
                         </div>
                     </form>     
                     </div><!-- end of customer details -->                    
@@ -160,43 +166,6 @@
                         </table>                                             
                     </div> 
 
-                    <div class="tab-pane <?php if($active == "4") { echo "active";} ?>" id="customercreditloan">                        
-                             
-                        <table class="table table-hover table-responsive table-bordered table-striped info" id="ThirdTable">      
-                            <thead>
-                                <tr class="info">   
-                                    <td class="text-center"><strong>Serial No.</strong></td>                                          
-                                    <td class="text-center"><strong>Date</strong></td>                         
-                                    <td class="text-center"><strong>Principal Balance</strong></td>   
-                                    <td class="text-center"><strong>Down payment</strong></td>   
-                                    <td class="text-center"><strong>Terms</strong></td> 
-                                    <td class="text-center"><strong>Due Amount</strong></td>  
-                                    <td class="text-center"><strong>Outstanding Balance</strong></td>  
-                                    <td class="text-center"><strong>Action</strong></td>  
-                                </tr> 
-                            </thead>
-                            <tbody>
-                                <?php foreach ($cllist as $key => $item): ?>                     
-                                <tr class="<?php if($item->status == 'OPEN'){ echo 'warning'; }if($item->status == 'PAYED'){ echo 'success';} ?>"> 
-                                    <td class="text-center" ><?php echo $item->cl_no;?></td>  
-                                    <td class="text-center" ><?php echo date_format(date_create($item->date), 'm/d/Y'); ?></td>
-                                    <td class="text-center" ><?php echo number_format((float)$item->principal_balance,2,'.',',');?></td>  
-                                    <td class="text-center" ><?php echo number_format((float)$item->downpayment,2,'.',',');?></td> 
-                                    <td class="text-center" ><?php echo $item->termsbymonth;?></td>   
-                                    <td class="text-center" ><?php echo number_format((float)$item->due_amount,2,'.',',');?></td> 
-                                    <td class="text-center" ><?php echo number_format((float)$item->outstanding_balance,2,'.',',');?></td> 
-                                    <td class="text-center" >
-                                        <!-- <a title="View" href="<?=site_url('/'.$item->cl_no)?>" class="glyphicon glyphicon-pencil btn btn-primary btn-sm"></a> -->
-                                        <a type="button" target="_blank" title="VIew" href="<?=site_url('Creditloan_con/creditloaninfo/'. $item->cl_no)?>" class="glyphicon glyphicon-eye-open btn btn-info"></a>    
-                                        <a title="Print" href="<?=site_url('Creditloan_con/reprint/'.$item->cl_no)?>" class="glyphicon glyphicon-print btn btn-default btn-sm" target="_blank"></a>
-                                                                                      
-                                    </td> 
-                                </tr>
-                                <?php endforeach;  ?>   
-                            </tbody>
-                        </table>                                             
-                    </div> 
-
                 </div>
             
         </div> <!-- end of panel body -->
@@ -205,3 +174,15 @@
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>  
+
+<script type="text/javascript">
+
+window.onload = function()
+{                         
+
+
+    setTimeout(function() {
+    $('#message').fadeOut();
+    }, 3000 );
+}
+</script>
