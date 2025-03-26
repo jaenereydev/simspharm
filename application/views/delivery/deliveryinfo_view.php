@@ -62,7 +62,7 @@
                     </tr>
                     <?php endforeach; else: ?>
                         <tr class="text-center">
-                          <td colspan="6">There are no Data</td>
+                          <td colspan="7">There are no Data</td>
                         </tr>
                     <?php endif?> 
                 </tbody>
@@ -142,8 +142,6 @@
                             <div class="col-sm-10">
                                 <p <?php if($del[0]->post == 'YES'){ echo 'disabled'; }else {} ?> class="form-control input-sm text-center" type="text" ><?php echo number_format((float)$del[0]->totalamount,2,'.',',');?> </p>
                             </div>   
-
-                           
                         </div>
                     </div>
 
@@ -161,7 +159,7 @@
             <div class="modal-footer">
                 <a title="Close" href="<?=site_url('delivery_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>
                 <?php if($del[0]->post == 'YES'){}else { ?> 
-                    <input type="submit" class="btn btn-primary" name="updatedeliverybtn" value="SUBMIT">
+                    <input type="submit" class="btn btn-primary" name="updatedeliverybtn" value="SAVE">
                 <?php } ?>
             </div>    
             </div>
@@ -170,7 +168,7 @@
 </div>
 <!-- Modal -->
 <div id="changesupplier" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+  <div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -190,7 +188,7 @@
                       <?php foreach ($sup as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
-                        <td class="text-center info">     
+                        <td class="text-center">     
                             <a title="Select" href="<?=site_url('deliveryinfo_con/changesupplier/'.$item->s_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
@@ -226,14 +224,14 @@
                 <tr>                         
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
-                    <td class="text-center info">                                
+                    <td class="text-center">                                
                         <button title="Add QTY" 
                             data-pno="<?php echo $item->p_no;?>"                                
                             data-name="<?php echo $item->name;?>"
                             data-unitcost="<?php echo $item->unitcost;?>"                                
                             data-toggle="modal" data-target="#addqty" 
                             class="glyphicon glyphicon-plus btn btn-info addqty"
-                            data-backdrop="static" data-keyboard="false"></button>
+                            data-backdrop="static" data-keyboard="false">ADD</button>
                     </td>
                 </tr>
                  <?php endforeach;  ?>     

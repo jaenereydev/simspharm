@@ -292,7 +292,6 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a title="Close"  data-dismiss="modal" data-toggle="modal"  type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
             <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
         </div>
         </form>

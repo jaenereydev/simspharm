@@ -18,6 +18,21 @@ class Producthistory_model extends CI_Model
         return $this->db->query($sql);
   }
 
+  //----------------------------------------------------------------------
+
+  public function insert_deliveryproductlothistory($d, $desc) //insert data to lot history from delivery
+  {
+  
+    $sql = "Insert into product_lot_history(expiration_date, ref_number, description, delivered_quantity, "
+          . "lot_number, product_p_no,  user_id, unit_cost, date, remaining_quantity) "
+          . "select l.expiration_date, o.ref_no, '$desc', l.qty, l.lot_number, "
+          . "l.product_p_no, o.user_id, l.unitcost, o.date, l.qty "
+          . "from deliveryline l "
+          . "JOIN delivery o ON o.d_no = l.delivery_d_no "
+          . "JOIN product p ON p.p_no = l.product_p_no "
+          . "where o.d_no = '$d' ";
+        return $this->db->query($sql);
+  }
 
   //----------------------------------------------------------------------
 

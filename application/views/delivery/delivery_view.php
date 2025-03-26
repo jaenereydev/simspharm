@@ -72,7 +72,7 @@
         
 <!-- Modal -->
 <div id="adddelivery" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+  <div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -92,7 +92,7 @@
                       <?php foreach ($sup as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
-                        <td class="text-center info">     
+                        <td class="text-center">     
                             <a title="Select" href="<?=site_url('delivery_con/selectsupplier/'.$item->s_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>

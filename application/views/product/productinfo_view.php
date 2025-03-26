@@ -10,7 +10,8 @@
         
         <ul class="nav nav-tabs">
             <li role="presentation" class="<?php if($active == "1") { echo "active";} ?>"><a href="#productdetails" data-toggle="tab">Product Details</a></li>
-            <li role="presentation" class="<?php if($active == "2") { echo "active";} ?>"><a href="#producthistory" data-toggle="tab">Product History</a></li>
+            <li role="presentation" class="<?php if($active == "3") { echo "active";} ?>"><a href="#productlothistory" data-toggle="tab">Lot History</a></li>
+            <li role="presentation" class="<?php if($active == "2") { echo "active";} ?>"><a href="#producthistory" data-toggle="tab">History</a></li>
         </ul>
         
         <div class="panel-body">  
@@ -18,97 +19,149 @@
                 <div class=" tab-content">
                     
                     <div class="tab-pane <?php if($active == "1") { echo "active";} ?>" id="productdetails">
-                    <form role="form" method="post" action="<?=site_url('productinfo_con/updateproduct')?>">
-                                               
-                        <div class="modal-body">  
-                            
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Barcode</label>
+                        <form role="form" method="post" action="<?=site_url('productinfo_con/updateproduct')?>">
+                                                
+                            <div class="modal-body">  
+                                
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Barcode</label>
+                                        <div class="col-sm-5">
+                                            <input class="form-control input-sm " type="text" value="<?php echo $prod[0]->barcode;?>" disabled>
+                                        </div>                            
+                                </div>
+
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Name</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control input-sm " type="text" value="<?php echo $prod[0]->barcode;?>" disabled>
+                                        <input style="text-transform: capitalize;" 
+                                        class="form-control input-sm" 
+                                        type="text" 
+                                        name="name" 
+                                        placeholder="Product Name" 
+                                        value="<?php echo $prod[0]->name;?>" 
+                                        required autofocus autocomplete="off">
                                     </div>                            
-                            </div>
+                                </div>     
 
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Name</label>
-                                <div class="col-sm-5">
-                                    <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="name" placeholder="Product Name" value="<?php echo $prod[0]->name;?>" required autofocus autocomplete="off">
-                                </div>                            
-                            </div>     
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Category</label>
+                                    <div class="col-sm-5">    
+                                        <button style="text-transform: capitalize" 
+                                        class="form-control input-sm"  
+                                        type="button" 
+                                        data-toggle="modal" 
+                                        data-target="#category" >
+                                            <strong><?php echo $prod[0]->cname;?>...</strong >
+                                        </button>
+                                    </div>                            
+                                </div>   
 
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Category</label>
-                                <div class="col-sm-3">
-                                    <input style="text-transform: capitalize;" class="form-control input-sm" type="text" placeholder="Category" value="<?php echo $prod[0]->cname;?>" disabled>
-                                </div> 
-                                <div class="col-sm-2">                                  
-                                    <button type="button" data-toggle="modal" data-target="#category" class="btn btn-warning pull-right" >Change Category</button> 
-                                </div>                            
-                            </div>   
-
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Supplier</label>
-                                <div class="col-sm-3">
-                                    <input style="text-transform: capitalize;" class="form-control input-sm" type="text" value="<?php echo $prod[0]->sname;?>" disabled>                                    
-                                </div>                            
-                                <div class="col-sm-2">                                  
-                                    <button type="button" data-toggle="modal" data-target="#supplier" class="btn btn-warning pull-right" >Change Supplier</button> 
-                                </div> 
-                            </div>                                                                                                                            
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Unit Cost</label>
-                                <div class="col-sm-5">
-                                    <input class="form-control input-sm" type="number" name="unitcost" placeholder="Unit Cost" min="0" step="any" value="<?php echo $prod[0]->unitcost; ?>" >
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Supplier</label>         
+                                    <div class="col-sm-5">    
+                                        <button style="text-transform: capitalize" 
+                                        class="form-control input-sm"  
+                                        type="button" 
+                                        data-toggle="modal" 
+                                        data-target="#supplier" >
+                                            <strong><?php echo $prod[0]->sname;?>...</strong >
+                                        </button>
+                                    </div>       
+                                </div>                                                                                                                            
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Unit Cost</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="number" name="unitcost" placeholder="Unit Cost" min="0" step="any" value="<?php echo $prod[0]->unitcost; ?>" >
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Price 1</label>
-                                <div class="col-sm-5">
-                                    <input class="form-control input-sm" type="number" name="price1" placeholder="Price" step="any" min="0" value="<?php echo $prod[0]->srpprice; ?>" required autocomplete="off">
+                                
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Price 1</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="number" name="price1" placeholder="Price" step="any" min="0" value="<?php echo $prod[0]->srpprice; ?>" required autocomplete="off">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Price 2</label>
-                                <div class="col-sm-5">
-                                    <input class="form-control input-sm" type="number" name="price2" placeholder="Price" step="any" min="0" value="<?php echo $prod[0]->price2; ?>" required autocomplete="off">
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Price 2</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="number" name="price2" placeholder="Price" step="any" min="0" value="<?php echo $prod[0]->price2; ?>" required autocomplete="off">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Price 3</label>
-                                <div class="col-sm-5">
-                                    <input class="form-control input-sm" type="number" name="price3" placeholder="Price" step="any" min="0" value="<?php echo $prod[0]->price3; ?>" required autocomplete="off">
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Price 3</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="number" name="price3" placeholder="Price" step="any" min="0" value="<?php echo $prod[0]->price3; ?>" required autocomplete="off">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Quantity</label>
-                                <div class="col-sm-5">
-                                    <input class="form-control input-sm" type="number" name="qty" placeholder="Quantity" value="<?php echo $prod[0]->qty;?>" disabled>
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Quantity</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="number" name="qty" placeholder="Quantity" value="<?php echo $prod[0]->qty; $cost=$prod[0]->qty*$prod[0]->unitcost; ?>" disabled>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group row row-offcanvas">
-                                <label class="col-sm-3 control-label">Track Inventory</label>
-                                <div class="col-sm-5">
-                                    <select name="ti" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
-                                        <option value="Yes" <?php if($prod[0]->inventory == 'Yes'){ echo 'selected'; } ?> >Yes</option>
-                                        <option value="No" <?php if($prod[0]->inventory == 'No'){ echo 'selected'; } ?> >No</option>
-                                    </select>  
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Inventory Cost</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="text" step="any" placeholder="Cost" value="<?php echo number_format((float)($prod[0]->cost),2,'.',',');?>" disabled>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                        </div><!-- end of body -->
 
-                        <div class="modal-footer">
-                          <a title="Close" href="<?=site_url('product_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-                          <button title="Save"  type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
-                        </div>
-                    </form>     
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Track Inventory</label>
+                                    <div class="col-sm-5">
+                                        <select name="ti" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                                            <option value="Yes" <?php if($prod[0]->inventory == 'Yes'){ echo 'selected'; } ?> >Yes</option>
+                                            <option value="No" <?php if($prod[0]->inventory == 'No'){ echo 'selected'; } ?> >No</option>
+                                        </select>  
+                                    </div>
+                                </div>
+                                
+                            </div><!-- end of body -->
+
+                            <div class="modal-footer">
+                            <a title="Close" href="<?=site_url('product_con')?>" onclick="return confirm('Do you want to back');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" > Back</a>
+                            <button title="Save"  type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" > Save</button>
+                            </div>
+                        </form>     
                     </div><!-- end of customer details -->                    
                    
+                    <div class="tab-pane <?php if($active == "3") { echo "active";} ?>" id="productlothistory">
+                        <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable">      
+                            <thead>
+                            <tr class="info">                                
+                                <td class="text-center"><strong>#</strong></td>    
+                                <td class="text-center"><strong>Ref. Number</strong></td>  
+                                <td class="text-center"><strong>Date</strong></td>     
+                                <td class="text-center"><strong>Lot Number</strong></td>
+                                <td class="text-center"><strong>Expiration Date</strong></td>
+                                <td class="text-center"><strong>Delivered Quantity</strong></td>
+                                <td class="text-center"><strong>Unit Cost</strong></td>
+                                <td class="text-center"><strong>Remaining Quantity</strong></td>
+                                <td class="text-center"><strong>Total Amount</strong></td>
+                              </tr> 
+                            </thead>
+                            <tbody>
+                            <?php foreach ($prodlothistory as $key => $item): ?>                    
+                            <tr> 
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->plh_number ?></td>                                   
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_number ?></td>   
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->date ?></td>                        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number.'<br>'.$item->description; ?></td>                        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>  
+                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->delivered_quantity,2,'.',',');?></td>     
+                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',');?></td>   
+                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->remaining_quantity,2,'.',',');?></td>        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)($item->unit_cost*$item->remaining_quantity),2,'.',',');?></td>                                   
+                            </tr>
+                            <?php endforeach;  ?>
+                            </tbody>
+                        </table>          
+                    </div>
+
                     <div class="tab-pane <?php if($active == "2") { echo "active";} ?>" id="producthistory">                        
                              
                         <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable">      
@@ -140,34 +193,6 @@
                             </tbody>
                         </table>                                             
                     </div> 
-                    
-                     <!-- <div class="tab-pane <?php if($active == "3") { echo "active";} ?>" id="customercredithistory">                        
-                             
-                        <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable">      
-                            <thead>
-                            <tr class="info">                               
-                                <td class="text-center"><strong>#</strong></td>       
-                                <td class="text-center"><strong>Date</strong></td>       
-                                <td class="text-center"><strong>Ref No.</strong></td>
-                                <td class="text-center"><strong>CI Amount</strong></td>
-                                <td class="text-center"><strong>CI Payment</strong></td>
-                                <td class="text-center"><strong>Balance</strong></td>
-                              </tr> 
-                            </thead>
-                            <tbody>
-                            <?php foreach ($cuscredithistory as $key => $item): ?>                    
-                            <tr>                                     
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->cbh_no ?></td>                        
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->date; ?></td>                        
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->transaction_t_no; ?></td>                               
-                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->ci_amount,2,'.',',');?></td>       
-                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->ci_payment,2,'.',',');?></td>       
-                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->balance,2,'.',',');?></td>                              
-                            </tr>
-                            <?php endforeach;  ?>
-                            </tbody>
-                        </table>                                             
-                    </div>  -->
 
                 </div>
             

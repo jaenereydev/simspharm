@@ -16,6 +16,20 @@ class Product_model extends CI_Model
 
   //----------------------------------------------------------------------
 
+  public function get_productnotindelivery($d) 
+  {
+  
+    $sql = "Select * 
+            from product 
+            where active = 'YES' 
+            and p_no not in (select product_p_no from deliveryline where delivery_d_no = '$d')";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+
+
+  //----------------------------------------------------------------------
+
   public function searchbarcode($b) 
   {
       $sql = "Select * from product 
@@ -90,7 +104,6 @@ class Product_model extends CI_Model
 
   public function get_productfortransaction($u) 
   {
-  
     $sql = "Select * 
               from product 
               where active = 'YES' 
@@ -119,7 +132,7 @@ class Product_model extends CI_Model
    public function productinfo($p) 
   {
   
-    $sql = "Select p.*, s.name as sname, c.name as cname 
+    $sql = "Select p.*, s.name as sname, c.name as cname, p.unitcost*p.qty as cost
     		from product p 
     		join supplier s on s.s_no = p.supplier_s_no 
     		join category c on c.c_no = p.category_c_no 
@@ -135,6 +148,17 @@ class Product_model extends CI_Model
   {
   
     $sql = "Select p.*, u.* from product_history p join user u ON u.id = p.user_id where p.product_p_no = '$p' ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+
+
+  //----------------------------------------------------------------------
+
+  public function productlothistory($p) 
+  {
+  
+    $sql = "Select p.*, u.* from product_lot_history p join user u ON u.id = p.user_id where p.product_p_no = '$p' ";
     $query = $this->db->query($sql);
     return $query->result();
   }

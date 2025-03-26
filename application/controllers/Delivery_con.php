@@ -98,6 +98,8 @@ class Delivery_con extends MY_Controller
 
         $this->Producthistory_model->insert_deliveryproducthistory($d, $desc); //update product history
 
+        $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
+
         $this->Product_model->updatedeliveryproductqty($d); // update product qty
 
         redirect('delivery_con');

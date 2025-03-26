@@ -42,6 +42,7 @@ class Productinfo_con extends MY_Controller
         }else {      
             $this->data['prod'] = $this->Product_model->productinfo($this->session->userdata('product'));
             $this->data['prodhistory'] = $this->Product_model->producthistoryinfo($this->session->userdata('product'));
+            $this->data['prodlothistory'] = $this->Product_model->productlothistory($this->session->userdata('product'));
 
             $this->data['sup'] = $this->Supplier_model->get_supplier();
             $this->data['cat'] = $this->Category_model->get_category();

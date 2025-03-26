@@ -42,7 +42,7 @@ class Deliveryinfo_con extends MY_Controller
             $this->data['del'] = $this->Delivery_model->get_deliveryinfo($this->session->userdata('dno'));
             $this->data['delline'] = $this->Delivery_model->get_deliveryline($this->session->userdata('dno'));
             $this->data['sup'] = $this->Supplier_model->get_supplier();     
-            $this->data['prod'] = $this->Product_model->get_product();     
+            $this->data['prod'] = $this->Product_model->get_productnotindelivery($this->session->userdata('dno'));     
 
             $this->render_html('delivery/deliveryinfo_view', false); 
         }
