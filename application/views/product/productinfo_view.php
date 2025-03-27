@@ -68,12 +68,12 @@
                                         </button>
                                     </div>       
                                 </div>                                                                                                                            
-                                <div class="form-group row row-offcanvas">
+                                <!-- <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Unit Cost</label>
                                     <div class="col-sm-5">
                                         <input class="form-control input-sm" type="number" name="unitcost" placeholder="Unit Cost" min="0" step="any" value="<?php echo $prod[0]->unitcost; ?>" >
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Price 1</label>
@@ -164,6 +164,8 @@
                                 <td class="text-center"><strong>Date</strong></td>       
                                 <td class="text-center"><strong>Ref No.</strong></td>
                                 <td class="text-center"><strong>Description</strong></td>
+                                <td class="text-center"><strong>Lot Number</strong></td>
+                                <td class="text-center"><strong>Expiration Date</strong></td>
                                 <td class="text-center"><strong>In</strong></td>
                                 <td class="text-center"><strong>Out</strong></td>
                                 <td class="text-center"><strong>Balance</strong></td>
@@ -177,6 +179,8 @@
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->date; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->description; ?></td>
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number; ?></td>
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->inqty; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->outqty; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->bal; ?></td>

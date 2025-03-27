@@ -24,9 +24,9 @@ class Producthistory_model extends CI_Model
   {
   
     $sql = "Insert into product_lot_history(expiration_date, ref_number, description, delivered_quantity, "
-          . "lot_number, product_p_no,  user_id, unit_cost, date, remaining_quantity) "
+          . "lot_number, product_p_no,  user_id, unit_cost, date, remaining_quantity, supplier_s_no) "
           . "select l.expiration_date, o.ref_no, '$desc', l.qty, l.lot_number, "
-          . "l.product_p_no, o.user_id, l.unitcost, o.date, l.qty "
+          . "l.product_p_no, o.user_id, l.unitcost, o.date, l.qty, o.supplier_s_no "
           . "from deliveryline l "
           . "JOIN delivery o ON o.d_no = l.delivery_d_no "
           . "JOIN product p ON p.p_no = l.product_p_no "

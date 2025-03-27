@@ -38,7 +38,19 @@
                         <tr> 
                             <td class="text-center">     
 
-                            <a title="Edit" href="<?=site_url('delivery_con/deliveryinfo/'.$item->d_no)?>" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                            <a <?php if($item->post == 'YES') { ?>
+                                    title="View" 
+                                <?php }else { ?>  
+                                    title="Edit"
+                                <?php }?> 
+                                href="<?=site_url('delivery_con/deliveryinfo/'.$item->d_no)?>" 
+                                <?php if($item->post == 'YES') { ?>
+                                    class="glyphicon glyphicon-eye-open btn btn-info">
+                                <?php }else { ?>  
+                                    class="glyphicon glyphicon-pencil btn btn-info">
+                                <?php }?>
+                                
+                            </a>
 
                             <?php if($item->post == 'YES') {}else{ ?>
                                 <a 
@@ -49,8 +61,14 @@
                                 class="glyphicon glyphicon-trash btn btn-danger"></a> 
                             <?php } ?>  
 
+                            <?php if($item->post == 'YES') { ?>
+                                <a title="Export to Excel" target="_blank" href="<?=site_url('delivery_con/exporttoexcel/'. $item->d_no)?>" class="glyphicon glyphicon-download-alt btn btn-success"></a>
+                                <a title="Print" target="_blank" href="<?=site_url('delivery_con/exporttoexcel/'. $item->d_no)?>" class="glyphicon glyphicon-print btn btn-default"></a>
+                            <?php } ?>  
+
                             <?php if($item->totalamount < 1 || $item->totalamount == null || $item->post == 'YES') {}else{ ?>
-                                <a title="Edit" href="<?=site_url('delivery_con/postdelivery/'.$item->d_no)?>" 
+                                <a  title="Post"
+                                    href="<?=site_url('delivery_con/postdelivery/'.$item->d_no)?>" 
                                     onclick="return confirm('Do you want to Post this file? This will update the Product Qty');"
                                     class="btn btn-success">POST</a>
                             <?php } ?>

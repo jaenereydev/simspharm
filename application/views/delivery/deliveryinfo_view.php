@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
 <div class="col-md-8 main" style="margin-top:60px;" >
@@ -5,7 +6,11 @@
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
                 <span class="glyphicon glyphicon-qrcode" ></span> Delvery Information
-            </h3>            
+
+            </h3>   
+            <?php if($del[0]->post == 'YES'){ ?>         
+            <button id="exportExcel" class="btn btn-success pull-right">Export this table to Excel</button>
+            <?php } ?>  
         </div> <!-- end of panel heading -->        
         
         <div class="panel-body"> 
@@ -15,7 +20,7 @@
                         <?php if($del[0]->post == 'YES'){}else { ?>                                           
                             <td class="text-center"><strong>Action</strong></td>    
                         <?php } ?>                        
-                        <td class="text-center"><strong>Barcode/Name</strong></td>          
+                        <td class="text-center"><strong>Name</strong></td>          
                         <td class="text-center"><strong>Lot No.</strong></td>    
                         <td class="text-center"><strong>Exp. Date</strong></td>                  
                         <td class="text-center"><strong>Unit Cost</strong></td> 
@@ -53,7 +58,7 @@
                                 </a>
                             </td>
                         <?php } ?>
-                        <td class="" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name ?> </td>
+                        <td class="" style="text-transform: capitalize"><?php echo $item->name ?> </td>
                         <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
@@ -275,14 +280,14 @@
                 <div class="form-group row row-offcanvas">                                       
                     <label class="col-sm-4 control-label">LOT No.</label>
                     <div class="col-sm-8">
-                        <input id="lot_number" class="form-control input-sm " type="text" name="lot_number" autocomplete="off" />
+                        <input id="lot_number" class="form-control input-sm " type="text" name="lot_number" required autocomplete="off" />
                     </div>   
                 </div>
 
                 <div class="form-group row row-offcanvas">                                       
                     <label class="col-sm-4 control-label">Expiration Date</label>
                     <div class="col-sm-8">
-                        <input id="fbirthday" class="form-control input-sm" type="text" name="expiration_date" autocomplete="off" />
+                        <input id="fbirthday" class="form-control input-sm" type="text" name="expiration_date" required autocomplete="off" />
                     </div>   
                 </div>
             
@@ -413,6 +418,12 @@ function updatediscountform(formObj) {
         return true;    
     } 
 
+    document.getElementById("exportExcel").addEventListener("click", function () {
+    let table = document.querySelector("table"); // Select the table
+    let workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" }); // Convert table to Excel format
+    XLSX.writeFile(workbook, "delivery_report.xlsx"); // Save as file
+});
+
 window.onload = function()
 {                         
 
@@ -444,5 +455,6 @@ window.onload = function()
         });
     });
 }
+
 
 </script>

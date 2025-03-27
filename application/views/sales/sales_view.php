@@ -55,12 +55,13 @@
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->totalamount,2,'.',','); $ta+=$item->totalamount; ?></td>
                                 <td class="text-center" style="text-transform: capitalize">
                                     <a title="Edit Product" 
-                                    data-tlno="<?php echo $item->tl_no;?>"                                
+                                    data-tlno="<?php echo $item->tl_no;?>" 
+                                    data-pno="<?php echo $item->product_p_no;?>"                                     
                                     data-name="<?php echo $item->name;?>"
                                     data-price="<?php echo $item->price;?>"                            
                                     data-discount="<?php echo $item->discount;?>"
                                     data-qty="<?php echo $item->tlqty;?>"
-                                    data-desc="<?php echo $item->description;?>"
+                                    data-plh="<?php echo $item->plh_number;?>"
                                     data-toggle="modal" data-target="#editproduct" 
                                     class="glyphicon glyphicon-pencil btn btn-sm btn-info editproduct"
                                     data-backdrop="static" data-keyboard="false"></a>
@@ -161,7 +162,7 @@
 
 <!-- Modal select customer-->
 <div id="selectcustomer" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+  <div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -183,10 +184,10 @@
                 <tbody>
                       <?php foreach ($cus as $key => $item): ?>                      
                     <tr>                         
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->credit_limit,2,'.',','); ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->balance,2,'.',','); ?></td>
-                        <td class="text-center info">     
+                        <td class="text-center">     
                             <a title="Select" href="<?=site_url('Sales_con/selectcustomer/'.$item->c_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
@@ -317,6 +318,7 @@
 
             <input id="tlno" class="form-control input-sm hide" type="text" name="tlno" />           
             <input id="price" class="form-control input-sm hide" type="text" name="price" />
+            <input id="plh" class="form-control input-sm hide" type="text" name="plh_number" />
 
             <div class="form-group row row-offcanvas">                                                        
                 <label class="col-sm-4 control-label">Product Name</label>
@@ -334,9 +336,11 @@
             </div>
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Description</label>
+                <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                    <input id="desc" class="form-control input-sm " type="text" placeholder="IMEI/Serial/remarks" name="desc"  autocomplete="off" />
+                    <select id="lot_number" name="lot_number" class="form-control">
+                        <option value="">Select Lot</option>
+                    </select>
                 </div>  
             </div>         
 
@@ -348,7 +352,6 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a title="Close"  data-dismiss="modal" data-toggle="modal"  type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
             <input type="submit" class="btn btn-primary" name="editproductbtn" value="submit">
         </div>
         </form>
@@ -506,13 +509,37 @@ window.onload = function()
             var price = $(this).data('price'); 
             var discount = $(this).data('discount');
             var qty = $(this).data('qty');
-            var desc = $(this).data('desc');
+            var plh = $(this).data('plh');
+            var pno = $(this).data('pno');
+
             $(".modal-body #tlno").val( tlno );
             $(".modal-body #name").val( name );
             $(".modal-body #discount").val( discount );
             $(".modal-body #qty").val( qty );
             $(".modal-body #price").val( price );
-            $(".modal-body #desc").val( desc );
+            $(".modal-body #plh").val( plh );
+
+            // Fetch lot numbers via AJAX
+            $.ajax({
+                url: '<?= site_url("Sales_con/getLotNumbers") ?>', 
+                type: 'POST',
+                data: { product_no: pno },
+                dataType: 'json',
+                success: function(response) {   
+                    var options = '<option value="">Select Lot Number</option>';
+                    $.each(response, function(index, lot) {
+                    var isSelected = (plh == lot.plh_number) ? ' selected' : ''; // Allow type conversion
+                    options += `<option value="${lot.plh_number}"${isSelected}>${lot.lot_number} - ${lot.expiration_date}</option>`;
+                });
+
+                    // Populate the select dropdown with received lot numbers
+                    $(".modal-body #lot_number").html(options);
+                },
+                error: function() {
+                    $(".modal-body #lot_number").html('<option value="">Failed to load</option>');
+                }
+            });
+
         });
     });
 

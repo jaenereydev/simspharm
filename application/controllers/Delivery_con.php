@@ -80,6 +80,15 @@ class Delivery_con extends MY_Controller
     
     // //--------------------------------------------------------------------------
 
+    public function exporttoexcel($d)
+    {
+        $del = $this->Delivery_model->get_deliveryinfo($d);
+        $delline = $this->Delivery_model->get_deliveryline($d);
+        $this->load->view('delivery/report/deliveryreport_excel', array('del' => $del, 'delline' => $delline));  
+    }
+
+     //--------------------------------------------------------------------------
+
     public function deletedelivery($d)
     {         
         $this->Delivery_model->deletedelivery($d);
