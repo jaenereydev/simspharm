@@ -12,7 +12,7 @@ class Deliveryinfo_con extends MY_Controller
         $this->load->model('Delivery_model');
         $this->load->model('Supplier_model');
         $this->load->model('Product_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -36,7 +36,7 @@ class Deliveryinfo_con extends MY_Controller
     
     public function index()
     {            
-         if($this->session->userdata('dno') == null){
+        if($this->session->userdata('dno') == null){
             redirect('delivery_con');
         }else {                 
             $this->data['del'] = $this->Delivery_model->get_deliveryinfo($this->session->userdata('dno'));
@@ -44,15 +44,15 @@ class Deliveryinfo_con extends MY_Controller
             $this->data['sup'] = $this->Supplier_model->get_supplier();     
             $this->data['prod'] = $this->Product_model->get_productnotindelivery($this->session->userdata('dno'));     
 
-            $this->render_html('delivery/deliveryinfo_view', false); 
+        $this->render_html('delivery/deliveryinfo_view', false); 
         }
     }
     
     //--------------------------------------------------------------------------
-       
+    
     public function changesupplier($s)
     {                    
-         $del = array(
+        $del = array(
             'supplier_s_no' => $s,
             'user_id' => $this->session->userdata('id')         
         );
@@ -62,7 +62,7 @@ class Deliveryinfo_con extends MY_Controller
     
     // //--------------------------------------------------------------------------
 
-     public function insertdeliveryline()
+    public function insertdeliveryline()
     {                    
         if($this->input->post('expiration_date') == null)
         {
@@ -70,7 +70,7 @@ class Deliveryinfo_con extends MY_Controller
         }else {
             $expdate = date_format(date_create($this->input->post('expiration_date')), 'Y/m/d');
         }
-         $dl = array(
+        $dl = array(
             'lot_number' => $this->input->post(lot_number),
             'expiration_date' => $expdate,
             'unitcost' => $this->input->post('unitcost'),
@@ -95,7 +95,7 @@ class Deliveryinfo_con extends MY_Controller
         }else {
             $expdate = date_format(date_create($this->input->post('expiration_date')), 'Y/m/d');
         }             
-         $dl = array(
+        $dl = array(
             'lot_number' => $this->input->post(lot_number),
             'expiration_date' => $expdate,
             'unitcost' => $this->input->post('unitcost'),
@@ -113,10 +113,10 @@ class Deliveryinfo_con extends MY_Controller
 
     public function updatediscount()
     {      
-         $ta = $this->Delivery_model->get_sumdeliveryline($this->session->userdata('dno'));
-         $a = $ta[0]->ta;
-         $t = $a-$this->input->post('discount');
-         $d = array(
+        $ta = $this->Delivery_model->get_sumdeliveryline($this->session->userdata('dno'));
+        $a = $ta[0]->ta;
+        $t = $a-$this->input->post('discount');
+        $d = array(
                 'discount' => $this->input->post('discount'),
                 'totalamount' => $t
             );
@@ -129,10 +129,10 @@ class Deliveryinfo_con extends MY_Controller
 
     public function getsumdeliveryline($d)
     {                    
-       $sumdl = $this->Delivery_model->get_sumdeliveryline($d);
-       $dis = $this->Delivery_model->get_deliveryinfo($this->session->userdata('dno')); 
-       $ta = $sumdl[0]->ta-$dis[0]->discount;
-       $del = array(
+        $sumdl = $this->Delivery_model->get_sumdeliveryline($d);
+        $dis = $this->Delivery_model->get_deliveryinfo($this->session->userdata('dno')); 
+        $ta = $sumdl[0]->ta-$dis[0]->discount;
+        $del = array(
             'totalamount' => $ta,
             'user_id' => $this->session->userdata('id')         
         );
@@ -141,9 +141,9 @@ class Deliveryinfo_con extends MY_Controller
     
     // //--------------------------------------------------------------------------
 
-     public function updatedelivery()
+    public function updatedelivery()
     {            
-       $del = array(
+        $del = array(
             'date' => date_format(date_create($this->input->post('date')), 'Y/m/d'),
             'ref_no' => $this->input->post('refno'),
             'remarks' => $this->input->post('remarks')         

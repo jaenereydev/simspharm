@@ -15,7 +15,6 @@
             </div>
         </div> <!-- end of panel heading -->  
         
-                
         <div class="panel-body">  
             <div class="">
                     <table class="table table-hover table-responsive table-bordered table-striped info"  > 
@@ -201,14 +200,14 @@
 
 <!-- Modal add product -->
 <div id="addproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Product</h4>
         </div>
-                           
+                        
         <div class="modal-body">                   
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
             <thead>
@@ -221,13 +220,13 @@
                 </tr> 
             </thead>
             <tbody>
-                  <?php foreach ($prod as $key => $item): ?>                      
+                <?php foreach ($prod as $key => $item): ?>                      
                 <tr>                         
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->srpprice,2,'.',','); ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
-                    <td class="text-center info">                                
+                    <td class="text-center">                                
                         <button title="Add QTY" 
                             data-pno="<?php echo $item->p_no;?>"                                
                             data-name="<?php echo $item->name;?>"
@@ -238,31 +237,31 @@
                             data-backdrop="static" data-keyboard="false"></button>
                     </td>
                 </tr>
-                 <?php endforeach;  ?>     
+                <?php endforeach;  ?>     
             </tbody>
             </table>
         </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal add product quantity -->
 <div id="addqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">                    
-            <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
-            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Quantity</h4>
-        </div>
-               
+<div class="modal-dialog modal-lg"> 
+<!-- Modal content-->
+<div class="modal-content">
+    <div class="modal-header">                    
+        <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
+        <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Quantity</h4>
+    </div>
+            
         <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Sales_con/inserttransactionline')?>">             
         <div class="modal-body">            
 
             <input id="pno" class="form-control input-sm hide" type="text" name="pno" />
             <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
             <input id="srp" class="form-control input-sm hide" type="text" name="price" /> 
-          
+        
             <div class="form-group row row-offcanvas">                                                        
                 <label class="col-sm-4 control-label">Product Name</label>
                 <div class="col-sm-8">
@@ -300,19 +299,19 @@
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal edit product-->
 <div id="editproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Product</h4>
         </div>
-               
+            
         <form onsubmit="return editproductform(this);" role="form" method="post" action="<?=site_url('Sales_con/updatetransactionline')?>">             
         <div class="modal-body">            
 
@@ -357,19 +356,19 @@
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal edit product price-->
 <div id="editproductprice" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Product Price</h4>
         </div>
-               
+            
         <div class="modal-body">      
             <div class="form-group row row-offcanvas">                                                        
                 <label class="col-sm-6 control-label">Product Name</label>
@@ -385,7 +384,7 @@
                 <div class="form-group row row-offcanvas">                                       
                     <label class="col-sm-6 control-label">Price 1</label>
                     <div class="col-sm-6">
-                         <input id="srpprice" type="submit" class="form-control btn btn-primary" name="price" >
+                        <input id="srpprice" type="submit" class="form-control btn btn-primary" name="price" >
                     </div>   
                 </div>
             </form>
@@ -431,7 +430,7 @@
 
         </div>               
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 
@@ -487,9 +486,9 @@ window.onload = function()
                 data: { product_no: pno },
                 dataType: 'json',
                 success: function(response) {
-                    var options = '<option value="">Select Lot Number</option>';
+                    var options = '<option value="">Select Lot Number - Expiration Date - Remaining Quantity</option>';
                     $.each(response, function(index, lot) {
-                        options += '<option value="' + lot.plh_number + '">' + lot.lot_number +' - '+ lot.expiration_date + '</option>';
+                        options += '<option value="' + lot.plh_number + '">' + lot.lot_number +' - '+ lot.expiration_date +' - '+ lot.remaining_quantity + '</option>';
                     });
 
                     // Populate the select dropdown with received lot numbers
@@ -526,10 +525,10 @@ window.onload = function()
                 data: { product_no: pno },
                 dataType: 'json',
                 success: function(response) {   
-                    var options = '<option value="">Select Lot Number</option>';
+                    var options = '<option value="">Select Lot Number - Expiration Date - Remaining Quantity</option>';
                     $.each(response, function(index, lot) {
                     var isSelected = (plh == lot.plh_number) ? ' selected' : ''; // Allow type conversion
-                    options += `<option value="${lot.plh_number}"${isSelected}>${lot.lot_number} - ${lot.expiration_date}</option>`;
+                    options += `<option value="${lot.plh_number}"${isSelected}>${lot.lot_number} - ${lot.expiration_date} - ${lot.remaining_quantity} </option>`;
                 });
 
                     // Populate the select dropdown with received lot numbers
@@ -543,7 +542,7 @@ window.onload = function()
         });
     });
 
-     $(document).ready(function () {
+    $(document).ready(function () {
         $(document).on('click', '.editproductprice', function(event) {        
             var tlno = $(this).data('tlno');
             var name = $(this).data('name');  

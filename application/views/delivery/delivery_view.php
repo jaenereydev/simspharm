@@ -8,8 +8,7 @@
             </h3>     
             
         <button type="button" data-toggle="modal" data-target="#adddelivery" class="btn btn-info pull-right" >New</button>               
-        </div> <!-- end of panel heading -->        
-        
+        </div> <!-- end of panel heading -->     
         
         <div class="panel-body">  
             <div class="row">
@@ -17,7 +16,7 @@
                     <div class="form-stack has-icon col-sm-4">
                         <input type="text" name="search" class="form-control input-sm" placeholder="Search Document" autofocus required>                                     
                     </div>
-                     <button type="submit" class="btn btn-sm btn-info">Search</button>  
+                    <button type="submit" class="btn btn-sm btn-info">Search</button>  
                 </form>
             </div>
             <hr>
@@ -54,16 +53,25 @@
 
                             <?php if($item->post == 'YES') {}else{ ?>
                                 <a 
-                                type="button" 
-                                title="Delete" 
-                                href="<?=site_url('delivery_con/deletedelivery/'. $item->d_no)?>" 
-                                onclick="return confirm('Do you want to delete this Delivery File?');" 
-                                class="glyphicon glyphicon-trash btn btn-danger"></a> 
+                                    type="button" 
+                                    title="Delete" 
+                                    href="<?=site_url('delivery_con/deletedelivery/'. $item->d_no)?>" 
+                                    onclick="return confirm('Do you want to delete this Delivery File?');" 
+                                    class="glyphicon glyphicon-trash btn btn-danger">
+                                </a> 
                             <?php } ?>  
 
                             <?php if($item->post == 'YES') { ?>
-                                <a title="Export to Excel" target="_blank" href="<?=site_url('delivery_con/exporttoexcel/'. $item->d_no)?>" class="glyphicon glyphicon-download-alt btn btn-success"></a>
-                                <a title="Print" target="_blank" href="<?=site_url('delivery_con/exporttoexcel/'. $item->d_no)?>" class="glyphicon glyphicon-print btn btn-default"></a>
+                                <a 
+                                    title="Export to Excel" 
+                                    target="_blank" 
+                                    href="<?=site_url('delivery_con/exporttoexcel/'. $item->d_no)?>" 
+                                    class="glyphicon glyphicon-download-alt btn btn-success"></a>
+                                <!-- <a 
+                                    title="Print" 
+                                    target="_blank"
+                                    href="<?=site_url('delivery_con/exporttoexcel/'. $item->d_no)?>" 
+                                    class="glyphicon glyphicon-print btn btn-default"></a> -->
                             <?php } ?>  
 
                             <?php if($item->totalamount < 1 || $item->totalamount == null || $item->post == 'YES') {}else{ ?>

@@ -6,10 +6,13 @@
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
                 <span class="glyphicon glyphicon-qrcode" ></span> Delvery Information
-
             </h3>   
             <?php if($del[0]->post == 'YES'){ ?>         
-            <button id="exportExcel" class="btn btn-success pull-right">Export this table to Excel</button>
+                <a 
+                    title="Export to Excel" 
+                    target="_blank" 
+                    href="<?=site_url('delivery_con/exporttoexcel/'. $del[0]->d_no)?>" 
+                    class="glyphicon glyphicon-download-alt btn btn-success pull-right"></a>
             <?php } ?>  
         </div> <!-- end of panel heading -->        
         
@@ -29,7 +32,7 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php if(sizeof($delline)):  foreach ($delline as $key => $item): ?>                      
+                    <?php if(sizeof($delline)):  foreach ($delline as $key => $item): ?>                      
                     <tr>     
                         <?php if($del[0]->post == 'YES'){}else { 
                             if($item->expiration_date == null){
@@ -67,17 +70,17 @@
                     </tr>
                     <?php endforeach; else: ?>
                         <tr class="text-center">
-                          <td colspan="7">There are no Data</td>
+                        <td colspan="7">There are no Data</td>
                         </tr>
                     <?php endif?> 
                 </tbody>
             </table>
-             
+            
         </div> <!-- end of panel body -->
-       
+    
     </div> <!-- end of panel div -->
 </div> <!-- end of main div -->
-   
+
 <div class="col-md-4" style="margin-top:60px;" >    
     <div class="panel panel-default">
         <div class="panel-heading ">                
@@ -173,14 +176,14 @@
 </div>
 <!-- Modal -->
 <div id="changesupplier" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Supplier</h4>
         </div>
-                           
+                        
             <div class="modal-body">                   
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable"> 
                 <thead>
@@ -190,31 +193,31 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($sup as $key => $item): ?>                      
+                    <?php foreach ($sup as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center">     
                             <a title="Select" href="<?=site_url('deliveryinfo_con/changesupplier/'.$item->s_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="addproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Product</h4>
         </div>
-                           
+                        
         <div class="modal-body">                   
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
             <thead>
@@ -225,7 +228,7 @@
                 </tr> 
             </thead>
             <tbody>
-                  <?php foreach ($prod as $key => $item): ?>                      
+                <?php foreach ($prod as $key => $item): ?>                      
                 <tr>                         
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
@@ -239,24 +242,24 @@
                             data-backdrop="static" data-keyboard="false">ADD</button>
                     </td>
                 </tr>
-                 <?php endforeach;  ?>     
+                <?php endforeach;  ?>     
             </tbody>
             </table>
         </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="addqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Quantity</h4>
         </div>
-               
+            
         <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Deliveryinfo_con/insertdeliveryline')?>">             
             <div class="modal-body">            
 
@@ -299,26 +302,26 @@
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 
 <!-- Modal -->
 <div id="editqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Edit Quantity</h4>
         </div>
-               
+            
         <form onsubmit="return editqtyform(this);" role="form" method="post" action="<?=site_url('Deliveryinfo_con/updatedeliveryline')?>">             
         <div class="modal-body">            
 
             <input id="dlno" class="form-control input-sm hide" type="text" name="dlno" />
             <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
-          
+        
             <div class="form-group row row-offcanvas">                                                        
                 <label class="col-sm-4 control-label">Product Name</label>
                 <div class="col-sm-8">
@@ -349,24 +352,24 @@
 
         </div>
         <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" name="qtyeditbtn" value="submit">
-            </div>
+            <input type="submit" class="btn btn-primary" name="qtyeditbtn" value="submit">
+        </div>
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="updatediscount" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm"> 
+<div class="modal-dialog modal-sm"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Discount</h4>
         </div>
-               
+            
         <form onsubmit="return updatediscountform(this);" role="form" method="post" action="<?=site_url('Deliveryinfo_con/updatediscount')?>">             
         <div class="modal-body">             
 
@@ -380,13 +383,13 @@
         
         </div>
         <div class="modal-footer">
-                <a title="Close" href="<?=site_url('Deliveryinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-              <input type="submit" class="btn btn-primary" name="updatediscountbtn" value="submit">
+            <a title="Close" href="<?=site_url('Deliveryinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
+            <input type="submit" class="btn btn-primary" name="updatediscountbtn" value="submit">
             </div>
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
@@ -417,12 +420,6 @@ function updatediscountform(formObj) {
         formObj.updatediscountbtn.value = 'Please Wait...';  
         return true;    
     } 
-
-    document.getElementById("exportExcel").addEventListener("click", function () {
-    let table = document.querySelector("table"); // Select the table
-    let workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" }); // Convert table to Excel format
-    XLSX.writeFile(workbook, "delivery_report.xlsx"); // Save as file
-});
 
 window.onload = function()
 {                         

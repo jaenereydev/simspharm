@@ -17,27 +17,27 @@ header("Expires: 0");
                 <thead>
                     <tr>  
                         <td style="text-align: left;"><strong>Date:</strong></td>          
-                        <td style="text-align: center;" colspan="3" ><strong><?php echo date_format(date_create($del[0]->date), 'm/d/Y');?></strong></td>  
+                        <td style="text-align: center;" colspan="5" ><strong><?php echo date_format(date_create($del[0]->date), 'm/d/Y');?></strong></td>  
                     </tr> 
                     <tr>  
                         <td style="text-align: left;"><strong>Ref. Number:</strong></td>                  
-                        <td style="text-align: center;" colspan="3"><strong><?php echo $del[0]->ref_no;?></strong></td> 
+                        <td style="text-align: center;" colspan="5"><strong><?php echo $del[0]->ref_no;?></strong></td> 
                     </tr> 
                     <tr>  
                         <td style="text-align: left;"><strong>Supplier Name</strong></td> 
-                        <td style="text-align: center;" colspan="3"><strong><?php echo $del[0]->name;?></strong></td>   
+                        <td style="text-align: center;" colspan="5"><strong><?php echo $del[0]->name;?></strong></td>   
                     </tr> 
                     <tr>  
                         <td style="text-align: left;"><strong>Discount Amount</strong></td> 
-                        <td style="text-align: center;" colspan="3"><strong><?php echo number_format((float)$del[0]->discount,2,'.',',');?></strong></td>   
+                        <td style="text-align: center;" colspan="5"><strong><?php echo number_format((float)$del[0]->discount,2,'.',',');?></strong></td>   
                     </tr> 
                     <tr>  
                         <td style="text-align: left;"><strong>Total Amount</strong></td> 
-                        <td style="text-align: center;" colspan="3"><strong><?php echo number_format((float)$del[0]->totalamount,2,'.',',');?></strong></td>   
+                        <td style="text-align: center;" colspan="5"><strong><?php echo number_format((float)$del[0]->totalamount,2,'.',',');?></strong></td>   
                     </tr> 
                     <tr>  
                         <td style="text-align: left;"><strong>Remarks</strong></td> 
-                        <td style="text-align: center;" colspan="3"><strong><?php echo $del[0]->remarks;?></strong></td>   
+                        <td style="text-align: center;" colspan="5"><strong><?php echo $del[0]->remarks;?></strong></td>   
                     </tr> 
 
                 </thead>
@@ -50,7 +50,7 @@ header("Expires: 0");
                         <td style="text-align: center;"><strong>QTY</strong></td> 
                         <td style="text-align: center;"><strong>Amount</strong></td>   
                     </tr> 
-                      <?php if(sizeof($delline)):  foreach ($delline as $key => $item): ?>                      
+                    <?php if(sizeof($delline)):  foreach ($delline as $key => $item): ?>                      
                     <tr>     
                         <td class="" style="text-transform: capitalize"><?php echo $item->name ?> </td>
                         <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>

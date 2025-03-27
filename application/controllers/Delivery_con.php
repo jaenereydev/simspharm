@@ -46,7 +46,7 @@ class Delivery_con extends MY_Controller
     
     //--------------------------------------------------------------------------
 
-     public function searchdelivery()
+    public function searchdelivery()
     { 
         $this->session->unset_userdata('dno');
         $this->data['delivery'] = $this->Delivery_model->get_deliverysearch($this->input->post('search'));
@@ -56,10 +56,10 @@ class Delivery_con extends MY_Controller
     }
     
     // //--------------------------------------------------------------------------
-       
+    
     public function selectsupplier($s)
     {                    
-         $del = array(
+        $del = array(
             'supplier_s_no' => $s,
             'discount' => '0',
             'user_id' => $this->session->userdata('id'),
@@ -97,7 +97,7 @@ class Delivery_con extends MY_Controller
     
     // //--------------------------------------------------------------------------
 
-     public function postdelivery($d)
+    public function postdelivery($d)
     {         
         $del = array(
             'post' => "YES"
