@@ -241,6 +241,21 @@ class Product_model extends CI_Model
     
   //--------------------------------------------------------------------------
 
+  public function updatesalesproductlothistoryremainingquantity($tno) // update product_lot_history remaining_quantity from POS
+  {
+      $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select (product_lot_history.remaining_quantity - transactionline.qty) "
+                                          . "from transactionline "
+                                          . "where transactionline.plh_number = product_lot_history.plh_number "
+                                          . "and transactionline.transaction_t_no = '$tno') "
+                  . "where product_lot_history.plh_number IN (select transactionline.plh_number "
+                                          . "from transactionline "
+                                          . "where transactionline.plh_number = product_lot_history.plh_number "
+                                          . "and transactionline.transaction_t_no = '$tno')";
+      return $this->db->query($sql);
+  }
+    
+  //--------------------------------------------------------------------------
+
   public function updatecreditloanproductqty($clno) // update qty from CREDIT LOAN
   {
       $sql = "update product set product.qty = (select (product.qty - creditloanline.qty) "
@@ -266,6 +281,21 @@ class Product_model extends CI_Model
                   . "where product.p_no IN (select transactionline.product_p_no "
                                           . "from transactionline "
                                           . "where transactionline.product_p_no = product.p_no "
+                                          . "and transactionline.transaction_t_no = '$tno')";
+      return $this->db->query($sql);
+  }
+    
+  //--------------------------------------------------------------------------
+
+  public function updatesalesproductlothistoryremainingquantityvoid($tno) // update product_lot_history remaining_quantity from POS
+  {
+      $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select (product_lot_history.remaining_quantity + transactionline.qty) "
+                                          . "from transactionline "
+                                          . "where transactionline.plh_number = product_lot_history.plh_number "
+                                          . "and transactionline.transaction_t_no = '$tno') "
+                  . "where product_lot_history.plh_number IN (select transactionline.plh_number "
+                                          . "from transactionline "
+                                          . "where transactionline.plh_number = product_lot_history.plh_number "
                                           . "and transactionline.transaction_t_no = '$tno')";
       return $this->db->query($sql);
   }

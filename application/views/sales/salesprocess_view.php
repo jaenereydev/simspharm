@@ -1,7 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
 
-
 <div class="col-md-6 col-sm-offset-3" style="margin-top:60px;" >
     <div class="panel panel-default">
         <div class="panel-heading ">
@@ -25,19 +24,19 @@
                 <?php } else  { ?>
                     href="<?=site_url('Sales_con')?>"
                 <?php } ?> 
-               
+            
                 ><span class=" glyphicon glyphicon-arrow-left"></span> Back</a>                   
             </div>
         </div> <!-- end of panel heading -->  
         
         <form onsubmit="return processform(this);" role="form" method="post" 
-        <?php if($this->session->userdata('type') == "RETURN") { ?>
-             action="<?=site_url('Salesreturn_con/submitsales')?>"
-         <?php } else if($this->session->userdata('type') == "CASH" || $this->session->userdata('type') == "CHECK") { ?>
-             action="<?=site_url('Sales_con/submitsales')?>"
-         <?php } else  { ?>
-              action="<?=site_url('Salescredit_con/submitsales')?>"
-        <?php } ?>   
+            <?php if($this->session->userdata('type') == "RETURN") { ?>
+                action="<?=site_url('Salesreturn_con/submitsales')?>"
+            <?php } else if($this->session->userdata('type') == "CASH" || $this->session->userdata('type') == "CHECK") { ?>
+                action="<?=site_url('Sales_con/submitsales')?>"
+            <?php } else  { ?>
+                action="<?=site_url('Salescredit_con/submitsales')?>"
+            <?php } ?>   
         >
         <div class="panel-body">
             <div class="form-group row">
@@ -65,10 +64,10 @@
                     <?php }else { ?>
                     
                     <input type="text" class="hide" name="cno" value="<?php echo $this->session->userdata('customer') ?>" >
-                     <input type="text" style="text-transform: capitalize" class="form-control input-sm text-center" value="<?php echo $customer[0]->name ?>" disabled >
-                   
+                    <input type="text" style="text-transform: capitalize" class="form-control input-sm text-center" value="<?php echo $customer[0]->name ?>" disabled >
+                
                     <?php } ?>     
-                                       
+                                    
                 </div>
             </div>
             <table class="table table-hover table-responsive table-bordered table-striped info" > 
@@ -95,10 +94,10 @@
                     </tr>
                     <?php endforeach;  else: $qty=0; $ta=0; $tldiscount=0; ?>
                         <tr class="text-center">
-                          <td colspan="6">There are no Data</td>
+                            <td colspan="6">There are no Data</td>
                         </tr>
                     <?php endif  ?> 
-                     <tr class="warning">
+                    <tr class="warning">
                         <td colspan="2"><strong>Total QTY</strong></td>
                         <td class="text-center"><strong><?php echo $qty; ?></strong></td>
                         <td class="text-right"></td>
@@ -110,13 +109,13 @@
                         <td colspan="5" class="text-right"><strong>Discount Amount</strong></td>
                         <td class="text-center"><strong>(<?php echo number_format((float)$this->session->userdata('discount'),2,'.',','); ?>)</strong></td>
                     </tr>
-                   
+                
                     <tr class="warning">
                         <td colspan="5" class="text-right"><strong>Net Sales</strong></td>
                         <td class="text-center"><strong>Php <?php echo number_format((float)$this->session->userdata('totalamount'),2,'.',','); ?></strong></td>
                     </tr>
                     <?php if($this->session->userdata('type') == "CREDIT") {}else { ?>
-                     <tr class="warning">
+                    <tr class="warning">
                         <td colspan="5" class="text-right"><strong><?php if($this->session->userdata('type') == "CHECK") { echo 'Check On Hand'; } else { echo 'Cash On Hand'; } ?></strong></td>
                         <td class="text-center"><strong>Php <?php echo number_format((float)$this->session->userdata('cashonhand'),2,'.',','); ?></strong></td>
                     </tr>
@@ -130,11 +129,11 @@
                         <tr class="danger">
                             <td colspan="6" class="text-right"><strong>*The Change is Negative.Please check your Orders</strong></td>
                         </tr>
-                          <?php } ?> 
+                        <?php } ?> 
                     <?php } ?>
                 </tbody>
             </table>
-             
+            
         </div> <!-- end of panel body --> 
         <div class="modal-footer">
 
@@ -144,16 +143,16 @@
             <?php } else if($this->session->userdata('type') == "CASH" || $this->session->userdata('type') == "CHECK") { ?>
                 href="<?=site_url('Sales_con/resettransaction')?>" 
             <?php } else  { ?>
-               href="<?=site_url('Salescredit_con/resettransaction')?>" 
+                href="<?=site_url('Salescredit_con/resettransaction')?>" 
             <?php } ?>   
-             onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" ></a>
+                onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" ></a>
 
             <input <?php if($this->session->userdata('change') < '0' ){ if($this->session->userdata('type') == "CASH") { echo 'disabled'; } else {} } ?> title="Process" type="submit" class="btn btn-primary" name="processbtn" value="Process">
         </div>       
         </form>
     </div> <!-- end of panel div -->
 </div> <!-- end of main div -->
-     
+    
 
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>

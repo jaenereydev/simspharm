@@ -121,29 +121,29 @@
                             </div>
                         </form>     
                     </div><!-- end of customer details -->                    
-                   
+                
                     <div class="tab-pane <?php if($active == "3") { echo "active";} ?>" id="productlothistory">
                         <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable">      
                             <thead>
                             <tr class="info">                                
                                 <td class="text-center"><strong>#</strong></td>    
                                 <td class="text-center"><strong>Ref. Number</strong></td>  
-                                <td class="text-center"><strong>Date</strong></td>     
+                                <td class="text-center"><strong>Date / Description</strong></td>     
                                 <td class="text-center"><strong>Lot Number</strong></td>
                                 <td class="text-center"><strong>Expiration Date</strong></td>
                                 <td class="text-center"><strong>Delivered Quantity</strong></td>
                                 <td class="text-center"><strong>Unit Cost</strong></td>
                                 <td class="text-center"><strong>Remaining Quantity</strong></td>
                                 <td class="text-center"><strong>Total Amount</strong></td>
-                              </tr> 
+                            </tr> 
                             </thead>
                             <tbody>
                             <?php foreach ($prodlothistory as $key => $item): ?>                    
                             <tr> 
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->plh_number ?></td>                                   
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_number ?></td>   
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->date ?></td>                        
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number.'<br>'.$item->description; ?></td>                        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->date.'<br>'.$item->description;  ?></td>                        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number?></td>                        
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>  
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->delivered_quantity,2,'.',',');?></td>     
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',');?></td>   
@@ -156,7 +156,7 @@
                     </div>
 
                     <div class="tab-pane <?php if($active == "2") { echo "active";} ?>" id="producthistory">                        
-                             
+                            
                         <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable">      
                             <thead>
                             <tr class="info">                               
@@ -170,7 +170,7 @@
                                 <td class="text-center"><strong>Out</strong></td>
                                 <td class="text-center"><strong>Balance</strong></td>
                                 <td class="text-center"><strong>User</strong></td>
-                              </tr> 
+                            </tr> 
                             </thead>
                             <tbody>
                             <?php foreach ($prodhistory as $key => $item): ?>                    
@@ -199,7 +199,7 @@
 
 <!-- Modal -->
         <div id="category" class="modal fade" role="dialog">
-          <div class="modal-dialog modal-md"> 
+        <div class="modal-dialog modal-md"> 
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">                                    
@@ -223,16 +223,16 @@
                     
                     <div class="modal-footer">
                         <a title="Close" href="<?=site_url('productinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-                      <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                    <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
                     </div>
                 </form>
             </div>
-          </div>
+        </div>
         </div> <!-- End of model -->
 
         <!-- Modal -->
         <div id="supplier" class="modal fade" role="dialog">
-          <div class="modal-dialog modal-md"> 
+        <div class="modal-dialog modal-md"> 
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">                                        
@@ -252,16 +252,16 @@
                                 </select>  
                             </div>
                         </div>
-                                              
+                                            
                     </div>
                     
                     <div class="modal-footer">
                         <a title="Close" href="<?=site_url('productinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-                      <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                        <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
                     </div>
                 </form>
             </div>
-          </div>
+        </div>
         </div> <!-- End of model -->
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>

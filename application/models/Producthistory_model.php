@@ -39,9 +39,9 @@ class Producthistory_model extends CI_Model
   public function insert_salesproducthistory($tno, $desc) //insert data from POS module SALES and CREDIT
   {
   
-    $sql = "Insert into product_history(date, ref_no, description, outqty, bal, product_p_no,  user_id) "
+    $sql = "Insert into product_history(date, ref_no, description, outqty, bal, product_p_no,  user_id, lot_number, expiration_date, plh_number, unit_cost, price) "
           . "select o.date, o.ref_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)-l.qty, "
-          . "l.product_p_no, o.user_id "
+          . "l.product_p_no, o.user_id, l.description, l.expiration_date, l.plh_number, l.delivery_cost, l.price "
           . "from transactionline l "
           . "JOIN transaction o ON o.t_no = l.transaction_t_no "
           . "JOIN product p ON p.p_no = l.product_p_no "
@@ -72,9 +72,9 @@ class Producthistory_model extends CI_Model
    public function insert_salesreturnproducthistory($tno, $desc) //insert data from POS Sales Return module
   {
   
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id) "
+    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id, lot_number, expiration_date, plh_number, unit_cost, price) "
           . "select o.date, o.ref_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)+l.qty, "
-          . "l.product_p_no, o.user_id "
+          . "l.product_p_no, o.user_id, l.description, l.expiration_date, l.plh_number, l.delivery_cost, l.price "
           . "from transactionline l "
           . "JOIN transaction o ON o.t_no = l.transaction_t_no "
           . "JOIN product p ON p.p_no = l.product_p_no "

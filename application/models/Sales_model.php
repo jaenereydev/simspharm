@@ -207,8 +207,7 @@ class Sales_model extends CI_Model
     $query = $this->db->query($sql);
     return $query->result();
   }
- 
- 
+
   //----------------------------------------------------------------------
 
   
@@ -222,12 +221,11 @@ class Sales_model extends CI_Model
     $query = $this->db->query($sql);
     return $query->result();
   }
- 
- 
+
   //----------------------------------------------------------------------
 
   public function get_sumexpenses($u) // sql for transactoin for the day
-   {
+  {
     $sql = "SELECT sum(amount) as ta
               from expenses 
               where  user_id = '$u' 
@@ -239,7 +237,7 @@ class Sales_model extends CI_Model
   //----------------------------------------------------------------------
 
   public function get_datesumexpenses($u, $d) // sql for transactoin for the day
-   {
+  {
     $sql = "SELECT sum(amount) as ta
               from expenses 
               where  user_id = '$u' 

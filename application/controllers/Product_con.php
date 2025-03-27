@@ -12,7 +12,7 @@ class Product_con extends MY_Controller
         $this->load->model('Supplier_model');
         $this->load->model('Category_model');
         $this->load->model('Product_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";

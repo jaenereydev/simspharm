@@ -44,7 +44,7 @@
                 <?php $ta=0; foreach ($tl as $key => $item): ?>
                     <tr >
                         <td style="text-align: center;width: 10%"><?php echo $item->tlqty ?></td>
-                        <td style="text-align: lefte;width: 30%"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->description.'<br>'; if($item->discount >=1){ echo ' - ('.$item->discount.'%)' ;} ?></td>
+                        <td style="text-align: lefte;width: 30%"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->description.'<br>'.$item->expiration_date.'<br>'; if($item->discount >=1){ echo ' - ('.$item->discount.'%)' ;} ?></td>
                         <td style="text-align: center;width: 10%"><?php echo number_format((float)$item->price,2,'.',','); ?></td>
                         <td style="text-align: center;width: 10%"><?php echo number_format((float)$item->totalamount,2,'.',','); $ta+=$item->totalamount; ?></td>                                                  
                     </tr>

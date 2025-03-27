@@ -360,6 +360,7 @@ class Sales_con extends MY_Controller
         $desc = "SALES";
         $this->Producthistory_model->insert_salesproducthistory($tno, $desc);//insert data to product history
         $this->Product_model->updatesalesproductqty($tno); // update product qty
+        $this->Product_model->updatesalesproductlothistoryremainingquantity($tno); // update product_lot_history qty
 
         if($this->session->userdata('customer') == null) {}else {    
             $ch = array(
@@ -387,11 +388,12 @@ class Sales_con extends MY_Controller
         $v = array(
             'type' => 'VOID',
         );
-        $this->Sales_model->updatetransaction($tno, $v);
+        $this->Sales_model->updatetransaction($tno, $v); //update transaction table to be void
         
         $desc = "VOID";
         $this->Producthistory_model->insert_salesreturnproducthistory($tno, $desc);//insert data to product history
         $this->Product_model->updatesalesreturnproductqty($tno); // update product qty
+        $this->Product_model->updatesalesproductlothistoryremainingquantityvoid($tno); // update product lot history qty
 
         $tinfo = $this->Sales_model->get_transactioninfo($tno); //insert data to transaction     
 
