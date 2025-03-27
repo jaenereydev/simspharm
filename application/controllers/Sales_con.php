@@ -157,7 +157,7 @@ class Sales_con extends MY_Controller
             $discountamount =  (($this->input->post('qty')*$this->input->post('price'))*$this->input->post('discount'))/100;
             $totalamount = ($this->input->post('qty')*$this->input->post('price'))-$discountamount;
         }
-
+        $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));
         $tl = array(            
             'user_id' => $this->session->userdata('id'),
             'product_p_no' => $this->input->post('pno'),
@@ -165,7 +165,8 @@ class Sales_con extends MY_Controller
             'totalunitcost' => $this->input->post('unitcost')*$this->input->post('qty'),
             'price' => $this->input->post('price'),
             'qty' => $this->input->post('qty'),
-            'description' => $this->input->post('desc'),
+            'description' => $lotnumber[0]->lot_number,
+            'expiration_date' => $lotnumber[0]->expiration_date,
             'discount' => $discount,
             'discountamount' => $discountamount,
             'totalamount' => $totalamount,
@@ -393,9 +394,7 @@ class Sales_con extends MY_Controller
         redirect('Sales_con/transactionlist');
     }
     
-    // //--------------------------------------------------------------------------
-
-
+    //--------------------------------------------------------------------------
 
     public function transactioninfo($tno, $c)
     {                            
@@ -405,5 +404,19 @@ class Sales_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------  
+
+    public function getLotNumbers() {
+        $product_no = $this->input->post('product_no');
+    
+        // Fetch lot numbers from database
+        $this->db->where('product_p_no', $product_no);
+        $query = $this->db->get('product_lot_history'); // Replace 'lot_table' with your actual table name
+    
+        if ($query->num_rows() > 0) {
+            echo json_encode($query->result());
+        } else {
+            echo json_encode([]);
+        }
+    }
 
 }

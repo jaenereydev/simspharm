@@ -17,6 +17,18 @@ class Sales_model extends CI_Model
  
   //----------------------------------------------------------------------
 
+  public function get_lotnumberinfo($l) 
+  {
+    $sql = "SELECT *
+              from product_lot_history  
+              where  plh_number = '$l' ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+ 
+ 
+  //----------------------------------------------------------------------
+
   public function get_totalcashsalesperdayperuser() 
   {
     $sql = "SELECT sum(t.totalqty) as tqty, sum(t.totalamount) as tamount, u.name as name
@@ -353,7 +365,8 @@ class Sales_model extends CI_Model
   public function get_transactionlineinfo($t) 
   {
   
-    $sql = "SELECT t.*, t.qty as tlqty, p.name as name, p.barcode as barcode, p.*, t.description as description
+    $sql = "SELECT t.*, t.qty as tlqty, p.name as name, 
+              p.barcode as barcode, p.*, t.description as description
               from transactionline t 
               join product p on p.p_no = t.product_p_no
               where t.transaction_t_no = '$t' ";
@@ -366,7 +379,8 @@ class Sales_model extends CI_Model
   public function get_transactionline($u) 
   {
   
-    $sql = "SELECT t.*, t.qty as tlqty, p.name as name, p.barcode as barcode, p.*, t.description as description
+    $sql = "SELECT t.*, t.qty as tlqty, p.name as name, p.barcode as barcode, 
+              p.*, t.description as description
               from transactionline t 
               join product p on p.p_no = t.product_p_no
               where t.user_id = '$u' 

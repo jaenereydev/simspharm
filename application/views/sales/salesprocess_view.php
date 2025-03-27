@@ -86,7 +86,7 @@
                     <?php if(sizeof($tl)):$qty=0; $ta=0; $tldiscount=0;   foreach ($tl as $key => $item):  ?>                      
                     <tr>    
                         <?php $tldiscount+=$item->discountamount; ?>                                             
-                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->description ?> </td>
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->description.'<br>'.$item->expiration_date  ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',','); ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->tlqty; $qty+=$item->tlqty; ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->tlqty*$item->price,2,'.',','); ?></td>

@@ -104,13 +104,6 @@
                                 </div>
 
                                 <div class="form-group row row-offcanvas">
-                                    <label class="col-sm-3 control-label">Inventory Cost</label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control input-sm" type="text" step="any" placeholder="Cost" value="<?php echo number_format((float)($prod[0]->cost),2,'.',',');?>" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Track Inventory</label>
                                     <div class="col-sm-5">
                                         <select name="ti" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             

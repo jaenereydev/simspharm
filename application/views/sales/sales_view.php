@@ -35,7 +35,7 @@
                             <tr>    
                                 <?php $tldiscount+=$item->discountamount; ?>                                             
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?> </td>
-                                <td class="text-left" style="text-transform: capitalize"><?php echo $item->name.'<br>'.$item->description ?> </td>
+                                <td class="text-left" style="text-transform: capitalize"><?php echo $item->name.'<br>'.$item->description.'<br>'.$item->expiration_date ?> </td>
                                 <td class="text-center" style="text-transform: capitalize">
                                     <a title="Edit Product Price" 
                                     data-tlno="<?php echo $item->tl_no;?>"                                
@@ -200,7 +200,7 @@
 
 <!-- Modal add product -->
 <div id="addproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+  <div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -277,9 +277,11 @@
             </div>
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Description</label>
+                <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                    <input class="form-control input-sm " type="text" placeholder="IMEI/Serial/remarks" name="desc"  autocomplete="off" />
+                <select id="lot_number" name="lot_number" class="form-control">
+                        <option value="">Select Lot</option>
+                    </select>
                 </div>  
             </div>
 
@@ -469,10 +471,31 @@ window.onload = function()
             var name = $(this).data('name');
             var srp = $(this).data('srp');
             var unitcost = $(this).data('unitcost');
+
             $(".modal-body #pno").val( pno );
             $(".modal-body #name").val( name );
             $(".modal-body #unitcost").val( unitcost );
             $(".modal-body #srp").val( srp );
+
+            // Fetch lot numbers via AJAX
+            $.ajax({
+                url: '<?= site_url("Sales_con/getLotNumbers") ?>', // Replace with your actual controller method
+                type: 'POST',
+                data: { product_no: pno },
+                dataType: 'json',
+                success: function(response) {
+                    var options = '<option value="">Select Lot Number</option>';
+                    $.each(response, function(index, lot) {
+                        options += '<option value="' + lot.plh_number + '">' + lot.lot_number +' - '+ lot.expiration_date + '</option>';
+                    });
+
+                    // Populate the select dropdown with received lot numbers
+                    $(".modal-body #lot_number").html(options);
+                },
+                error: function() {
+                    $(".modal-body #lot_number").html('<option value="">Failed to load</option>');
+                }
+            });
         });
     });
 
