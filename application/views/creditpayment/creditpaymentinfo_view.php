@@ -28,10 +28,10 @@
                         <div class="col-sm-4">
                             <button style="text-transform: capitalize" class="form-control input-sm"  type="button" data-toggle="modal" data-target="#changecustomer"<?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?> ><strong><?php echo $cp[0]->name ?><?php if($cp[0]->post == 'YES'){ }else { ?> - <span class="text-danger"><strong>Php<?php echo number_format((float)$cp[0]->balance,2,'.',','); ?></strong></span> ...</strong ><?php } ?></button>
                         </div>  
-                                          
+                                        
                     </div>
                 </div>
-              
+            
             </div>            
             <div class="row">
 
@@ -45,8 +45,8 @@
                                 <td class="text-center" colspan="4"><strong>Credit Info</strong></td>
                                 <td class="text-center">
                                     <?php if($countcddl[0]->c == 1) {}else { ?>
-                                     <button style="text-transform: capitalize" class="btn btn-info "  type="button" data-toggle="modal" data-target="#insertduedate"<?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?> >INSERT</button>  
-                                     <?php } ?>                                  
+                                        <button style="text-transform: capitalize" class="btn btn-info "  type="button" data-toggle="modal" data-target="#insertduedate"<?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?> >INSERT</button>  
+                                    <?php } ?>                                  
                                 </td>
                             <?php } ?> 
                         </tr>
@@ -62,34 +62,39 @@
                         </tr> 
                     </thead>
                     <tbody>
-                          <?php $a=0; if(sizeof($cddlist)):  foreach ($cddlist as $key => $item):  
+                        <?php $a=0; if(sizeof($cddlist)):  foreach ($cddlist as $key => $item):  
                             $bal = $item->amount-$item->amountpayed; ?>                      
                         <tr>     
                             <?php if($cp[0]->post == 'YES'){}else { ?> 
                                 <td class="text-center" style="text-transform: capitalize">                             
-                                    <a title="Edit" href="<?=site_url('Creditpaymentinfo_con/deletecreditduedateline/'.$item->cddl_no.'/'.$bal)?>" class="glyphicon glyphicon-trash btn btn-danger" onclick="return confirm('Do you want to delete this credit');"></a>
+                                    <a 
+                                        title="Edit" 
+                                        href="<?=site_url('Creditpaymentinfo_con/deletecreditduedateline/'.$item->cddl_no.'/'.$bal)?>" 
+                                        class="glyphicon glyphicon-trash btn btn-danger" 
+                                        onclick="return confirm('Do you want to delete this credit');">
+                                    </a>
                                 </td>
                             <?php } ?>
                             <td class="text-center" style="text-transform: capitalize"><?php echo $item->cdd_no ?> </td>
                             <td class="text-center" style="text-transform: capitalize"><?php echo $item->duedate ?> </td>
                             <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no ?> </td>
-                            <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->amount,2,'.',','); $a+=($item->amount-$item->amountpayed); ?></td>                            
+                            <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->amount-$item->amountpayed,2,'.',','); $a+=($item->amount-$item->amountpayed); ?></td>                            
                         </tr>
                         <?php endforeach; else: ?>
                         <?php if($cp[0]->post == 'YES'){ ?>
                             <tr class="text-center">
-                              <td colspan="4">There are no Data</td>
+                                <td colspan="4">There are no Data</td>
                             </tr>
                         <?php }else { ?>
                             <tr class="text-center">
-                              <td colspan="5">There are no Data</td>
+                                <td colspan="5">There are no Data</td>
                             </tr>
                         <?php } ?>
                         <?php endif?> 
                         <?php if($cp[0]->post == 'YES'){}else { ?>
                             <tr class="warning">
-                              <td class="text-right" colspan="4"><strong>Total</strong></td>
-                              <td class="text-center"><strong><?php echo number_format((float)$a,2,'.',','); ?></strong></td>
+                                <td class="text-right" colspan="4"><strong>Total</strong></td>
+                                <td class="text-center"><strong><?php echo number_format((float)$a,2,'.',','); ?></strong></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -117,7 +122,7 @@
                         </tr> 
                     </thead>
                     <tbody>
-                          <?php $tp=0;  if(sizeof($cpl)):  foreach ($cpl as $key => $item): ?>                      
+                        <?php $tp=0;  if(sizeof($cpl)):  foreach ($cpl as $key => $item): ?>                      
                         <tr>     
                             <?php if($cp[0]->post == 'YES'){}else { ?> 
                                 <td class="text-center" style="text-transform: capitalize">                             
@@ -129,13 +134,13 @@
                         </tr>
                         <?php endforeach; else: ?>
                             <tr class="text-center">
-                              <td colspan="3">There are no Data</td>
+                                <td colspan="3">There are no Data</td>
                             </tr>
                         <?php endif?> 
                         <tr class="warning">
-                             
+                            
                             <td <?php if($cp[0]->post == 'YES'){ ?> colspan="1"<?php }else { ?>colspan="2"<?php } ?>  class="text-right"><strong>Total Amount</strong></td>
-                           
+                        
                             <td class="text-center"><strong><?php echo number_format((float)$tp,2,'.',','); ?></strong></td>
                         </tr>   
                     </tbody>
@@ -203,19 +208,19 @@
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="insertduedate" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Crediit Due Date</h4>
         </div>
-                           
+                        
             <div class="modal-body">                    
 
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
@@ -230,7 +235,7 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($cdd as $key => $item): ?>                      
+                        <?php foreach ($cdd as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->duedate ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no; ?></td>
@@ -241,12 +246,12 @@
                             <a title="Select" href="<?=site_url('Creditpaymentinfo_con/insertcreditduedateline/'.$item->cdd_no.'/'.$s.'/'.$cp[0]->totalcredit)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
-                     <?php endforeach;  ?>     
+                        <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
