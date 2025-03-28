@@ -10,7 +10,7 @@
         
         <ul class="nav nav-tabs">
             <li role="presentation" class="<?php if($active == "1") { echo "active";} ?>"><a href="#productdetails" data-toggle="tab">Product Details</a></li>
-            <li role="presentation" class="<?php if($active == "3") { echo "active";} ?>"><a href="#productlothistory" data-toggle="tab">Lot History</a></li>
+            <li role="presentation" class="<?php if($active == "3") { echo "active";} ?>"><a href="#productlothistory" data-toggle="tab">Lot Quantity</a></li>
             <li role="presentation" class="<?php if($active == "2") { echo "active";} ?>"><a href="#producthistory" data-toggle="tab">History</a></li>
         </ul>
         
@@ -68,12 +68,12 @@
                                         </button>
                                     </div>       
                                 </div>                                                                                                                            
-                                <!-- <div class="form-group row row-offcanvas">
+                                <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Unit Cost</label>
                                     <div class="col-sm-5">
                                         <input class="form-control input-sm" type="number" name="unitcost" placeholder="Unit Cost" min="0" step="any" value="<?php echo $prod[0]->unitcost; ?>" >
                                     </div>
-                                </div> -->
+                                </div>
                                 
                                 <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Price 1</label>

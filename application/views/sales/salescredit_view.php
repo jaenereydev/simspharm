@@ -41,7 +41,7 @@
                     <tr>    
                         <?php $tldiscount+=$item->discountamount; ?>                                             
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?> </td>
-                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->name.'<br>'.$item->description ?> </td>
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->name.'<br>'.$item->description.'<br>'.$item->expiration_date ?> </td>
                         <td class="text-center" style="text-transform: capitalize">
                             <a title="Edit Product Price" 
                             data-tlno="<?php echo $item->tl_no;?>"                                
@@ -175,7 +175,7 @@
 </div>     
 <!-- Modal select customer-->
 <div id="selectcustomer" class="modal fade" role="dialog">
-<div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -200,7 +200,7 @@
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->credit_limit,2,'.',','); ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->balance,2,'.',','); ?></td>
-                        <td class="text-center info">     
+                        <td class="text-center">     
                             <a title="Select" href="<?=site_url('Salescredit_con/selectcustomer/'.$item->c_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
@@ -363,7 +363,6 @@
         </div>
 
         <div class="modal-footer">
-            <a title="Close"  data-dismiss="modal" data-toggle="modal"  type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
             <input type="submit" class="btn btn-primary" name="editproductbtn" value="submit">
         </div>
         </form>
@@ -374,7 +373,7 @@
 
 <!-- Modal edit product price-->
 <div id="editproductprice" class="modal fade" role="dialog">
-<div class="modal-dialog modal-sm"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    

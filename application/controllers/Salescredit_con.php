@@ -196,13 +196,16 @@ class Salescredit_con extends MY_Controller
             $totalamount = ($this->input->post('qty')*$this->input->post('price'))-$discountamount;
         }
 
+        $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));
         $tl = array(                        
             'qty' => $this->input->post('qty'),
             'discount' => $discount,
             'discountamount' => $discountamount,
             'totalamount' => $totalamount,
-            'description' => $this->input->post('desc'),
-        );      
+            'description' => $lotnumber[0]->lot_number,
+            'expiration_date' => $lotnumber[0]->expiration_date,
+            'plh_number' => $this->input->post('lot_number'),
+        );     
         $this->Sales_model->edittransactionline($this->input->post('tlno'),$tl);
 
         redirect('Salescredit_con');
@@ -323,6 +326,7 @@ class Salescredit_con extends MY_Controller
         $desc = "CREDIT";
         $this->Producthistory_model->insert_salesproducthistory($tno, $desc);//insert data to product history
         $this->Product_model->updatesalesproductqty($tno); // update product qty
+        $this->Product_model->updatesalesproductlothistoryremainingquantity($tno); // update product_lot_history qty
 
         $c = $this->Customer_model->customerinfo($this->session->userdata('customer')); // find customer info     
 

@@ -121,12 +121,12 @@
                     </div>                            
                 </div>
                 
-                <!-- <div class="form-group row row-offcanvas">
+                <div class="form-group row row-offcanvas">
                     <label class="col-sm-3 control-label">Unit Cost</label>
                     <div class="col-sm-5">
                         <input  class="form-control input-sm" type="number" min="0" step="any" name="unitcost" placeholder="Unit Cost"  required autocomplete="off">
                     </div>                            
-                </div>                                                                                -->
+                </div>                                                                               
                 
                 <div class="form-group row row-offcanvas">
                     <label class="col-sm-3 control-label">Price 1</label>

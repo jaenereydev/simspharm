@@ -46,8 +46,8 @@ class Report_model extends CI_Model
   public function get_profitreport($d) 
   {
     $sql = "SELECT t.t_no, t.customer_c_no,t.ref_no as ref_no, t.date as date, 
-            t.type as type, sum(l.totalunitcost) as total_cost, sum(l.totalamount) as total_amount, 
-            (sum(l.totalamount)-sum(l.totalunitcost)) as profit
+            t.type as type, sum(l.delivery_cost*l.qty) as total_cost, sum(l.totalamount) as total_amount, 
+            (sum(l.delivery_cost*l.qty)-sum(l.totalunitcost)) as profit
             FROM transactionline as l 
             JOIN transaction as t on t.t_no = l.transaction_t_no
             WHERE t.date = '$d'

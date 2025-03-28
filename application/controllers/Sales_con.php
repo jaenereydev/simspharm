@@ -433,7 +433,12 @@ class Sales_con extends MY_Controller
         $this->db->from('product_lot_history');
         $this->db->where('product_p_no', $product_no);
         $this->db->where('remaining_quantity !=', 0); // Exclude lots with 0 quantity
-        $this->db->like('lot_number', $search); // Search for matching lot number
+        
+        $this->db->group_start(); // Start grouping for multiple conditions
+        $this->db->like('lot_number', $search); // Search in lot_number
+        $this->db->or_like('expiration_date', $search); // Search in expiration_date
+        $this->db->group_end(); // End grouping
+        
         $this->db->order_by('expiration_date', 'ASC'); // Sort by expiration date (oldest first)
         $query = $this->db->get();
 

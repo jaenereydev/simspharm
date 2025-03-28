@@ -8,9 +8,9 @@ class Producthistory_model extends CI_Model
   public function insert_deliveryproducthistory($d, $desc) //insert data from delivery
   {
   
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id) "
+    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id, lot_number, expiration_date, unit_cost, price) "
           . "select o.date, o.ref_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)+l.qty, "
-          . "l.product_p_no, o.user_id "
+          . "l.product_p_no, o.user_id, l.lot_number, l.expiration_date, l.unitcost, l.price  "
           . "from deliveryline l "
           . "JOIN delivery o ON o.d_no = l.delivery_d_no "
           . "JOIN product p ON p.p_no = l.product_p_no "

@@ -150,7 +150,7 @@ class Product_con extends MY_Controller
             $p = array(
                 'barcode' => $this->input->post('barcode'),
                 'name' => $this->input->post('name'),
-                'unitcost' => '0',
+                'unitcost' => $this->input->post('unitcost'),
                 'qty' => '0',
                 'srpprice' => $this->input->post('price1'),
                 'price2' => $this->input->post('price2'),
