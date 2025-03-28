@@ -1,5 +1,11 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
+<style>
+    .select2-container {
+    width: 100% !important; /* Makes sure it occupies full width */
+    min-width: 300px; /* Adjust as needed */
+}
+</style>
 <div class="col-md-8 main" style="margin-top:60px;" >
     <div class="panel panel-default">
         <div class="panel-heading ">
@@ -10,7 +16,7 @@
                 <a title="Dashboard" class="btn btn-default btn-sm" href="<?=site_url('dashboard')?>"><span class=" glyphicon glyphicon-dashboard"></span> Dashboard</a>      
                 <a title="Dashboard" class="btn btn-info btn-sm" href="<?=site_url('Duedate_con')?>"><span class=" glyphicon glyphicon-calendar"></span> Due Date</a>   
                 <a title="Dashboard" class="btn btn-danger btn-sm" href="<?=site_url('Creditreturn_con')?>"><span class=" glyphicon glyphicon-book"></span> Credit Return</a>   
-                 <a title="Dashboard" class="btn btn-success btn-sm" href="<?=site_url('Sales_con')?>"><span class=" glyphicon glyphicon-shopping-cart"></span> POS</a>   
+                <a title="Dashboard" class="btn btn-success btn-sm" href="<?=site_url('Sales_con')?>"><span class=" glyphicon glyphicon-shopping-cart"></span> POS</a>   
                 <a title="Dashboard" class="btn btn-default btn-sm" href="<?=site_url('Sales_con/transactionlist')?>"><span class="    glyphicon glyphicon-tags"></span> Transaction List</a>                   
             </div>
         </div> <!-- end of panel heading -->  
@@ -55,12 +61,13 @@
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->totalamount,2,'.',','); $ta+=$item->totalamount; ?></td>
                         <td class="text-center" style="text-transform: capitalize">
                             <a title="Edit Product" 
-                            data-tlno="<?php echo $item->tl_no;?>"                                
+                            data-tlno="<?php echo $item->tl_no;?>" 
+                            data-pno="<?php echo $item->product_p_no;?>"                                     
                             data-name="<?php echo $item->name;?>"
                             data-price="<?php echo $item->price;?>"                            
                             data-discount="<?php echo $item->discount;?>"
                             data-qty="<?php echo $item->tlqty;?>"
-                            data-desc="<?php echo $item->description;?>"
+                            data-plh="<?php echo $item->plh_number;?>"
                             data-toggle="modal" data-target="#editproduct" 
                             class="glyphicon glyphicon-pencil btn btn-sm btn-info editproduct"
                             data-backdrop="static" data-keyboard="false"></a>
@@ -70,10 +77,10 @@
                     </tr>
                     <?php endforeach;  else: $qty=0; $ta=0; $tldiscount=0; ?>
                         <tr class="text-center">
-                          <td colspan="7">There are no Data</td>
+                            <td colspan="7">There are no Data</td>
                         </tr>
                     <?php endif  ?> 
-                     <tr class="warning">
+                    <tr class="warning">
                         <td colspan="3"><strong>Total</strong></td>
                         <td class="text-center"><strong><?php echo $qty; ?></strong></td>
                         <td class="text-center"></td>
@@ -82,7 +89,7 @@
                     </tr>
                 </tbody>
             </table>
-             
+            
         </div> <!-- end of panel body -->        
         
     </div> <!-- end of panel div -->
@@ -93,7 +100,7 @@
         <div class="panel-heading">                   
             <div class="panel-toolbar text-right" >   
             <span class="text-rightinfo"><strong>CREDIT SALES</strong></span>            
-               <input type="button" class="btn btn-sm btn-info text-center " data-toggle="modal" data-target="#addproduct" value="ADD PRODUCT" />                  
+                <input type="button" class="btn btn-sm btn-info text-center " data-toggle="modal" data-target="#addproduct" value="ADD PRODUCT" />                  
             </div>
         </div> <!-- end of panel heading -->  
         <form onsubmit="return processform(this);" role="form" method="post" action="<?=site_url('Salescredit_con/processsales')?>">                        
@@ -113,7 +120,7 @@
                             </div>
                         </div>
                         <?php } ?>     
-                                           
+                                        
                     </div>
                 </div>  
                 <?php if($ta == '0') {}else { ?>
@@ -121,19 +128,19 @@
                 <div class="form-group row">
                     <div class="col-md-12">
                         <label for="customer">Date</label>
-                         <input id="from" type="text" name="date" class="form-control input-sm text-center" value="<?php if($date == null){} else { echo date_format(date_create($this->session->userdata('date')), 'm/d/Y'); } ?>" placeholder="Date - m/d/Y" autocomplete="off" required>
+                        <input id="from" type="text" name="date" class="form-control input-sm text-center" value="<?php if($date == null){} else { echo date_format(date_create($this->session->userdata('date')), 'm/d/Y'); } ?>" placeholder="Date - m/d/Y" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="form-group row">                  
                     <div class="col-md-12">
                         <label for="customer">C.I.#</label>
-                         <input type="text"  name="refno" class="form-control input-sm text-center" value="<?php if($refno == null){ echo ''; } else { echo $this->session->userdata('refno'); } ?>" placeholder="Credit Invoice Number" required autocomplete="off" >
+                        <input type="text"  name="refno" class="form-control input-sm text-center" value="<?php if($refno == null){ echo ''; } else { echo $this->session->userdata('refno'); } ?>" placeholder="Credit Invoice Number" required autocomplete="off" >
                     </div>
                 </div>
                 <div class="form-group row">                  
                     <div class="col-md-12">
                         <label for="customer">Discount Amount</label>                       
-                         <input type="number" step="any" name="discount" class="form-control input-sm text-center" value="<?php if($discount == null){ echo '0'; } else { echo $this->session->userdata('discount'); } ?>" > 
+                        <input type="number" step="any" name="discount" class="form-control input-sm text-center" value="<?php if($discount == null){ echo '0'; } else { echo $this->session->userdata('discount'); } ?>" > 
                     </div>
                 </div>
                 <div class="form-group row">
@@ -163,19 +170,19 @@
                     <input title="Process" type="submit" class="btn btn-primary" name="processbtn" value="Process">
                 <?php } ?>
             </div>
-             <?php } ?>
+            <?php } ?>
         </form>
 </div>     
 <!-- Modal select customer-->
 <div id="selectcustomer" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Customer</h4>
         </div>
-                           
+                        
             <div class="modal-body">                    
 
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable"> 
@@ -188,7 +195,7 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($cus as $key => $item): ?>                      
+                    <?php foreach ($cus as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->credit_limit,2,'.',','); ?></td>
@@ -197,24 +204,24 @@
                             <a title="Select" href="<?=site_url('Salescredit_con/selectcustomer/'.$item->c_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal add product-->
 <div id="addproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Product</h4>
         </div>
-                           
+                        
         <div class="modal-body">                   
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
             <thead>
@@ -227,13 +234,13 @@
                 </tr> 
             </thead>
             <tbody>
-                  <?php foreach ($prod as $key => $item): ?>                      
+                <?php foreach ($prod as $key => $item): ?>                      
                 <tr>                         
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->srpprice,2,'.',','); ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
-                    <td class="text-center info">                                
+                    <td class="text-center">                                
                         <button title="Add QTY" 
                             data-pno="<?php echo $item->p_no;?>"                                
                             data-name="<?php echo $item->name;?>"
@@ -244,31 +251,31 @@
                             data-backdrop="static" data-keyboard="false"></button>
                     </td>
                 </tr>
-                 <?php endforeach;  ?>     
+                <?php endforeach;  ?>     
             </tbody>
             </table>
         </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal add quantity-->
 <div id="addqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Quantity</h4>
         </div>
-               
+            
         <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Salescredit_con/inserttransactionline')?>">             
         <div class="modal-body">            
 
             <input id="pno" class="form-control input-sm hide" type="text" name="pno" />
             <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
             <input id="srp" class="form-control input-sm hide" type="text" name="price" /> 
-          
+        
             <div class="form-group row row-offcanvas">                                                        
                 <label class="col-sm-4 control-label">Product Name</label>
                 <div class="col-sm-8">
@@ -284,9 +291,10 @@
             </div>
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Description</label>
+                <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                    <input class="form-control input-sm " type="text" placeholder="IMEI/Serial/remarks" name="desc"  autocomplete="off" />
+                    <select id="lot_numbercredit" name="lot_number" class="form-control">
+                    </select>
                 </div>  
             </div>
 
@@ -299,25 +307,24 @@
         </div>
 
         <div class="modal-footer">
-            <a title="Close"  data-dismiss="modal" data-toggle="modal"  type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
             <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
         </div>
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal edit product-->
 <div id="editproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Product</h4>
         </div>
-               
+            
         <form onsubmit="return editproductform(this);" role="form" method="post" action="<?=site_url('Salescredit_con/updatetransactionline')?>">             
         <div class="modal-body">            
 
@@ -340,9 +347,10 @@
             </div>
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Description</label>
+                <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                    <input id="desc" class="form-control input-sm " type="text" placeholder="IMEI/Serial/remarks" name="desc"  autocomplete="off" />
+                    <select id="lot_number" name="lot_number" class="form-control">
+                    </select>
                 </div>  
             </div> 
 
@@ -361,19 +369,19 @@
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal edit product price-->
 <div id="editproductprice" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm"> 
+<div class="modal-dialog modal-sm"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Product Price</h4>
         </div>
-               
+            
         <div class="modal-body">      
             <div class="form-group row row-offcanvas">                                                        
                 <label class="col-sm-6 control-label">Product Name</label>
@@ -389,7 +397,7 @@
                 <div class="form-group row row-offcanvas">                                       
                     <label class="col-sm-6 control-label">Price 1</label>
                     <div class="col-sm-6">
-                         <input id="srpprice" type="submit" class="form-control btn btn-primary" name="price" >
+                        <input id="srpprice" type="submit" class="form-control btn btn-primary" name="price" >
                     </div>   
                 </div>
             </form>
@@ -420,12 +428,14 @@
 
         </div>               
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 <script type="text/javascript">
 
@@ -463,31 +473,111 @@ window.onload = function()
             var name = $(this).data('name');
             var srp = $(this).data('srp');
             var unitcost = $(this).data('unitcost');
+
             $(".modal-body #pno").val( pno );
             $(".modal-body #name").val( name );
             $(".modal-body #unitcost").val( unitcost );
             $(".modal-body #srp").val( srp );
+
+            // Initialize Select2 with AJAX search
+            $(".modal-body #lot_numbercredit").select2({
+                placeholder: "Search Lot Number...",
+                allowClear: true,
+                minimumInputLength: 1, // Only search when the user types at least 1 character
+                ajax: {
+                    url: "<?= site_url('Sales_con/getLotNumbers') ?>", // Controller URL
+                    type: "POST",
+                    dataType: "json",
+                    delay: 250, // Delay for better performance
+                    data: function (params) {
+                        return {
+                            search: params.term, // Send search term to server
+                            product_no: pno // Send product number to filter results
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (lot) {
+                                return {
+                                    id: lot.plh_number,
+                                    text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
         });
     });
 
     $(document).ready(function () {
         $(document).on('click', '.editproduct', function(event) {        
-            var tlno = $(this).data('tlno');
-            var name = $(this).data('name');
-            var price = $(this).data('price'); 
-            var discount = $(this).data('discount');
-            var qty = $(this).data('qty');
-            var desc = $(this).data('desc');
-            $(".modal-body #tlno").val( tlno );
-            $(".modal-body #name").val( name );
-            $(".modal-body #discount").val( discount );
-            $(".modal-body #qty").val( qty );
-            $(".modal-body #price").val( price );
-            $(".modal-body #desc").val( desc );
-        });
-    });
+        var tlno = $(this).data('tlno');
+        var name = $(this).data('name');
+        var price = $(this).data('price'); 
+        var discount = $(this).data('discount');
+        var qty = $(this).data('qty');
+        var plh = $(this).data('plh');
+        var pno = $(this).data('pno');
 
-     $(document).ready(function () {
+        $(".modal-body #tlno").val(tlno);
+        $(".modal-body #name").val(name);
+        $(".modal-body #discount").val(discount);
+        $(".modal-body #qty").val(qty);
+        $(".modal-body #price").val(price);
+        $(".modal-body #plh").val(plh);
+
+        // Initialize Select2 with AJAX search
+        $(".modal-body #lot_number").select2({
+            placeholder: "Search Lot Number...",
+            allowClear: true,
+            minimumInputLength: 1, // Search starts after typing 1 character
+            ajax: {
+                url: "<?= site_url('Sales_con/getLotNumbers') ?>", 
+                type: "POST",
+                dataType: "json",
+                delay: 250, // Delay for better performance
+                data: function (params) {
+                    return {
+                        search: params.term, // Search term typed by user
+                        product_no: pno
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (lot) {
+                            return {
+                                id: lot.plh_number,
+                                text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        // Pre-select the current lot if it exists
+        if (plh) {
+            $.ajax({
+                url: "<?= site_url('Sales_con/getLotDetails') ?>",
+                type: "POST",
+                data: { plh_number: plh },
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        var option = new Option(data.lot_number + " - " + data.expiration_date + " - " + data.remaining_quantity, data.plh_number, true, true);
+                        $(".modal-body #lot_number").append(option).trigger('change');
+                    }
+                }
+            });
+        }
+    });
+});
+
+
+    $(document).ready(function () {
         $(document).on('click', '.editproductprice', function(event) {        
             var tlno = $(this).data('tlno');
             var name = $(this).data('name');  
