@@ -16,7 +16,7 @@
     
     
     <!--  oncontextmenu="return false;" style="background-color: #94BFFF" -->
-<body style="background-color: #D9DDEB;" >
+<body style="background-color: #D3D3D3;" >
 <nav class="navbar navbar-inverse navbar-fixed-top"  >
     <div class="container-fluid">
         <div class="navbar-header">

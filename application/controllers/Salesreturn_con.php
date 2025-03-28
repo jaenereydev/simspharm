@@ -10,6 +10,7 @@ class Salesreturn_con extends MY_Controller
         $this->load->model('User_model');
         $this->load->model('Company_model');
         $this->load->model('Salesreturn_model');
+        $this->load->model('Sales_model');
         $this->load->model('Customer_model');
         $this->load->model('Product_model');
         $this->load->model('Producthistory_model');
@@ -88,17 +89,33 @@ class Salesreturn_con extends MY_Controller
             $totalamount = ($this->input->post('qty')*$this->input->post('price'))-$discountamount;
         }
 
+        if($this->input->post('lot_number')==null ||$this->input->post('lot_number') == ''){
+            $ln = null;
+            $ed = null;
+            $uc = null;
+            $pn = null;
+        }else {
+            $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));
+            $ln = $lotnumber[0]->lot_number;
+            $ed = $lotnumber[0]->expiration_date;
+            $uc = $lotnumber[0]->unit_cost;
+            $pn = $lotnumber[0]->plh_number;
+        }
+        
         $tl = array(            
             'user_id' => $this->session->userdata('id'),
-            'product_p_no' => $this->input->post('pno'),
+            'product_p_no' => $this->input->post('pno'),  
             'unitcost' => $this->input->post('unitcost'),
             'totalunitcost' => $this->input->post('unitcost')*$this->input->post('qty'),
             'price' => $this->input->post('price'),
             'qty' => $this->input->post('qty'),
+            'description' => $ln,
+            'expiration_date' => $ed,
+            'delivery_cost' => $uc,
             'discount' => $discount,
             'discountamount' => $discountamount,
             'totalamount' => $totalamount,
-
+            'plh_number' => $pn
         );
         $this->Salesreturn_model->inserttransactionline($tl);
 
@@ -147,13 +164,16 @@ class Salesreturn_con extends MY_Controller
             $totalamount = ($this->input->post('qty')*$this->input->post('price'))-$discountamount;
         }
 
+        $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));
         $tl = array(                        
             'qty' => $this->input->post('qty'),
             'discount' => $discount,
             'discountamount' => $discountamount,
             'totalamount' => $totalamount,
-
-        );      
+            'description' => $lotnumber[0]->lot_number,
+            'expiration_date' => $lotnumber[0]->expiration_date,
+            'plh_number' => $this->input->post('lot_number'),
+        );            
         $this->Salesreturn_model->edittransactionline($this->input->post('tlno'),$tl);
 
         redirect('Salesreturn_con');
@@ -199,7 +219,7 @@ class Salesreturn_con extends MY_Controller
         $this->session->unset_userdata('totalamount');
         $this->session->unset_userdata('cashonhand');
         $this->session->unset_userdata('change');
-       
+    
     }
     
     //--------------------------------------------------------------------------  
@@ -273,6 +293,7 @@ class Salesreturn_con extends MY_Controller
         $desc = "RETURN SALES";
         $this->Producthistory_model->insert_salesreturnproducthistory($tno, $desc);//insert data to product history
         $this->Product_model->updatesalesreturnproductqty($tno); // update product qty
+        $this->Product_model->updatesalesproductlothistoryremainingquantityvoid($tno); // update product_lot_history qty
 
         if($this->session->userdata('customer') == null) {}else {    
             $ch = array(

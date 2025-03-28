@@ -60,11 +60,13 @@
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->totalamount,2,'.',','); $ta+=$item->totalamount; ?></td>
                         <td class="text-center" style="text-transform: capitalize">
                             <a title="Edit Product" 
-                            data-tlno="<?php echo $item->tl_no;?>"                                
+                            data-tlno="<?php echo $item->tl_no;?>" 
+                            data-pno="<?php echo $item->product_p_no;?>"                                     
                             data-name="<?php echo $item->name;?>"
                             data-price="<?php echo $item->price;?>"                            
                             data-discount="<?php echo $item->discount;?>"
                             data-qty="<?php echo $item->tlqty;?>"
+                            data-plh="<?php echo $item->plh_number;?>"
                             data-toggle="modal" data-target="#editproduct" 
                             class="glyphicon glyphicon-pencil btn btn-sm btn-info editproduct"
                             data-backdrop="static" data-keyboard="false"></a>
@@ -270,7 +272,7 @@
             <div class="form-group row row-offcanvas">                                       
                 <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                <select id="lot_numberreturn" name="lot_number" class="form-control">
+                    <select id="lot_numberreturn" name="lot_number" class="form-control">
                     </select>
                 </div>  
             </div>
@@ -295,7 +297,7 @@
 
 <!-- Modal -->
 <div id="editproduct" class="modal fade" role="dialog">
-<div class="modal-dialog modal-sm"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -308,29 +310,36 @@
 
             <input id="tlno" class="form-control input-sm hide" type="text" name="tlno" />           
             <input id="price" class="form-control input-sm hide" type="text" name="price" />
+            <input id="plh" class="form-control input-sm hide" type="text" name="plh_number" />
 
             <div class="form-group row row-offcanvas">                                                        
-                <label class="col-sm-6 control-label">Product Name</label>
-                <div class="col-sm-6">
+                <label class="col-sm-4 control-label">Product Name</label>
+                <div class="col-sm-8">
                     <input style="text-transform: capitalize" id="name" class="form-control input-sm " type="text" name="name" disabled />
                 </div>   
             </div>
         
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-6 control-label">Qty</label>
-                <div class="col-sm-6">
-                    <input id="qty" class="form-control input-sm " type="number" name="qty" required autocomplete="off" />
+                <label class="col-sm-4 control-label">Qty</label>
+                <div class="col-sm-8">
+                    <input id="qty" class="form-control input-sm " min="1" type="number" name="qty" required autocomplete="off" />
                 </div>   
-
             </div>
 
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-6 control-label">Discount %</label>
-                <div class="col-sm-6">
+                <label class="col-sm-4 control-label">Lot Number</label>
+                <div class="col-sm-8">
+                    <select id="lot_number" name="lot_number" class="form-control">
+                    </select>
+                </div>  
+            </div>         
+
+            <div class="form-group row row-offcanvas">                                       
+                <label class="col-sm-4 control-label">Discount %</label>
+                <div class="col-sm-8">
                     <input id="discount" class="form-control input-sm " type="number" name="discount" required autocomplete="off" />
                 </div>   
-
             </div>
     
         </div>
@@ -484,19 +493,69 @@ window.onload = function()
     });
 
     $(document).ready(function () {
-        $(document).on('click', '.editproduct', function(event) {        
-            var tlno = $(this).data('tlno');
-            var name = $(this).data('name');
-            var price = $(this).data('price'); 
-            var discount = $(this).data('discount');
-            var qty = $(this).data('qty');
-            $(".modal-body #tlno").val( tlno );
-            $(".modal-body #name").val( name );
-            $(".modal-body #discount").val( discount );
-            $(".modal-body #qty").val( qty );
-            $(".modal-body #price").val( price );
+    $(document).on('click', '.editproduct', function(event) {        
+        var tlno = $(this).data('tlno');
+        var name = $(this).data('name');
+        var price = $(this).data('price'); 
+        var discount = $(this).data('discount');
+        var qty = $(this).data('qty');
+        var plh = $(this).data('plh');
+        var pno = $(this).data('pno');
+
+        $(".modal-body #tlno").val(tlno);
+        $(".modal-body #name").val(name);
+        $(".modal-body #discount").val(discount);
+        $(".modal-body #qty").val(qty);
+        $(".modal-body #price").val(price);
+        $(".modal-body #plh").val(plh);
+
+        // Initialize Select2 with AJAX search
+        $(".modal-body #lot_number").select2({
+            placeholder: "Search Lot Number...",
+            allowClear: true,
+            minimumInputLength: 1, // Search starts after typing 1 character
+            ajax: {
+                url: "<?= site_url('Sales_con/getLotNumbers') ?>", 
+                type: "POST",
+                dataType: "json",
+                delay: 250, // Delay for better performance
+                data: function (params) {
+                    return {
+                        search: params.term, // Search term typed by user
+                        product_no: pno
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (lot) {
+                            return {
+                                id: lot.plh_number,
+                                text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
         });
+
+        // Pre-select the current lot if it exists
+        if (plh) {
+            $.ajax({
+                url: "<?= site_url('Sales_con/getLotDetails') ?>",
+                type: "POST",
+                data: { plh_number: plh },
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        var option = new Option(data.lot_number + " - " + data.expiration_date + " - " + data.remaining_quantity, data.plh_number, true, true);
+                        $(".modal-body #lot_number").append(option).trigger('change');
+                    }
+                }
+            });
+        }
     });
+});
 
     $(document).ready(function () {
         $(document).on('click', '.editproductprice', function(event) {        

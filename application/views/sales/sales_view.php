@@ -303,7 +303,7 @@
         </div>
         </form>
 
-    </div>
+</div>
 </div>
 </div> <!-- End of model -->
 
@@ -343,7 +343,6 @@
                 <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
                     <select id="lot_number" name="lot_number" class="form-control">
-                        <option value="">Select Lot</option>
                     </select>
                 </div>  
             </div>         

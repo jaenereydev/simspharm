@@ -157,6 +157,7 @@ class Sales_con extends MY_Controller
             $discountamount =  (($this->input->post('qty')*$this->input->post('price'))*$this->input->post('discount'))/100;
             $totalamount = ($this->input->post('qty')*$this->input->post('price'))-$discountamount;
         }
+        
         if($this->input->post('lot_number')==null ||$this->input->post('lot_number') == ''){
             $ln = null;
             $ed = null;
