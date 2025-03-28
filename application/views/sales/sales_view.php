@@ -1,5 +1,11 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
+<style>
+    .select2-container {
+    width: 100% !important; /* Makes sure it occupies full width */
+    min-width: 300px; /* Adjust as needed */
+}
+</style>
 <div class="col-md-8 main" style="margin-top:60px;" >
     <div class="panel panel-default">
         <div class="panel-heading ">
@@ -70,10 +76,10 @@
                             </tr>
                             <?php endforeach;  else: $qty=0; $ta=0; $tldiscount=0; ?>
                                 <tr class="text-center">
-                                  <td colspan="7">There are no Data</td>
+                                    <td colspan="7">There are no Data</td>
                                 </tr>
                             <?php endif  ?> 
-                             <tr class="warning">
+                            <tr class="warning">
                                 <td colspan="3"><strong>Total</strong></td>
                                 <td class="text-center"><strong><?php echo $qty; ?></strong></td>
                                 <td class="text-center"></td>
@@ -92,7 +98,7 @@
     <div class="panel panel-default">
         <div class="panel-heading ">                
             <div class="panel-toolbar text-right" >               
-               <input type="button" class="btn btn-sm btn-info text-center " data-toggle="modal" data-target="#addproduct" value="ADD PRODUCT" />                  
+                <input type="button" class="btn btn-sm btn-info text-center " data-toggle="modal" data-target="#addproduct" value="ADD PRODUCT" />                  
             </div>
         </div> <!-- end of panel heading -->  
         <form onsubmit="return processform(this);" role="form" method="post" action="<?=site_url('Sales_con/processsales')?>">                        
@@ -114,7 +120,7 @@
                             </div>
                         </div>
                         <?php } ?>     
-                                           
+                                        
                     </div>
                 </div>  
                 <?php if($ta == '0') {}else { ?>
@@ -122,7 +128,7 @@
                 <div class="form-group row">                  
                     <div class="col-md-12">
                         <label for="customer">S.I.#</label>
-                         <input type="text"  name="refno" class="form-control input-sm text-center" value="<?php if($refno == null){ echo ''; } else { echo $this->session->userdata('refno'); } ?>" placeholder="Sales Invoice Number" required autocomplete="off" >
+                        <input type="text"  name="refno" class="form-control input-sm text-center" value="<?php if($refno == null){ echo ''; } else { echo $this->session->userdata('refno'); } ?>" placeholder="Sales Invoice Number" required autocomplete="off" >
                     </div>
                 </div>
                 <div class="form-group row">
@@ -134,7 +140,7 @@
 
                     <div class="col-md-12">
                         <label for="customer">Discount Amount</label>
-                         <input type="number" step="any" name="discount" class="form-control input-sm text-center" value="<?php if($discount == null){ echo '0'; } else { echo $this->session->userdata('discount'); } ?>" placeholder="Discount amount" autocomplete="off" >
+                        <input type="number" step="any" name="discount" class="form-control input-sm text-center" value="<?php if($discount == null){ echo '0'; } else { echo $this->session->userdata('discount'); } ?>" placeholder="Discount amount" autocomplete="off" >
                     </div>
                 </div>
                 <div class="form-group row">
@@ -154,21 +160,21 @@
                 <a title="Reset" href="<?=site_url('Sales_con/resettransaction')?>"  onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" ></a>
                 <input title="Process" type="submit" class="btn btn-primary" name="processbtn" value="Process">
             </div>
-             <?php } ?>
+            <?php } ?>
         </form>
     </div>   
 </div>  
 
 <!-- Modal select customer-->
 <div id="selectcustomer" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Customer</h4>
         </div>
-                           
+                        
             <div class="modal-body">                    
 
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable"> 
@@ -181,7 +187,7 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($cus as $key => $item): ?>                      
+                    <?php foreach ($cus as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-left" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->credit_limit,2,'.',','); ?></td>
@@ -190,12 +196,12 @@
                             <a title="Select" href="<?=site_url('Sales_con/selectcustomer/'.$item->c_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal add product -->
@@ -279,8 +285,7 @@
             <div class="form-group row row-offcanvas">                                       
                 <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                <select id="lot_number" name="lot_number" class="form-control">
-                        <option value="">Select Lot</option>
+                    <select id="lot_numbersales" name="lot_number" class="form-control">
                     </select>
                 </div>  
             </div>
@@ -290,8 +295,8 @@
                 <div class="col-sm-8">
                     <input class="form-control input-sm " min="0" type="number" name="discount" value="0" required autocomplete="off" />
                 </div>   
-
             </div>
+
         </div>
         <div class="modal-footer">
             <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
@@ -436,7 +441,8 @@
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script type="text/javascript">
 
 function processform(formObj) {            
@@ -479,68 +485,103 @@ window.onload = function()
             $(".modal-body #unitcost").val( unitcost );
             $(".modal-body #srp").val( srp );
 
-            // Fetch lot numbers via AJAX
-            $.ajax({
-                url: '<?= site_url("Sales_con/getLotNumbers") ?>', // Replace with your actual controller method
-                type: 'POST',
-                data: { product_no: pno },
-                dataType: 'json',
-                success: function(response) {
-                    var options = '<option value="">Select Lot Number - Expiration Date - Remaining Quantity</option>';
-                    $.each(response, function(index, lot) {
-                        options += '<option value="' + lot.plh_number + '">' + lot.lot_number +' - '+ lot.expiration_date +' - '+ lot.remaining_quantity + '</option>';
-                    });
-
-                    // Populate the select dropdown with received lot numbers
-                    $(".modal-body #lot_number").html(options);
-                },
-                error: function() {
-                    $(".modal-body #lot_number").html('<option value="">Failed to load</option>');
+            // Initialize Select2 with AJAX search
+            $(".modal-body #lot_numbersales").select2({
+                placeholder: "Search Lot Number...",
+                allowClear: true,
+                minimumInputLength: 1, // Only search when the user types at least 1 character
+                ajax: {
+                    url: "<?= site_url('Sales_con/getLotNumbers') ?>", // Controller URL
+                    type: "POST",
+                    dataType: "json",
+                    delay: 250, // Delay for better performance
+                    data: function (params) {
+                        return {
+                            search: params.term, // Send search term to server
+                            product_no: pno // Send product number to filter results
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (lot) {
+                                return {
+                                    id: lot.plh_number,
+                                    text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
+                                };
+                            })
+                        };
+                    },
+                    cache: true
                 }
             });
         });
     });
 
     $(document).ready(function () {
-        $(document).on('click', '.editproduct', function(event) {        
-            var tlno = $(this).data('tlno');
-            var name = $(this).data('name');
-            var price = $(this).data('price'); 
-            var discount = $(this).data('discount');
-            var qty = $(this).data('qty');
-            var plh = $(this).data('plh');
-            var pno = $(this).data('pno');
+    $(document).on('click', '.editproduct', function(event) {        
+        var tlno = $(this).data('tlno');
+        var name = $(this).data('name');
+        var price = $(this).data('price'); 
+        var discount = $(this).data('discount');
+        var qty = $(this).data('qty');
+        var plh = $(this).data('plh');
+        var pno = $(this).data('pno');
 
-            $(".modal-body #tlno").val( tlno );
-            $(".modal-body #name").val( name );
-            $(".modal-body #discount").val( discount );
-            $(".modal-body #qty").val( qty );
-            $(".modal-body #price").val( price );
-            $(".modal-body #plh").val( plh );
+        $(".modal-body #tlno").val(tlno);
+        $(".modal-body #name").val(name);
+        $(".modal-body #discount").val(discount);
+        $(".modal-body #qty").val(qty);
+        $(".modal-body #price").val(price);
+        $(".modal-body #plh").val(plh);
 
-            // Fetch lot numbers via AJAX
-            $.ajax({
-                url: '<?= site_url("Sales_con/getLotNumbers") ?>', 
-                type: 'POST',
-                data: { product_no: pno },
-                dataType: 'json',
-                success: function(response) {   
-                    var options = '<option value="">Select Lot Number - Expiration Date - Remaining Quantity</option>';
-                    $.each(response, function(index, lot) {
-                    var isSelected = (plh == lot.plh_number) ? ' selected' : ''; // Allow type conversion
-                    options += `<option value="${lot.plh_number}"${isSelected}>${lot.lot_number} - ${lot.expiration_date} - ${lot.remaining_quantity} </option>`;
-                });
-
-                    // Populate the select dropdown with received lot numbers
-                    $(".modal-body #lot_number").html(options);
+        // Initialize Select2 with AJAX search
+        $(".modal-body #lot_number").select2({
+            placeholder: "Search Lot Number...",
+            allowClear: true,
+            minimumInputLength: 1, // Search starts after typing 1 character
+            ajax: {
+                url: "<?= site_url('Sales_con/getLotNumbers') ?>", 
+                type: "POST",
+                dataType: "json",
+                delay: 250, // Delay for better performance
+                data: function (params) {
+                    return {
+                        search: params.term, // Search term typed by user
+                        product_no: pno
+                    };
                 },
-                error: function() {
-                    $(".modal-body #lot_number").html('<option value="">Failed to load</option>');
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (lot) {
+                            return {
+                                id: lot.plh_number,
+                                text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        // Pre-select the current lot if it exists
+        if (plh) {
+            $.ajax({
+                url: "<?= site_url('Sales_con/getLotDetails') ?>",
+                type: "POST",
+                data: { plh_number: plh },
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        var option = new Option(data.lot_number + " - " + data.expiration_date + " - " + data.remaining_quantity, data.plh_number, true, true);
+                        $(".modal-body #lot_number").append(option).trigger('change');
+                    }
                 }
             });
-
-        });
+        }
     });
+});
+
 
     $(document).ready(function () {
         $(document).on('click', '.editproductprice', function(event) {        

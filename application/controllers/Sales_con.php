@@ -423,20 +423,34 @@ class Sales_con extends MY_Controller
     
     //--------------------------------------------------------------------------  
 
-    public function getLotNumbers() {
+    public function getLotNumbers() 
+    {
+        $search = $this->input->post('search');
         $product_no = $this->input->post('product_no');
-    
-        // Fetch lot numbers from database
+
+        $this->db->select('plh_number, lot_number, expiration_date, remaining_quantity');
+        $this->db->from('product_lot_history');
         $this->db->where('product_p_no', $product_no);
-        $this->db->where('remaining_quantity >', 0);
-        $this->db->order_by('expiration_date', 'ASC');
-        $query = $this->db->get('product_lot_history'); 
-    
-        if ($query->num_rows() > 0) {
-            echo json_encode($query->result());
-        } else {
-            echo json_encode([]);
-        }
+        $this->db->where('remaining_quantity !=', 0); // Exclude lots with 0 quantity
+        $this->db->like('lot_number', $search); // Search for matching lot number
+        $this->db->order_by('expiration_date', 'ASC'); // Sort by expiration date (oldest first)
+        $query = $this->db->get();
+
+        echo json_encode($query->result());
+    }
+
+    //-------------------------------------------------------------------------- 
+
+    public function getLotDetails()
+    {
+        $plh_number = $this->input->post('plh_number');
+
+        $this->db->select('plh_number, lot_number, expiration_date, remaining_quantity');
+        $this->db->from('product_lot_history');
+        $this->db->where('plh_number', $plh_number);
+        $query = $this->db->get();
+
+        echo json_encode($query->row()); // Return single row
     }
 
 }
