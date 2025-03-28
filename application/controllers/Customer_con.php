@@ -81,7 +81,7 @@ class Customer_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------
-       
+    
     public function insertcustomer()
     {              
         $sname = $this->Customer_model->searchname($this->input->post('name'));
@@ -115,12 +115,12 @@ class Customer_con extends MY_Controller
 
     public function customerdeposit()
     {     
-         $b = array(
+        $b = array(
             'balance' => $this->input->post('bal')-$this->input->post('amount'),                       
         );
         $this->Customer_model->updatecustomer($this->input->post('cno'), $b);
 
-         $c = array(
+        $c = array(
             'customer_c_no' => $this->input->post('cno'),       
             'description' => "DEPOSIT",     
             'amount' => $this->input->post('amount'),
@@ -142,7 +142,7 @@ class Customer_con extends MY_Controller
             'balance' => $ce[0]->balance+$cde[0]->amount,                       
         );
         $this->Customer_model->updatecustomer($c, $b);
-      
+    
         $this->Customer_model->deletecustomerdeposit($d);
         redirect('Customer_con/customerdepositlist');
     }

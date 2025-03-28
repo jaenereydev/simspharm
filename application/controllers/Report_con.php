@@ -16,7 +16,7 @@ class Report_con extends MY_Controller
         $this->load->model('Sales_model');
         $this->load->model('Report_model');
         $this->load->model('Creditpayment_model');
-       
+
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->active = "1";
         $this->open = "1";

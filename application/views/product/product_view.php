@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
+
 <div class="col-md-10" >
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
@@ -108,51 +109,65 @@
             <div class="modal-body">   
 
                 <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Barcode</label>
-                    <div class="col-sm-5">
-                        <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="barcode" placeholder="barcode"  required autofocus autocomplete="off">
+                    <label class="col-sm-4 control-label">Barcode</label>
+                    <div class="col-sm-8">
+                        <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="barcode" placeholder="barcode" autofocus autocomplete="off">
                     </div>                            
                 </div>  
                 
                 <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Name</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-4 control-label">Product Name</label>
+                    <div class="col-sm-8">
                         <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="name" placeholder="Product Name"  required autocomplete="off">
+                    </div>                            
+                </div>
+
+                <div class="form-group row row-offcanvas">
+                    <label class="col-sm-4 control-label">Brand Name</label>
+                    <div class="col-sm-8">
+                        <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="brand" placeholder="Brand Name"  autocomplete="off">
+                    </div>                            
+                </div>
+
+                <div class="form-group row row-offcanvas">
+                    <label class="col-sm-4 control-label">UOM</label>
+                    <div class="col-sm-8">
+                        <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="uom" placeholder="Unit of Measure"  required autocomplete="off">
                     </div>                            
                 </div>
                 
                 <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Unit Cost</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-4 control-label">Unit Cost</label>
+                    <div class="col-sm-8">
                         <input  class="form-control input-sm" type="number" min="0" step="any" name="unitcost" placeholder="Unit Cost"  required autocomplete="off">
                     </div>                            
                 </div>                                                                               
                 
                 <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Price 1</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-4 control-label">Price 1</label>
+                    <div class="col-sm-8">
                         <input class="form-control input-sm" type="number" step="any" name="price1" placeholder="Price 1" autocomplete="off" required>
                     </div>
                 </div> 
 
                 <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Price 2</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-4 control-label">Price 2</label>
+                    <div class="col-sm-8">
                         <input class="form-control input-sm" type="number" step="any" name="price2" placeholder="Price 2" autocomplete="off" required>
                     </div>
                 </div> 
 
                 <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Price 3</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-4 control-label">Price 3</label>
+                    <div class="col-sm-8">
                         <input class="form-control input-sm" type="number" step="any" name="price3" placeholder="Price 3" autocomplete="off" required>
                     </div>
                 </div>                                                                                
                 
-                <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Supplier</label>
-                    <div class="col-sm-5">
-                        <select name="sno" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                <div class="form-group row">
+                    <label class="col-sm-4 control-label">Supplier</label>
+                    <div class="col-sm-8">
+                        <select name="sno" class="btn btn-default dropdown-toggle"  data-toggle="dropdown" style="width: 100% !important;" aria-expanded="true" required>                             
                             <option value=""> --Please Select--</option>
                             <?php for($s=0;$s<count($sup);$s++) { ?>
                             <option value="<?php echo $sup[$s]->s_no;?>" ><?php echo $sup[$s]->name;?></option>
@@ -161,10 +176,10 @@
                     </div>
                 </div>
                 
-                <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Category</label>
-                    <div class="col-sm-5">
-                        <select name="cno" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                <div class="form-group row">
+                    <label class="col-sm-4 control-label">Category</label>
+                    <div class="col-sm-8">
+                        <select name="cno" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;" aria-expanded="true" required>                             
                             <option value=""> --Please Select--</option>
                             <?php for($c=0;$c<count($cat);$c++) { ?>
                             <option value="<?php echo $cat[$c]->c_no;?>" ><?php echo $cat[$c]->name;?></option>
@@ -173,10 +188,10 @@
                     </div>
                 </div>   
                 
-                <div class="form-group row row-offcanvas">
-                    <label class="col-sm-3 control-label">Track Inventory</label>
-                    <div class="col-sm-5">
-                        <select name="ti" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                <div class="form-group row">
+                    <label class="col-sm-4 control-label">Track Inventory</label>
+                    <div class="col-sm-8">
+                        <select name="ti" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 100% !important;" aria-expanded="true" required>                             
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>  
@@ -186,7 +201,8 @@
             </div>
             
             <div class="modal-footer">
-                <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                <button title="Reset" type="reset" class="btn btn-warning" onclick="return confirm('Do you want to reset this transaction');" >Reset</button>
+                <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" > Save</button>
             </div>
         </form>
     </div>

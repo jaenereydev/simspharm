@@ -74,7 +74,7 @@ class Deliveryinfo_con extends MY_Controller
             'lot_number' => $this->input->post(lot_number),
             'expiration_date' => $expdate,
             'unitcost' => $this->input->post('unitcost'),
-            'qty' => $this->input->post('qty'),
+            'qty' => $this->input->post('qty')*$this->input->post('uom'),
             'discount' => '0',
             'price' => $this->input->post('unitcost')*$this->input->post('qty'),
             'delivery_d_no' => $this->session->userdata('dno'),  
@@ -99,7 +99,7 @@ class Deliveryinfo_con extends MY_Controller
             'lot_number' => $this->input->post(lot_number),
             'expiration_date' => $expdate,
             'unitcost' => $this->input->post('unitcost'),
-            'qty' => $this->input->post('qty'),
+            'qty' => $this->input->post('qty')*$this->input->post('uom'),
             'discount' => '0',
             'price' => $this->input->post('unitcost')*$this->input->post('qty')
         );

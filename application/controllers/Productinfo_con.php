@@ -12,7 +12,7 @@ class Productinfo_con extends MY_Controller
         $this->load->model('Supplier_model');
         $this->load->model('Category_model');
         $this->load->model('Product_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -55,7 +55,7 @@ class Productinfo_con extends MY_Controller
 
     public function updateproductcategory()
     {                    
-         $prod = array(            
+        $prod = array(            
             'category_c_no' => $this->input->post('cno'),
             'user_id' => $this->session->userdata('id'),                    
         );
@@ -68,7 +68,7 @@ class Productinfo_con extends MY_Controller
 
     public function updateproductsupplier()
     {                    
-         $prod = array(            
+        $prod = array(            
             'supplier_s_no' => $this->input->post('sno'),
             'user_id' => $this->session->userdata('id'),                    
         );
@@ -81,7 +81,7 @@ class Productinfo_con extends MY_Controller
 
     public function updateproduct()
     {                    
-         $p = array(        
+        $p = array(        
             'name' => $this->input->post('name'),
             'unitcost' => $this->input->post('unitcost'),            
             'srpprice' => $this->input->post('price1'),

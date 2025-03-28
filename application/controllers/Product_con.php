@@ -150,6 +150,8 @@ class Product_con extends MY_Controller
             $p = array(
                 'barcode' => $this->input->post('barcode'),
                 'name' => $this->input->post('name'),
+                'brand' => $this->input->post('brand'),
+                'uom' => $this->input->post('uom'),
                 'unitcost' => $this->input->post('unitcost'),
                 'qty' => '0',
                 'srpprice' => $this->input->post('price1'),
@@ -180,7 +182,7 @@ class Product_con extends MY_Controller
 
     public function delproduct($p)
     {                    
-         $prod = array(            
+        $prod = array(            
             'active' => 'NO',
             'user_id' => $this->session->userdata('id')            
         );

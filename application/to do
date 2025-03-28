@@ -1,5 +1,7 @@
--lot number and expiration date in product history
--uom in product table
--when deliver is posted connected to product history and expiration table
+-alert in product information
+-uom in sales, sales return
+-uom in credit, credit sales
+-fix credit return
+
 -report add delivery report
 -expiration table in navbar and dashboard for update

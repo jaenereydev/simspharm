@@ -4,7 +4,7 @@
     <div class="panel panel-default">
         <div class="panel-heading clearfix">            
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                <span class="glyphicon glyphicon-user" ></span> Product Information
+                <span class="glyphicon glyphicon-user" ></span> Product Information - <?php echo $prod[0]->name;?>
             </h3>                            
         </div> <!-- end of panel heading -->              
         
@@ -97,16 +97,50 @@
                                 </div>
 
                                 <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">UOM</label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control input-sm" type="number" min="1" name="uom" placeholder="Unit of Measure" value="<?php echo $prod[0]->uom ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Quantity</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control input-sm" type="number" name="qty" placeholder="Quantity" value="<?php echo $prod[0]->qty; $cost=$prod[0]->qty*$prod[0]->unitcost; ?>" disabled>
+                                    <input 
+                                        class="form-control input-sm" 
+                                        type="text" 
+                                        title="<?php echo $prod[0]->qty . ' pcs'; ?>"
+                                        placeholder="Quantity" 
+                                        value="<?php 
+                                            $qty = $prod[0]->qty;
+                                            $uom = $prod[0]->uom;
+
+                                            if( $prod[0]->qty < 0){
+                                                echo $qty.'pcs';
+                                            }else {
+                                                if ($uom == 0) { 
+                                                    echo 'Invalid UOM'; // Prevent division by zero
+                                                } else {
+                                                    $quotient = intdiv($qty, $uom); // Get whole number part
+                                                    $remainder = $qty % $uom; // Get remainder
+    
+                                                    if ($remainder != 0) {
+                                                        echo $quotient . ' / ' . abs($remainder); // Ensure remainder is always positive
+                                                    } else {
+                                                        echo $quotient;
+                                                    }
+                                                }
+                                            }
+                                            
+                                        ?>" 
+                                        disabled>
                                     </div>
                                 </div>
 
                                 <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Track Inventory</label>
                                     <div class="col-sm-5">
-                                        <select name="ti" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                                        <select name="ti" class="btn btn-default dropdown-toggle" style="width: 100% !important;" data-toggle="dropdown" aria-expanded="true" required>                             
                                             <option value="Yes" <?php if($prod[0]->inventory == 'Yes'){ echo 'selected'; } ?> >Yes</option>
                                             <option value="No" <?php if($prod[0]->inventory == 'No'){ echo 'selected'; } ?> >No</option>
                                         </select>  
@@ -128,11 +162,12 @@
                             <tr class="info">                                
                                 <td class="text-center"><strong>#</strong></td>    
                                 <td class="text-center"><strong>Ref. Number</strong></td>  
-                                <td class="text-center"><strong>Date / Description</strong></td>     
+                                <td class="text-center"><strong>Date / Description</strong></td>   
+                                <td class="text-center"><strong>Supplier</strong></td>  
                                 <td class="text-center"><strong>Lot Number</strong></td>
                                 <td class="text-center"><strong>Expiration Date</strong></td>
                                 <td class="text-center"><strong>Delivered Quantity</strong></td>
-                                <td class="text-center"><strong>Unit Cost</strong></td>
+                                <td class="text-center"><strong>Delivery Cost</strong></td>
                                 <td class="text-center"><strong>Remaining Quantity</strong></td>
                                 <td class="text-center"><strong>Total Amount</strong></td>
                             </tr> 
@@ -142,8 +177,9 @@
                             <tr> 
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->plh_number ?></td>                                   
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_number ?></td>   
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->date.'<br>'.$item->description;  ?></td>                        
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number?></td>                        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->date.'<br>'.$item->description; ?></td>                        
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td> 
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number?></td>                       
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>  
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->delivered_quantity,2,'.',',');?></td>     
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',');?></td>   

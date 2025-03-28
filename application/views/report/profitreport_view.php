@@ -12,7 +12,7 @@
         
         
         <div class="panel-body">  
-           
+        
             <form role="form" method="post" action="<?=site_url('Report_con/searchprofitreport')?>">                    
                     
                 <div class="form-group row row-offcanvas">

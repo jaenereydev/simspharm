@@ -65,7 +65,7 @@ public function get_totalaccountpayeble() //get sum of account payable
   public function get_deliveryline($d) 
   {
   
-    $sql = "Select d.*, p.name as name, p.barcode as barcode
+    $sql = "Select d.*, p.name as name, p.barcode as barcode, p.uom as uom
             from deliveryline d 
             join product p on p.p_no = d.product_p_no 
             where d.delivery_d_no = '$d' ";

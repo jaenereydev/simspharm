@@ -45,6 +45,7 @@
                                     title="Edit QTY" 
                                     data-dlno="<?php echo $item->dl_no;?>"                                
                                     data-name="<?php echo $item->name;?>"
+                                    data-uom="<?php echo $item->uom;?>"
                                     data-unitcost="<?php echo $item->unitcost;?>"
                                     data-lotnumber="<?php echo $item->lot_number;?>"
                                     data-expdate="<?php echo  $expdate ?>" 
@@ -61,11 +62,22 @@
                                 </a>
                             </td>
                         <?php } ?>
-                        <td class="" style="text-transform: capitalize"><?php echo $item->name ?> </td>
-                        <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
+                        <td class="" style="text-transform: capitalize"><?php echo $item->name.' - '.$item->uom.'S' ?></td>
+                        <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
+                        <td class="text-center" style="text-transform: capitalize" title="<?php echo $item->qty?>pcs">
+                            <?php 
+                                $quotient = intdiv($item->qty, $item->uom); // Get whole number part
+                                $remainder = $item->qty % $item->uom; // Get remainder
+
+                                if ($remainder > 0) {
+                                    echo $quotient . " / " . $remainder;
+                                } else {
+                                    echo $quotient;
+                                }
+                            ?>
+                        </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',',') ?></td>
                     </tr>
                     <?php endforeach; else: ?>
@@ -223,7 +235,8 @@
             <thead>
                 <tr class="info">                                        
                     <td class="text-center"><strong>Barcode</strong></td>                        
-                    <td class="text-center"><strong>Product</strong></td>  
+                    <td class="text-center"><strong>Product</strong></td>
+                    <td class="text-center"><strong>UOM</strong></td>  
                     <td class="text-center"><strong>Action</strong></td>  
                 </tr> 
             </thead>
@@ -232,10 +245,12 @@
                 <tr>                         
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
+                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->uom ?></td>
                     <td class="text-center">                                
                         <button title="Add QTY" 
                             data-pno="<?php echo $item->p_no;?>"                                
                             data-name="<?php echo $item->name;?>"
+                            data-uom="<?php echo $item->uom;?>"
                             data-unitcost="<?php echo $item->unitcost;?>"                                
                             data-toggle="modal" data-target="#addqty" 
                             class="glyphicon glyphicon-plus btn btn-info addqty"
@@ -270,6 +285,13 @@
                     <label class="col-sm-4 control-label">Product Name</label>
                     <div class="col-sm-8">
                         <input id="name" class="form-control input-sm " type="text" name="name" disabled />
+                    </div>   
+                </div>
+
+                <div class="form-group row row-offcanvas">                                                        
+                    <label class="col-sm-4 control-label">UOM</label>
+                    <div class="col-sm-8">
+                        <input id="uom" class="form-control input-sm " type="number" min="1" name="uom" placeholder="Unit of Measure" required/>
                     </div>   
                 </div>
 
@@ -326,6 +348,13 @@
                 <label class="col-sm-4 control-label">Product Name</label>
                 <div class="col-sm-8">
                     <input id="name" class="form-control input-sm " type="text" name="name" disabled />
+                </div>   
+            </div>
+
+            <div class="form-group row row-offcanvas">                                                        
+                <label class="col-sm-4 control-label">UOM</label>
+                <div class="col-sm-8">
+                    <input id="uom" class="form-control input-sm " type="number" min="1" name="uom" placeholder="Unit of Measure" required/>
                 </div>   
             </div>
 
@@ -428,9 +457,11 @@ window.onload = function()
         $(document).on('click', '.addqty', function(event) {        
             var pno = $(this).data('pno');
             var name = $(this).data('name');
+            var uom = $(this).data('uom');
             var unitcost = $(this).data('unitcost');
             $(".modal-body #pno").val( pno );
             $(".modal-body #name").val( name );
+            $(".modal-body #uom").val( uom );
             $(".modal-body #unitcost").val( unitcost );
         });
     });
@@ -439,12 +470,14 @@ window.onload = function()
         $(document).on('click', '.editqty', function(event) {        
             var dlno = $(this).data('dlno');
             var name = $(this).data('name');
+            var uom = $(this).data('uom');
             var unitcost = $(this).data('unitcost');
             var qty = $(this).data('qty');
             var lotnumber = $(this).data('lotnumber');
             var expdate = $(this).data('expdate');
             $(".modal-body #dlno").val( dlno );
             $(".modal-body #name").val( name );
+            $(".modal-body #uom").val( uom );
             $(".modal-body #unitcost").val( unitcost );
             $(".modal-body #qty").val( qty );
             $(".modal-body #lotnumber").val( lotnumber );
