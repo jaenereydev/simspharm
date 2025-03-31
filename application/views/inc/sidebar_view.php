@@ -30,6 +30,5 @@
                     <!-- <a title="Task" class="list-group-item" href="<?php echo site_url('Task_con') ?>"><span class="glyphicon glyphicon-tasks"></span> Task Mgt.</a> -->
                     <a title="Reports" class="list-group-item" href="<?php echo site_url('Report_con') ?>"><span class="glyphicon glyphicon-signal"></span> Reports</a>
                 <?php } ?>
-               
             </div>
         </div><!--end of sidebar -->        

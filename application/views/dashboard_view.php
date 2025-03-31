@@ -2,24 +2,75 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-
 <?php if($users[0]->position == "Admin" ){ ?>   
 
-    <div class="col-md-3">
-    <div class="panel">
-        <div class="panel-heading clearfix">            
-            <h3 class="panel-title" style="padding-top: 8px; font-size: 20px;">
-                Customer
-            </h3>  
+    <!-- Customer number -->
+    <div class="col-md-5">
+        <div class="panel">
+            <div class="panel-heading clearfix">            
+                <h3 class="panel-title" style="padding-top: 8px; font-size: 20px;">
+                    Customer
+                </h3>  
+            </div> 
+            <div class="panel-body d-flex justify-content-between align-items-center">   
+                <span style="font-size: 24px; font-weight: bold;">
+                    <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
+                </span>
+                <i class="fa fa-user fa-2x pull-right"></i> <!-- Customer Icon -->
+            </div> 
         </div> 
-        <div class="panel-body d-flex justify-content-between align-items-center">   
-            <span style="font-size: 24px; font-weight: bold;">
-                <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
-            </span>
-            <i class="fa fa-user fa-2x pull-right"></i> <!-- Customer Icon -->
+    </div>
+
+    <!-- Supplier number -->
+    <div class="col-md-5">
+        <div class="panel">
+            <div class="panel-heading clearfix">            
+                <h3 class="panel-title" style="padding-top: 8px; font-size: 20px;">
+                    Supplier
+                </h3>  
+            </div> 
+            <div class="panel-body d-flex justify-content-between align-items-center">   
+                <span style="font-size: 24px; font-weight: bold;">
+                    <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
+                </span>
+                <i class="fa fa-user fa-2x pull-right"></i> <!-- Customer Icon -->
+            </div> 
         </div> 
-    </div> 
-</div>
+    </div>
+
+    <!-- Product number -->
+    <div class="col-md-5">
+        <div class="panel">
+            <div class="panel-heading clearfix">            
+                <h3 class="panel-title" style="padding-top: 8px; font-size: 20px;">
+                    Product
+                </h3>  
+            </div> 
+            <div class="panel-body d-flex justify-content-between align-items-center">   
+                <span style="font-size: 24px; font-weight: bold;">
+                    <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
+                </span>
+                <i class="fa fa-user fa-2x pull-right"></i> <!-- Customer Icon -->
+            </div> 
+        </div> 
+    </div>
+
+    <!-- User number -->
+    <div class="col-md-5">
+        <div class="panel">
+            <div class="panel-heading clearfix">            
+                <h3 class="panel-title" style="padding-top: 8px; font-size: 20px;">
+                    User
+                </h3>  
+            </div> 
+            <div class="panel-body d-flex justify-content-between align-items-center">   
+                <span style="font-size: 24px; font-weight: bold;">
+                    <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
+                </span>
+                <i class="fa fa-user fa-2x pull-right"></i> <!-- Customer Icon -->
+            </div> 
+        </div> 
+    </div>
 
     
     <div class="col-md-5">
