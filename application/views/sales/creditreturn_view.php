@@ -43,10 +43,10 @@
                     </tr>
                     <?php endforeach;  else: $qty=0; $ta=0;  ?>
                         <tr class="text-center">
-                          <td colspan="6">There are no Data</td>
+                            <td colspan="6">There are no Data</td>
                         </tr>
                     <?php endif  ?> 
-                     <tr class="danger">
+                    <tr class="danger">
                         <td colspan="2"><strong>Total</strong></td>
                         <td class="text-center"><strong><?php echo $qty; ?></strong></td>
                         <td class="text-center"></td>
@@ -55,7 +55,6 @@
                     </tr>
                 </tbody>
             </table>
-             
         </div> <!-- end of panel body -->        
         
     </div> <!-- end of panel div -->
@@ -67,7 +66,7 @@
             <div class="panel-toolbar text-right" >    
             <span class="text-danger"><strong>CREDIT RETURN</strong></span>  
             <?php if($returnrefno == null){}else { ?>         
-               <input type="button" class="btn btn-sm btn-info text-center " data-toggle="modal" data-target="#addproduct" value="ADD PRODUCT" />       
+                <input type="button" class="btn btn-sm btn-info text-center " data-toggle="modal" data-target="#addproduct" value="ADD PRODUCT" />       
             <?php } ?>           
             </div>
         </div> <!-- end of panel heading -->  
@@ -92,8 +91,7 @@
                                 <a title="Edit" href="<?=site_url('Creditreturn_con/deletecustomer')?>" class="glyphicon glyphicon-minus btn btn-danger btn-sm" onclick="return confirm('Do you want to Remove this Customer');"></a>
                             </div>
                         </div>
-                        <?php } ?>     
-                                           
+                        <?php } ?>             
                     </div>
                 </div>  
 
@@ -112,32 +110,29 @@
                                 <a title="Edit" href="<?=site_url('Creditreturn_con/deleterefno')?>" class="glyphicon glyphicon-minus btn btn-danger btn-sm" onclick="return confirm('Do you want to Remove this C.I. No.');"></a>
                             </div>
                         </div>
-                        <?php } ?>     
-                                           
+                        <?php } ?>          
                     </div>
                 </div> 
                 <?php } ?>
-               
             </div>
             <?php if($ta == '0') {}else { ?>
             <div class="modal-footer">
                 <a title="Reset" href="<?=site_url('Creditreturn_con/resettransaction')?>"  onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" ></a>
                 <input title="Process" type="submit" onclick="return confirm('Do you want to Return this file?')" class="btn btn-primary" name="processbtn" value="Process">
             </div>
-             <?php } ?>
+            <?php } ?>
         </form>
 </div>   
 
 <!-- Modal -->
 <div id="selectcustomer" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Customer with Active Credit</h4>
         </div>
-                           
             <div class="modal-body">                    
 
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable"> 
@@ -150,33 +145,32 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($cus as $key => $item): ?>                      
-                    <tr>                         
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->credit_limit,2,'.',','); ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->balance,2,'.',','); ?></td>
-                        <td class="text-center info">     
-                            <a title="Select" href="<?=site_url('Creditreturn_con/selectcustomer/'.$item->c_no)?>" class=" btn btn-info">SELECT</a>
-                        </td>
-                    </tr>
-                     <?php endforeach;  ?>     
+                    <?php foreach ($cus as $key => $item): ?>                      
+                        <tr>                         
+                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->credit_limit,2,'.',','); ?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->balance,2,'.',','); ?></td>
+                            <td class="text-center">     
+                                <a title="Select" href="<?=site_url('Creditreturn_con/selectcustomer/'.$item->c_no)?>" class=" btn btn-info">SELECT</a>
+                            </td>
+                        </tr>
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="selectrefno" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Credit Invoice No.</h4>
-        </div>
-                           
+        </div>     
             <div class="modal-body">                    
 
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable"> 
@@ -190,34 +184,33 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($creditlist as $key => $item): ?>                      
+                    <?php foreach ($creditlist as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo date_format(date_create($item->date), 'm/d/Y'); ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo date_format(date_create($item->duedate), 'm/d/Y'); ?></td>
-                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->amount,2,'.',','); ?></td>
-                        <td class="text-center info">     
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->amount,2,'.',','); ?></td>
+                        <td class="text-center ">     
                             <a title="Select" href="<?=site_url('Creditreturn_con/selectrefno/'.$item->cdd_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="addproduct" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Product</h4>
-        </div>
-                           
+        </div>                   
         <div class="modal-body">                   
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
             <thead>
@@ -231,16 +224,16 @@
                 </tr> 
             </thead>
             <tbody>
-                  <?php foreach ($prod as $key => $item): 
+                <?php foreach ($prod as $key => $item): 
                     $dis = (($item->price*($item->qty-$item->returnqty))*$item->discount)/100; ?>                      
                 <tr>                                             
-                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
+                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->name.'' ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',','); ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty-$item->returnqty ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->discount.'% - '.number_format((float)$dis,2,'.',',') ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)($item->price*($item->qty-$item->returnqty))-$dis,2,'.',','); ?></td>
-                    <td class="text-center info">                                
-                          <button title="Add QTY" 
+                    <td class="text-center">                                
+                        <button title="Add QTY" 
                             data-pno="<?php echo $item->p_no;?>"                                
                             data-name="<?php echo $item->name;?>"
                             data-unitcost="<?php echo $item->unitcost;?>" 
@@ -252,24 +245,23 @@
                             data-backdrop="static" data-keyboard="false"></button>
                     </td>
                 </tr>
-                 <?php endforeach;  ?>     
+                <?php endforeach;  ?>     
             </tbody>
             </table>
         </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <!-- Modal -->
 <div id="addqty" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm"> 
+<div class="modal-dialog modal-sm"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Quantity</h4>
-        </div>
-               
+        </div> 
         <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Creditreturn_con/insertreturntransactionline')?>">             
         <div class="modal-body">            
 
@@ -291,8 +283,7 @@
                     <input id="qty" class="form-control input-sm" max="qty" type="number" name="qty" required autocomplete="off" />
                 </div>   
 
-            </div>
-           
+            </div> 
         </div>
         <div class="modal-footer">
             <a title="Close"  data-dismiss="modal" data-toggle="modal"  type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
@@ -301,7 +292,7 @@
         </form>
 
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 
@@ -341,13 +332,12 @@ window.onload = function()
             $(".modal-body #price").val( price );
             $(".modal-body #qty").val( qty );
             $(".modal-body #qty").attr({
-                   "max" : qty,       
-                   "min" : 1        
+                "max" : qty,       
+                "min" : 1        
                 });
             $(".modal-body #discount").val( discount );
         });
     });
 
-  
 }
 </script>

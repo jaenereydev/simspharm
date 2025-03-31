@@ -23,8 +23,8 @@
                 <div class=" tab-content">
                     
                     <div class="tab-pane <?php if($active == "1") { echo "active";} ?>" id="customerdetails">
-                    <form role="form" method="post" action="<?=site_url('customer_con/updatecustomer')?>">
-                       
+                <form role="form" method="post" action="<?=site_url('customer_con/updatecustomer')?>">
+                    
                         <input class="form-control input-sm hide" type="text" name="c_no" value="<?php echo $cus[0]->c_no;?>" required>
                         <div class="modal-body">  
                             
@@ -134,8 +134,7 @@
                         </table>                                             
                     </div> 
                     
-                    <div class="tab-pane <?php if($active == "3") { echo "active";} ?>" id="customercredithistory">                        
-                             
+                    <div class="tab-pane <?php if($active == "3") { echo "active";} ?>" id="customercredithistory"> 
                         <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable">      
                             <thead>
                             <tr class="info">                               
@@ -147,7 +146,7 @@
                                 <td class="text-center"><strong>CI Payment</strong></td>
                                 <td class="text-center"><strong>Balance</strong></td>
                                 <td class="text-center"><strong></strong></td>
-                              </tr> 
+                            </tr> 
                             </thead>
                             <tbody>
                             <?php foreach ($cuscredithistory as $key => $item): ?>                    
@@ -179,8 +178,6 @@
 
 window.onload = function()
 {                         
-
-
     setTimeout(function() {
     $('#message').fadeOut();
     }, 3000 );

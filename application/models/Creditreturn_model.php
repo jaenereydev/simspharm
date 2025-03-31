@@ -1,8 +1,8 @@
 <?php
- 
+
 class Creditreturn_model extends CI_Model
 {
- 
+
   //----------------------------------------------------------------------
   
   public function get_returntransactionline($u) 
@@ -17,7 +17,6 @@ class Creditreturn_model extends CI_Model
     return $query->result();
   }
 
- 
   //----------------------------------------------------------------------
 
   public function get_customer() 
@@ -31,7 +30,6 @@ class Creditreturn_model extends CI_Model
     return $query->result();
   }
 
- 
   //----------------------------------------------------------------------
 
   public function get_creditduedate($c) 
@@ -42,7 +40,6 @@ class Creditreturn_model extends CI_Model
     return $query->result();
   }
 
- 
   //----------------------------------------------------------------------
 
   public function get_creditduedateinfo($c) 
@@ -53,10 +50,9 @@ class Creditreturn_model extends CI_Model
     return $query->result();
   }
 
- 
   //----------------------------------------------------------------------
 
-   public function get_transactionline($c, $u) 
+  public function get_transactionline($c, $u) 
   {
   
     $sql = "SELECT t.*, p.name as name, p.p_no as p_no 
@@ -82,7 +78,6 @@ class Creditreturn_model extends CI_Model
     return $query->result();
   }
 
- 
   //----------------------------------------------------------------------
 
   public function updatereturntransactionline($rtno, $u) 
@@ -94,10 +89,9 @@ class Creditreturn_model extends CI_Model
         return $this->db->query($sql);
   }
 
- 
   //----------------------------------------------------------------------
 
-   public function insertreturntransaction($rt = null) 
+  public function insertreturntransaction($rt = null) 
   {  
       $this->db->insert('returntransaction',$rt);
       return $this->db->insert_id();
@@ -114,7 +108,7 @@ class Creditreturn_model extends CI_Model
 
     public function deletereturntransactionline($rtl) 
     {                       
-         $this->db->delete('returntransactionline', array('rtl_no' => $rtl));
+        $this->db->delete('returntransactionline', array('rtl_no' => $rtl));
     }
 
     //--------------------------------------------------------------------------    
@@ -144,6 +138,6 @@ class Creditreturn_model extends CI_Model
     public function deleteallreturntransactionline($u) 
     {                       
         $sql = "DELETE FROM returntransactionline WHERE user_id ='$u' and returntransaction_rt_no is null";
-       return $this->db->query($sql);
+        return $this->db->query($sql);
     }
 }

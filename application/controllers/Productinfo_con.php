@@ -40,17 +40,26 @@ class Productinfo_con extends MY_Controller
         if($this->session->userdata('product') == null){
             redirect('product_con');
         }else {      
-            $this->data['prod'] = $this->Product_model->productinfo($this->session->userdata('product'));
-            $this->data['prodhistory'] = $this->Product_model->producthistoryinfo($this->session->userdata('product'));
-            $this->data['prodlothistory'] = $this->Product_model->productlothistory($this->session->userdata('product'));
-
-            $this->data['sup'] = $this->Supplier_model->get_supplier();
-            $this->data['cat'] = $this->Category_model->get_category();
-
-            $this->render_html('product/productinfo_view', true); 
+            $this->data['alert'] = null;   
+            $this->data['message'] = null;
+            $this->productvar();
         }
     }
     
+    //--------------------------------------------------------------------------
+    
+
+    public function productvar()
+    {                    
+        $this->data['prod'] = $this->Product_model->productinfo($this->session->userdata('product'));
+        $this->data['prodhistory'] = $this->Product_model->producthistoryinfo($this->session->userdata('product'));
+        $this->data['prodlothistory'] = $this->Product_model->productlothistory($this->session->userdata('product'));
+
+        $this->data['sup'] = $this->Supplier_model->get_supplier();
+        $this->data['cat'] = $this->Category_model->get_category();
+
+        $this->render_html('product/productinfo_view', true); 
+}
     //--------------------------------------------------------------------------
 
     public function updateproductcategory()
@@ -88,11 +97,13 @@ class Productinfo_con extends MY_Controller
             'price2' => $this->input->post('price2'),
             'price3' => $this->input->post('price3'),                    
             'user_id' => $this->session->userdata('id'),
-            'inventory' => $this->input->post('ti'),           
+            'inventory' => $this->input->post('ti'),         
+            'uom' => $this->input->post('uom'),       
         );
         $this->Product_model->updateproduct($this->session->userdata('product'),$p);
-
-        redirect('product_con/productsave');
+        $this->data['alert'] =   1; 
+        $this->data['message'] = 'Product successfully saved!';
+        $this->productvar();
     }
     
     //--------------------------------------------------------------------------

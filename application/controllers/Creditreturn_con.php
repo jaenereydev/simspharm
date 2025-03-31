@@ -3,7 +3,7 @@
 class Creditreturn_con extends MY_Controller
 {
     //--------------------------------------------------------------------------
-      
+    
     public function __construct() 
     {
         parent::__construct();
@@ -14,7 +14,6 @@ class Creditreturn_con extends MY_Controller
         $this->load->model('Product_model');
         $this->load->model('Sales_model');
         $this->load->model('Producthistory_model');
-       
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -115,7 +114,7 @@ class Creditreturn_con extends MY_Controller
     
     //--------------------------------------------------------------------------  
 
-     public function selectrefno($c)
+    public function selectrefno($c)
     {                            
 
         $this->session->set_userdata(['cddno' => $c]);  
@@ -147,8 +146,7 @@ class Creditreturn_con extends MY_Controller
     public function resetsessiontransaction()
     {                            
         $this->session->unset_userdata('returncustomer');
-        $this->session->unset_userdata('cddno');      
-       
+        $this->session->unset_userdata('cddno');    
     }
     
     //--------------------------------------------------------------------------  
@@ -168,7 +166,7 @@ class Creditreturn_con extends MY_Controller
     public function processreturn()
     {           
 
-         $rt = array(
+        $rt = array(
             'date' => $this->input->post('date'),            
             'totalqty' => $this->input->post('totalqty'),
             'totalamount' => $this->input->post('totalamount'),            
@@ -198,7 +196,6 @@ class Creditreturn_con extends MY_Controller
             'status' => $stat,        
         );
         $this->Creditreturn_model->update_creditduedate($this->session->userdata('cddno'), $cdd);//update credit due date
-               
         //update transactin type
         $transactiontype = array(
             'type' => 'CREDIT RETURN',
@@ -228,7 +225,5 @@ class Creditreturn_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------  
-
-
 
 }

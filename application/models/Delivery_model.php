@@ -38,7 +38,7 @@ class Delivery_model extends CI_Model
 
  //----------------------------------------------------------------------
 
-   public function get_deliveryinfo($d) 
+  public function get_deliveryinfo($d) 
   {
   
     $sql = "Select d.*, s.name as name

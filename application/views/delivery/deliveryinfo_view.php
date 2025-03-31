@@ -49,7 +49,7 @@
                                     data-unitcost="<?php echo $item->unitcost;?>"
                                     data-lotnumber="<?php echo $item->lot_number;?>"
                                     data-expdate="<?php echo  $expdate ?>" 
-                                    data-qty="<?php echo $item->qty;?>"
+                                    data-qty="<?php echo $item->qty/$item->uom;?>"
                                     data-toggle="modal" data-target="#editqty" 
                                     class="glyphicon glyphicon-pencil btn btn-info btn-sm editqty"
                                     data-backdrop="static" data-keyboard="false">
@@ -65,7 +65,7 @@
                         <td class="" style="text-transform: capitalize"><?php echo $item->name.' - '.$item->uom.'S' ?></td>
                         <td class="" style="text-transform: capitalize"><?php echo $item->lot_number?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost*$item->uom,2,'.',',') ?></td>
                         <td class="text-center" style="text-transform: capitalize" title="<?php echo $item->qty?>pcs">
                             <?php 
                                 $quotient = intdiv($item->qty, $item->uom); // Get whole number part
@@ -78,7 +78,7 @@
                                 }
                             ?>
                         </td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',',') ?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost*$item->qty,2,'.',',') ?></td>
                     </tr>
                     <?php endforeach; else: ?>
                         <tr class="text-center">

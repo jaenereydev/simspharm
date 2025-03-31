@@ -192,7 +192,7 @@ class Customer_con extends MY_Controller
     
     public function delcustomer($c)
     {                                
-       $customer = array(            
+        $customer = array(            
             'user_id' => $this->session->userdata('id'),
             'active' => 'NO'
         );

@@ -1,6 +1,4 @@
--alert in product information
--uom in sales, sales return
--uom in credit, credit sales
+
 -fix credit return
 
 -report add delivery report

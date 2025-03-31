@@ -76,7 +76,7 @@ class Deliveryinfo_con extends MY_Controller
             'unitcost' => $this->input->post('unitcost'),
             'qty' => $this->input->post('qty')*$this->input->post('uom'),
             'discount' => '0',
-            'price' => $this->input->post('unitcost')*$this->input->post('qty'),
+            'price' => $this->input->post('unitcost')*($this->input->post('qty')*$this->input->post('uom')),
             'delivery_d_no' => $this->session->userdata('dno'),  
             'product_p_no' => $this->input->post('pno')
         );
@@ -101,7 +101,7 @@ class Deliveryinfo_con extends MY_Controller
             'unitcost' => $this->input->post('unitcost'),
             'qty' => $this->input->post('qty')*$this->input->post('uom'),
             'discount' => '0',
-            'price' => $this->input->post('unitcost')*$this->input->post('qty')
+            'price' => $this->input->post('unitcost')*($this->input->post('qty')*$this->input->post('uom'))
         );
         $this->Delivery_model->updatedeliveryline( $this->input->post('dlno'),$dl);    
 

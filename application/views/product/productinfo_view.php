@@ -16,6 +16,12 @@
         
         <div class="panel-body">  
             
+            <?php if($alert == null){}else { ?>
+                <div class="form-group row row-offcanvas" id="message">
+                    <label style="font-size: 30px" class="col-sm-12 control-label text-danger text-center"><?php echo $message; ?></label>                          
+                </div>  
+            <?php } ?>
+
                 <div class=" tab-content">
                     
                     <div class="tab-pane <?php if($active == "1") { echo "active";} ?>" id="productdetails">
@@ -302,3 +308,12 @@
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>  
+<script type="text/javascript">
+
+window.onload = function()
+{                         
+    setTimeout(function() {
+    $('#message').fadeOut();
+    }, 3000 );
+}
+</script>
