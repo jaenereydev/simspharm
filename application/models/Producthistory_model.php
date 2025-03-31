@@ -88,9 +88,10 @@ class Producthistory_model extends CI_Model
    public function insert_creditreturnproducthistory($rtno, $desc) //insert data from Credit Return module
   {
   
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id) "
+    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no, "
+          . "user_id, lot_number, expiration_date, plh_number) "
           . "select o.date, o.rt_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)+l.qty, "
-          . "l.product_p_no, o.user_id "
+          . "l.product_p_no, o.user_id, lot_number, expiration_date, plh_number "
           . "from returntransactionline l "
           . "JOIN returntransaction o ON o.rt_no = l.returntransaction_rt_no "
           . "JOIN product p ON p.p_no = l.product_p_no "

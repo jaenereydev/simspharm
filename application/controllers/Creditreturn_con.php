@@ -183,6 +183,7 @@ class Creditreturn_con extends MY_Controller
         $desc = "RETURN CREDIT";
         $this->Producthistory_model->insert_creditreturnproducthistory($rtno, $desc);//insert data to product history        
         $this->Product_model->updatecreditreturnproductqty($rtno); // update product qty        
+        $this->Product_model->updatecreditreturnloghistory($rtno); // update product_lot_history qty
 
         $bal = $this->Creditreturn_model->get_creditduedateinfo($this->session->userdata('cddno')); 
 
