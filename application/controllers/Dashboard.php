@@ -39,6 +39,9 @@ class Dashboard extends MY_Controller
     
     public function index()
     {                    
+
+        $this->data['product'] = $this->Product_model->countproduct(); //number of product
+        
         $this->data['com'] = $this->Company_model->get_companyinfo(); //company details
         $this->data['customer'] = $this->Customer_model->countcustomer(); //number of customer
         $this->data['product'] = $this->Product_model->countproduct(); //number of product
