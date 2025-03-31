@@ -30,9 +30,8 @@
                 <tbody>
                     <?php if(sizeof($rtl)):$qty=0; $ta=0; foreach ($rtl as $key => $item):  ?>                      
                     <tr class="danger">                                          
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?> </td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',',');?></a>
-                            </td>
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->name.'<br>'.$item->lot_number.'<br>'.$item->expiration_date ?> </td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',',');?></a></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->rtlqty; $qty+=$item->rtlqty; ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->discount ?>%</td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->totalamount,2,'.',','); $ta+=$item->totalamount; ?></td>
@@ -227,7 +226,7 @@
                 <?php foreach ($prod as $key => $item): 
                     $dis = (($item->price*($item->qty-$item->returnqty))*$item->discount)/100; ?>                      
                 <tr>                                             
-                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->name.'' ?></td>
+                    <td class="text-left" style="text-transform: capitalize"><?php echo $item->name.'<br>'.$item->description.'<br>'.$item->expiration_date ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',','); ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty-$item->returnqty ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->discount.'% - '.number_format((float)$dis,2,'.',',') ?></td>
@@ -237,6 +236,9 @@
                             data-pno="<?php echo $item->p_no;?>"                                
                             data-name="<?php echo $item->name;?>"
                             data-unitcost="<?php echo $item->unitcost;?>" 
+                            data-plh="<?php echo $item->plh_number;?>" 
+                            data-ln="<?php echo $item->description;?>"
+                            data-ed="<?php echo $item->expiration_date;?>"  
                             data-price="<?php echo $item->price;?>"
                             data-qty="<?php echo $item->qty-$item->returnqty;?>"
                             data-discount="<?php echo $item->discount;?>"                                
@@ -255,7 +257,7 @@
 
 <!-- Modal -->
 <div id="addqty" class="modal fade" role="dialog">
-<div class="modal-dialog modal-sm"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -266,6 +268,9 @@
         <div class="modal-body">            
 
             <input id="pno" class="form-control input-sm hide" type="text" name="pno" />
+            <input id="ln" class="form-control input-sm hide" type="text" name="ln" />
+            <input id="plh" class="form-control input-sm hide" type="text" name="plh" />
+            <input id="ed" class="form-control input-sm hide" type="text" name="ed" />
             <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
             <input id="price" class="form-control input-sm hide" type="text" name="price" /> 
             <input id="discount" class="form-control input-sm hide" type="number" name="discount" value="0" />
@@ -286,7 +291,6 @@
             </div> 
         </div>
         <div class="modal-footer">
-            <a title="Close"  data-dismiss="modal" data-toggle="modal"  type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
             <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
         </div>
         </form>
@@ -321,12 +325,18 @@ window.onload = function()
     $(document).ready(function () {
         $(document).on('click', '.addqty', function(event) {        
             var pno = $(this).data('pno');
+            var ln = $(this).data('ln');
+            var ed = $(this).data('ed');
+            var plh = $(this).data('plh');
             var name = $(this).data('name');            
             var unitcost = $(this).data('unitcost');
             var price = $(this).data('price');
             var qty = $(this).data('qty');
             var discount = $(this).data('discount');
             $(".modal-body #pno").val( pno );
+            $(".modal-body #ln").val( ln );
+            $(".modal-body #plh").val( plh );
+            $(".modal-body #ed").val( ed );
             $(".modal-body #name").val( name );
             $(".modal-body #unitcost").val( unitcost );
             $(".modal-body #price").val( price );

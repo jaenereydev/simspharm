@@ -77,6 +77,9 @@ class Creditreturn_con extends MY_Controller
         $rtl = array(            
             'user_id' => $this->session->userdata('id'),
             'product_p_no' => $this->input->post('pno'),
+            'lot_number' => $this->input->post('ln'),
+            'expiration_date' => $this->input->post('ed'),
+            'plh_number' => $this->input->post('plh'),
             'unitcost' => $this->input->post('unitcost'),
             'totalunitcost' => $this->input->post('unitcost')*$this->input->post('qty'),
             'price' => $this->input->post('price'),
