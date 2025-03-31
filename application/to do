@@ -1,5 +1,6 @@
 
--fix credit return
-
 -report add delivery report
 -expiration table in navbar and dashboard for update
+-stock adjustment module
+-batch distribution module
+-additional dashboard
