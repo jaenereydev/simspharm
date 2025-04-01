@@ -9,10 +9,8 @@ class Stockadjustment_con extends MY_Controller
         parent::__construct();
         $this->load->model('User_model');
         $this->load->model('Company_model');
-        $this->load->model('Delivery_model');
-        $this->load->model('Supplier_model');
         $this->load->model('Product_model');
-        $this->load->model('Producthistory_model');
+        $this->load->model('Stockadjustment_model');
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -25,7 +23,6 @@ class Stockadjustment_con extends MY_Controller
             'open' => $this->open
         ];
 
-        
         $user_id = $this->session->userdata('id');
         if(!$user_id) {
             $this->logout();
@@ -40,7 +37,7 @@ class Stockadjustment_con extends MY_Controller
         $this->data['delivery'] = $this->Delivery_model->get_delivery();
         $this->data['sup'] = $this->Supplier_model->get_supplier();
 
-        $this->render_html('delivery/delivery_view', true); 
+        $this->render_html('stockadjustment/stockadjustment_view', true); 
     }
     
     //--------------------------------------------------------------------------

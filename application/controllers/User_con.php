@@ -9,7 +9,7 @@ class User_con extends MY_Controller
         parent::__construct();
         $this->load->model('User_model');
         $this->load->model('Company_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -40,16 +40,13 @@ class User_con extends MY_Controller
     
     //--------------------------------------------------------------------------
 
-     public function insertuser()
+    public function insertuser()
     {                    
-         $u = array(
+        $u = array(
             'name' => $this->input->post('name'),
             'username' => $this->input->post('username'),
             'password' => $this->input->post('password'),
             'position' => $this->input->post('position'),
-            'percentage' => $this->input->post('percentage'),
-            'collectable_commission' => "0",
-            'uncollectable_commission' => "0",
             'status' => "ACTIVE",
         );
         $this->User_model->insert_user($u);
@@ -61,12 +58,11 @@ class User_con extends MY_Controller
 
     public function updateuser()
     {                    
-         $u = array(
+        $u = array(
             'name' => $this->input->post('name'),
             'username' => $this->input->post('username'),
             'password' => $this->input->post('password'),
             'position' => $this->input->post('position'),
-            'percentage' => $this->input->post('percentage'),
         );
         $this->User_model->updateuser($this->input->post('uno'),$u);
 
@@ -77,7 +73,7 @@ class User_con extends MY_Controller
 
     public function deleteuser($uno)
     {                    
-         $u = array(           
+        $u = array(           
             'status' => "DEACTIVATED"
         );
         $this->User_model->updateuser($uno,$u);
