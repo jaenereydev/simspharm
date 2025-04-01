@@ -22,6 +22,16 @@ class User_model extends CI_Model
     
     //--------------------------------------------------------------------------
 
+    public function countuser() 
+    {
+    
+        $sql = "Select count(id) as u from user where status = 'ACTIVE' ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+  //----------------------------------------------------------------------
+
     public function get_user()
     {
         $query = $this->db->get('user');
@@ -41,7 +51,7 @@ class User_model extends CI_Model
     
     //--------------------------------------------------------------------------
     
-     public function get_useractive()
+    public function get_useractive()
     {
         $sql = "Select * from user where status = 'ACTIVE'";
         $query = $this->db->query($sql);
@@ -51,7 +61,7 @@ class User_model extends CI_Model
     
     //--------------------------------------------------------------------------
     
-     public function insert_user($user = NULL) 
+    public function insert_user($user = NULL) 
     {
         $this->db->insert('user',$user);
         return $this->db->insert_id();

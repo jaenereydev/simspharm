@@ -16,6 +16,17 @@ class Product_model extends CI_Model
 
   //----------------------------------------------------------------------
 
+  public function get_productqty($p) 
+  {
+  
+    $sql = "Select qty from product where p_no = '$p' ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+
+
+  //----------------------------------------------------------------------
+
   public function get_productnotindelivery($d) 
   {
   
@@ -176,6 +187,21 @@ class Product_model extends CI_Model
   public function insertproduct($p = null) 
   {  
       $this->db->insert('product',$p);
+  }
+
+  //--------------------------------------------------------------------------     
+
+  public function insertproducthistory($p = null) 
+  {  
+      $this->db->insert('product_history',$p);
+  }
+
+  //--------------------------------------------------------------------------     
+
+  public function insertlotinformation($p = null) 
+  {  
+      $this->db->insert('product_lot_history',$p);
+      return $this->db->insert_id();
   }
 
   //--------------------------------------------------------------------------     

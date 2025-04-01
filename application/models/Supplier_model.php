@@ -31,4 +31,14 @@ class Supplier_model extends CI_Model
 
     //-------------------------------------------------------------------------- 
 
+    public function countsupplier() 
+  {
+  
+    $sql = "Select count(s_no) as s from supplier where active = 'YES' ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+
+  //----------------------------------------------------------------------
+
 }

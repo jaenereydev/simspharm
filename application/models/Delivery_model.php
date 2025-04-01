@@ -40,7 +40,6 @@ class Delivery_model extends CI_Model
 
   public function get_deliveryinfo($d) 
   {
-  
     $sql = "Select d.*, s.name as name
             from delivery d 
             join supplier s on s.s_no = d.supplier_s_no 
@@ -53,7 +52,6 @@ class Delivery_model extends CI_Model
 
 public function get_totalaccountpayeble() //get sum of account payable
   {
-  
     $sql = "select sum(totalamount) as ta from delivery where post = 'YES' and status is null";
     $query = $this->db->query($sql);
     return $query->result();

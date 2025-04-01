@@ -27,14 +27,14 @@
                     <tr> 
                         <td class="text-center">
 
-                           <button title="Edit" 
+                            <button title="Edit" 
                                 data-cno="<?php echo $item->c_no;?>"
                                 data-name="<?php echo $item->name;?>"
                                 data-toggle="modal" data-target="#cat-edit" 
                                 class="glyphicon glyphicon-pencil btn btn-info cat-edit"></button>
                         
-                           <a type="button" title="Delete" href="<?=site_url('category_con/delcategory/'.$item->c_no)?>" onclick="return confirm('Do you want to delete this Category?');" class="glyphicon glyphicon-trash btn btn-danger"></a>                           
-                                                   
+                            <a type="button" title="Delete" href="<?=site_url('category_con/delcategory/'.$item->c_no)?>" onclick="return confirm('Do you want to delete this Category?');" class="glyphicon glyphicon-trash btn btn-danger"></a>                           
+                                                
                         </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->c_no ?></td>                        
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name;?></td>  
@@ -48,7 +48,7 @@
         
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -60,7 +60,7 @@
                 
                 <div class="form-group row row-offcanvas">
                     <label class="col-sm-3 control-label">Name</label>
-                    <div class="col-sm-5">
+                    <div class="col-sm-9">
                         <input style="text-transform: capitalize;" class="form-control input-sm" type="text" name="name" placeholder="Category Name" required autocomplete="off">
                     </div>                            
                 </div>
@@ -68,17 +68,16 @@
             </div>
             
             <div class="modal-footer">
-                <a title="Close" href="<?=site_url('category_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-              <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
             </div>
         </form>
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
- <!-- Modal -->
+<!-- Modal -->
 <div id="cat-edit" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
@@ -87,10 +86,10 @@
         </div>
         <form role="form" method="post" action="<?=site_url('Category_con/updatecategory')?>">                    
             <div class="modal-body">  
-                 <input id="cno" class="form-control input-sm hide" type="text" name="cno">
+                <input id="cno" class="form-control input-sm hide" type="text" name="cno">
                 <div class="form-group row row-offcanvas">
                     <label class="col-sm-3 control-label">Name</label>
-                    <div class="col-sm-5">
+                    <div class="col-sm-9">
                         <input id="name" style="text-transform: capitalize;" class="form-control input-sm" type="text" name="name" placeholder="Category Name" required autocomplete="off">
                     </div>                            
                 </div>
@@ -98,12 +97,11 @@
             </div>
             
             <div class="modal-footer">
-                <a title="Close" href="<?=site_url('category_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-              <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
             </div>
         </form>
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>

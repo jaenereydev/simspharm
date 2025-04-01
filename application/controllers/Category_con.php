@@ -10,7 +10,6 @@ class Category_con extends MY_Controller
         $this->load->model('User_model');
         $this->load->model('Company_model');
         $this->load->model('Category_model');
-       
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -40,10 +39,10 @@ class Category_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------
-       
+    
     public function insertcategory()
     {                    
-         $cat = array(
+        $cat = array(
             'name' => $this->input->post('name'),
             'user_id' => $this->session->userdata('id'),
             'active' => 'YES'
@@ -63,14 +62,14 @@ class Category_con extends MY_Controller
         );
         $this->Category_model->updatecategory($this->input->post('cno'), $cat);
 
-       redirect('category_con');
+        redirect('category_con');
     }
     
     //--------------------------------------------------------------------------
     
     public function delcategory($c)
     {                                
-       $cat = array(            
+        $cat = array(            
             'user_id' => $this->session->userdata('id'),
             'active' => 'NO'
         );

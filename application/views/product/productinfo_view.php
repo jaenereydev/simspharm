@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/datatables.min.css"/>
 <link rel="stylesheet" type="text/css" href="<?=base_url()?>public/css/selectize.bootstrap3.css"/>
+
 <div class="col-md-10 main" >
     <div class="panel panel-default">
         <div class="panel-heading clearfix">            
@@ -17,7 +18,7 @@
         <div class="panel-body">  
             
             <?php if($alert == null){}else { ?>
-                <div class="form-group row row-offcanvas" id="message">
+                <div class="form-group row row-offcanvas"  id="message">
                     <label style="font-size: 30px" class="col-sm-12 control-label text-danger text-center"><?php echo $message; ?></label>                          
                 </div>  
             <?php } ?>
@@ -163,6 +164,19 @@
                     </div><!-- end of customer details -->                    
                 
                     <div class="tab-pane <?php if($active == "3") { echo "active";} ?>" id="productlothistory">
+                                
+                        <div class="form-group row row-offcanvas">
+                            <div class="col-sm-2">    
+                                <button style="text-transform: capitalize" 
+                                class="form-control input-sm btn btn-info"  
+                                type="button" 
+                                data-toggle="modal" 
+                                data-target="#lotnumber" >
+                                    <strong>Add Lot Number</strong >
+                                </button>
+                            </div>       
+                        </div>     
+                        <hr>
                         <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable">      
                             <thead>
                             <tr class="info">                                
@@ -244,7 +258,8 @@
         <div class="modal-dialog modal-md"> 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">                                    
+                <div class="modal-header">     
+                    <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                               
                     <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Category</h4>
                 </div>
                 <form role="form" method="post" action="<?=site_url('productinfo_con/updateproductcategory')?>">                    
@@ -264,8 +279,7 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <a title="Close" href="<?=site_url('productinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-                    <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                        <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
                     </div>
                 </form>
             </div>
@@ -277,7 +291,8 @@
         <div class="modal-dialog modal-md"> 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">                                        
+                <div class="modal-header">   
+                    <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                                     
                     <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Update Supplier</h4>
                 </div>
                 <form role="form" method="post" action="<?=site_url('productinfo_con/updateproductsupplier')?>">                    
@@ -298,7 +313,70 @@
                     </div>
                     
                     <div class="modal-footer">
-                        <a title="Close" href="<?=site_url('productinfo_con')?>" onclick="return confirm('Do you want to cancel');" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
+                        <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div> <!-- End of model -->
+
+        <!-- Modal -->
+        <div id="lotnumber" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-md"> 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header"> 
+                    <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Lot Information</h4>
+                </div>
+                <form role="form" method="post" action="<?=site_url('productinfo_con/insertlotinformation')?>">                    
+                    <div class="modal-body">   
+
+                        <input class="form-control input-sm hide" name="date" value="<?php echo date('Y/m/d'); ?>" />                
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-3 control-label">Supplier</label>
+                            <div class="col-sm-9">
+                                <select name="sno" class="btn btn-default dropdown-toggle "style="width: 100% !important;" data-toggle="dropdown" aria-expanded="true" required>                             
+                                    <option value=""> --Please Select--</option>
+                                    <?php for($s=0;$s<count($sup);$s++) { ?>
+                                    <option value="<?php echo $sup[$s]->s_no;?>" ><?php echo $sup[$s]->name;?></option>
+                                    <?php } ?>
+                                </select>  
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-3 control-label">Lot Number</label>
+                            <div class="col-sm-9">
+                                <input class="form-control input-sm" type="text" name="lotnumber" placeholder="Lot Number" required autocomplete="off" >
+                            </div>
+                        </div>
+
+                        <div class="form-group row row-offcanvas">                                       
+                            <label class="col-sm-3 control-label">Expiration Date</label>
+                            <div class="col-sm-9">
+                                <input id="fbirthday" class="form-control input-sm" type="text" name="expirationdate" placeholder="Expiration Date" required autocomplete="off" />
+                            </div>   
+                        </div>
+
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-3 control-label">Unit Cost</label>
+                            <div class="col-sm-9">
+                                <input class="form-control input-sm" type="number" min="0" step="any" name="unitcost" placeholder="Unit Cost" required autocomplete="off" >
+                            </div>
+                        </div>
+
+                        <div class="form-group row row-offcanvas">
+                            <label class="col-sm-3 control-label">Remaining Quantity</label>
+                            <div class="col-sm-9">
+                                <input class="form-control input-sm" type="number" min="0" step="any" name="remainingquantity" placeholder="Remaining Quantity" required autocomplete="off" >
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button title="Reset" type="reset" class="btn btn-warning" onclick="return confirm('Do you want to reset this transaction');" >Reset</button>
                         <button title="Save" type="Submit" class="btn btn-success glyphicon glyphicon-floppy-save" ></button>
                     </div>
                 </form>
@@ -316,4 +394,4 @@ window.onload = function()
     $('#message').fadeOut();
     }, 3000 );
 }
-</script>
+</script>   

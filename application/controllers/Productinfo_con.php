@@ -108,4 +108,47 @@ class Productinfo_con extends MY_Controller
     
     //--------------------------------------------------------------------------
 
+    public function insertlotinformation()
+    {                    
+        $p = array(        
+            'date' => $this->input->post('date'),
+            'description' => 'ADDED',
+            'lot_number' => $this->input->post('lotnumber'),
+            'expiration_date' => date_format(date_create($this->input->post('expirationdate')), 'Y/m/d'),
+            'delivered_quantity' => '0',
+            'unit_cost' => $this->input->post('unitcost'),
+            'supplier_s_no' => $this->input->post('sno'),
+            'product_p_no' => $this->session->userdata('product'),
+            'remaining_quantity' => $this->input->post('remainingquantity'),
+            'user_id' => $this->session->userdata('id'), 
+        );
+        $lotnumber = $this->Product_model->insertlotinformation($p);
+        $productquantity = $this->Product_model->get_productqty($this->session->userdata('product'));
+    
+        $history = array(        
+            'date' => $this->input->post('date'),
+            'description' => "ADDED",
+            'lot_number' => $this->input->post('lotnumber'),
+            'expiration_date' => date_format(date_create($this->input->post('expirationdate')), 'Y/m/d'),
+            'plh_number' => $lotnumber,
+            'unit_cost' => $this->input->post('unitcost'),
+            'inqty' => $this->input->post('remainingquantity'),
+            'product_p_no' => $this->session->userdata('product'),
+            'bal' => $this->input->post('remainingquantity')+$productquantity[0]->qty,
+            'user_id' => $this->session->userdata('id'), 
+        );
+        $this->Product_model->insertproducthistory($history);
+
+        $qty = array(             
+            'qty' => $productquantity[0]->qty+$this->input->post('remainingquantity'),       
+        );
+        $this->Product_model->updateproduct($this->session->userdata('product'),$qty);
+
+        $this->data['alert'] =   1; 
+        $this->data['message'] = 'Lot number successfully added!';
+        $this->productvar();
+    }
+    
+    //--------------------------------------------------------------------------
+
 }

@@ -10,6 +10,7 @@ class Dashboard extends MY_Controller
         $this->load->model('User_model');
         $this->load->model('Company_model');
         $this->load->model('Customer_model');
+        $this->load->model('Supplier_model');
         $this->load->model('Product_model');
         $this->load->model('Delivery_model');
         $this->load->model('Duedate_model');
@@ -45,6 +46,9 @@ class Dashboard extends MY_Controller
         $this->data['com'] = $this->Company_model->get_companyinfo(); //company details
         $this->data['customer'] = $this->Customer_model->countcustomer(); //number of customer
         $this->data['product'] = $this->Product_model->countproduct(); //number of product
+        $this->data['supplier'] = $this->Supplier_model->countsupplier(); //number of supplier
+        $this->data['user'] = $this->User_model->countuser(); //number of user
+
         $this->data['productwounitcost'] = $this->Product_model->countproductwounitcost(); //number of product with unit cost
         $this->data['productnegativequantity'] = $this->Product_model->productwithnegativequantity(); //number of product with negative quantity
 

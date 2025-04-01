@@ -33,7 +33,7 @@
                 </div> 
                 <div class="panel-body d-flex justify-content-between align-items-center">   
                     <span style="font-size: 24px; font-weight: bold;">
-                        <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
+                        <a href=""><?php echo number_format((float)$supplier[0]->s, 0, '.', ','); ?></a>
                     </span>
                     <i class="fa fa-truck fa-2x pull-right"></i> 
                 </div> 
@@ -62,12 +62,12 @@
             <div class="panel">
                 <div class="panel-heading clearfix">            
                     <h3 class="panel-title" style="padding-top: 8px; font-size: 20px;">
-                        User
+                        User Active
                     </h3>  
                 </div> 
                 <div class="panel-body d-flex justify-content-between align-items-center">   
                     <span style="font-size: 24px; font-weight: bold;">
-                        <a href=""><?php echo number_format((float)$customer[0]->c, 0, '.', ','); ?></a>
+                        <a href=""><?php echo number_format((float)$user[0]->u, 0, '.', ','); ?></a>
                     </span>
                     <i class="fa fa-user fa-2x pull-right"></i> <!-- Customer Icon -->
                 </div> 
