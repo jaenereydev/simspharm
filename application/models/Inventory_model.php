@@ -7,7 +7,11 @@ class Inventory_model extends CI_Model
   
   public function get_inventory() 
   {
-    $sql = "Select * from inventory where post is null order by i_no DESC";
+    $sql = "SELECT * 
+            FROM inventory 
+            WHERE MONTH(date) = MONTH(CURRENT_DATE()) 
+            AND YEAR(date) = YEAR(CURRENT_DATE()) 
+            ORDER BY i_no DESC ";
     $query = $this->db->query($sql);
     return $query->result();
   }

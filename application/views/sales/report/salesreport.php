@@ -41,11 +41,10 @@
             padding: 5px;
             }
 
-   
         </style>
     </head>
     <body>          
-              
+            
         <div>
             <table style="font-family: arial;width: 100%; font-size: 24pt;">
                 <tr>
@@ -154,7 +153,7 @@
                 </table>
                 <br>
                 <?php endif  ?> 
-                           
+                        
                 <?php if(sizeof($creditpayment)):  ?>            
                 <table style="font-family: arial;width: 100%; font-size: 12pt;"> 
                     <thead>

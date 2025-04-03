@@ -10,9 +10,9 @@ class Inventoryinfo_con extends MY_Controller
         $this->load->model('User_model');
         $this->load->model('Company_model');
         $this->load->model('Inventory_model');
+        $this->load->model('Sales_model');
         $this->load->model('Product_model');
         $this->load->model('Producthistory_model');
-       
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -46,8 +46,8 @@ class Inventoryinfo_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------
-       
-   public function resetinventory()
+    
+    public function resetinventory()
     {                                      
         $this->Inventory_model->deleteallinventoryline($this->session->userdata('id'));
         redirect('Inventoryinfo_con');
@@ -56,46 +56,66 @@ class Inventoryinfo_con extends MY_Controller
     //--------------------------------------------------------------------------  
 
     public function insertinventoryline()
-    {                    
-         $il = array(
-            'unitcost' => $this->input->post('unitcost'),
+    {                 
+        if($this->input->post('lot_number')==null ||$this->input->post('lot_number') == ''){
+            $ln = null;
+            $ed = null;
+            $uc = null;
+            $pn = null;
+        }else {
+            $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));
+            $ln = $lotnumber[0]->lot_number;
+            $ed = $lotnumber[0]->expiration_date;
+            $uc = $lotnumber[0]->unit_cost;
+            $pn = $lotnumber[0]->plh_number;
+        }   
+        $il = array(
+            'lot_number' => $ln,
+            'expiration_date' => $ed,
+            'plh_number' => $pn,
+            'unitcost' => $uc,
             'qty' => $this->input->post('qty'),
-            'oldqty' => $this->input->post('oldqty'),
-            'price' => $this->input->post('unitcost')*$this->input->post('qty'),
+            'oldqty' => $lotnumber[0]->remaining_quantity,
+            'price' => $uc*$this->input->post('qty'),
             'product_p_no' => $this->input->post('pno'),
             'inventory_i_no' => $this->session->userdata('ino'),
             'user_id' => $this->session->userdata('id'),
         );
         $this->Inventory_model->insertinventoryline($il); // insert inverntory line
-     
+    
         redirect('Inventoryinfo_con');
     }
     
     // //--------------------------------------------------------------------------
 
     public function updateinventoryline()
-    {                    
-         $il = array(
-            'unitcost' => $this->input->post('unitcost'),
+    {        
+        $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));            
+        $il = array(
+            'unitcost' => $lotnumber[0]->unit_cost,
             'qty' => $this->input->post('qty'),
-            'price' => $this->input->post('unitcost')*$this->input->post('qty')
+            'oldqty' => $lotnumber[0]->remaining_quantity,
+            'price' => $lotnumber[0]->unit_cost*$this->input->post('qty'),
+            'lot_number' => $lotnumber[0]->lot_number,
+            'expiration_date' => $lotnumber[0]->expiration_date,
+            'plh_number' => $this->input->post('lot_number'),
         );
         $this->Inventory_model->updateinventoryline( $this->input->post('dlno'),$il);    
-     
+    
         redirect('Inventoryinfo_con');
     }
     
     // //--------------------------------------------------------------------------
 
-     public function updateinventory()
+    public function updateinventory()
     {                    
-         $i = array(
+        $i = array(
             'totalamount' => $this->input->post('totalamount'),
             'ref_no' => $this->input->post('refno'),
             'remarks' => $this->input->post('remarks'),
         );
         $this->Inventory_model->updateinventory( $this->session->userdata('ino'),$i);    
-     
+    
         redirect('Inventory_con');
     }
     

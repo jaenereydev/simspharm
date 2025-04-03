@@ -3,7 +3,7 @@
 class Sales_con extends MY_Controller
 {
     //---------------------------------------------------------------------------
-      
+    
     public function __construct() 
     {
         parent::__construct();
@@ -14,7 +14,7 @@ class Sales_con extends MY_Controller
         $this->load->model('Product_model');
         $this->load->model('Creditpayment_model');
         $this->load->model('Producthistory_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -241,6 +241,7 @@ class Sales_con extends MY_Controller
             'description' => $lotnumber[0]->lot_number,
             'expiration_date' => $lotnumber[0]->expiration_date,
             'plh_number' => $this->input->post('lot_number'),
+            'unitcost' => $lotnumber[0]->unit_cost,
         );      
         $this->Sales_model->edittransactionline($this->input->post('tlno'),$tl);
 

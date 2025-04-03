@@ -285,8 +285,7 @@
             <div class="form-group row row-offcanvas">                                       
                 <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                    <select id="lot_numbersales" name="lot_number" class="form-control">
-                    </select>
+                    <select id="lot_numbersales" name="lot_number" class="form-control"></select>
                 </div>  
             </div>
 

@@ -289,6 +289,21 @@ class Product_model extends CI_Model
     
   //--------------------------------------------------------------------------
 
+  public function updatesalesproductlothistoryremainingquantityinventory($tno) // update product_lot_history remaining_quantity from Inventory
+  {
+      $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select inventoryline.qty "
+                                          . "from inventoryline "
+                                          . "where inventoryline.plh_number = product_lot_history.plh_number "
+                                          . "and inventoryline.inventory_i_no = '$tno') "
+                  . "where product_lot_history.plh_number IN (select inventoryline.plh_number "
+                                          . "from inventoryline "
+                                          . "where inventoryline.plh_number = product_lot_history.plh_number "
+                                          . "and inventoryline.inventory_i_no = '$tno')";
+      return $this->db->query($sql);
+  }
+    
+  //--------------------------------------------------------------------------
+
   public function updatesalesproductlothistoryremainingquantityvoid($tno) // update product_lot_history remaining_quantity void from POS
   {
       $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select (product_lot_history.remaining_quantity + transactionline.qty) "
