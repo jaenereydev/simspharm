@@ -114,7 +114,7 @@
                 <div class="panel-body" >  
                     <table class="table table-hover table-responsive table-bordered table-striped "> 
                         <thead>
-                            <tr class="warning">                                             
+                            <tr class="info">                                             
                                 <td class="text-center"><strong>Name</strong></td>
                                 <td class="text-center"><strong>Total Quantity</strong></td>           
                                 <td class="text-center"><strong>Total Amount</strong></td>   
@@ -143,7 +143,7 @@
                 <div class="panel-body" >  
                     <table class="table table-hover table-responsive table-bordered table-striped "> 
                         <thead>
-                            <tr class="warning">                                             
+                            <tr class="info">                                             
                                 <td class="text-center"><strong>Name</strong></td>      
                                 <td class="text-center"><strong>Customer Count</strong></td>       
                                 <td class="text-center"><strong>Total Amount</strong></td>   
@@ -167,10 +167,10 @@
 
         <!-- Customer -->
         <div class="col-md-6">
-            <div class="panel panel-warning">
+            <div class="panel panel-default">
                 <div class="panel-heading clearfix">            
                     <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                        <span class="glyphicon glyphicon-user" ></span> CUSTOMER
+                        CUSTOMER
                     </h3>  
                 </div> <!-- end of panel heading -->
                 <div class="panel-body" >   
@@ -189,10 +189,10 @@
 
         <!-- Product -->
         <div class="col-md-6">
-            <div class="panel panel-info">
+            <div class="panel panel-default">
                 <div class="panel-heading clearfix">            
                     <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                        <span class="glyphicon glyphicon-barcode" ></span> PRODUCT
+                        PRODUCT
                     </h3>  
                 </div> <!-- end of panel heading -->
                 <div class="panel-body" >   

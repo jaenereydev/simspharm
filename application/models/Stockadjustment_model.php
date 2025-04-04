@@ -3,52 +3,33 @@
 class Stockadjustment_model extends CI_Model
 {
 
+ //----------------------------------------------------------------------
+  
+  public function get_stockadjustmentlist() 
+  {
+  
+    $sql = "SELECT * 
+            FROM stockadjustment 
+            WHERE MONTH(date) = MONTH(CURRENT_DATE()) 
+            AND YEAR(date) = YEAR(CURRENT_DATE()) 
+            ORDER BY sa_no DESC ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+
   //----------------------------------------------------------------------
-  
-//   public function get_delivery() 
-//   {
-  
-//     $sql = "Select d.*, s.name as name
-//             from delivery d 
-//             join supplier s on s.s_no = d.supplier_s_no 
-//             where d.date = CURDATE() 
-//             or d.date is null 
-//             or d.post = 'NO'
-//             Order by d.d_no DESC";
-//     $query = $this->db->query($sql);
-//     return $query->result();
-//   }
 
-//  //----------------------------------------------------------------------
+  public function get_deliveryinfo($d) 
+  {
+    $sql = "Select d.*, s.name as name
+            from delivery d 
+            join supplier s on s.s_no = d.supplier_s_no 
+            where d.d_no = '$d' ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
 
-//   public function get_deliverysearch($d) 
-//   {
-  
-//     $sql = "Select d.*, s.name as name
-//             from delivery d 
-//             join supplier s on s.s_no = d.supplier_s_no 
-//             where d.date like '$d%'
-//             or d.ref_no like '$d%' 
-//             or s.name like '$d%' 
-//             or d.totalamount like '$d%' 
-//             or d.remarks like '$d%' ";
-//     $query = $this->db->query($sql);
-//     return $query->result();
-//   }
-
-//  //----------------------------------------------------------------------
-
-//   public function get_deliveryinfo($d) 
-//   {
-//     $sql = "Select d.*, s.name as name
-//             from delivery d 
-//             join supplier s on s.s_no = d.supplier_s_no 
-//             where d.d_no = '$d' ";
-//     $query = $this->db->query($sql);
-//     return $query->result();
-//   }
-
-//  //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
 
 // public function get_totalaccountpayeble() //get sum of account payable
 //   {
@@ -81,17 +62,17 @@ class Stockadjustment_model extends CI_Model
 //     return $query->result();
 //   }
 
-//   //----------------------------------------------------------------------
+//----------------------------------------------------------------------
 
 
 
-//   public function insertdelivery($del = null) 
-//   {  
-//     $this->db->insert('delivery',$del);
-//     return $this->db->insert_id();
-//   }
+  public function insertstockadjustment($sa = null) 
+  {  
+    $this->db->insert('stockadjustment',$sa);
+    return $this->db->insert_id();
+  }
 
-//  // //----------------------------------------------------------------------
+ //----------------------------------------------------------------------
 
 //   public function updatedelivery($d, $del = null) 
 //   {  

@@ -33,25 +33,27 @@ class Stockadjustment_con extends MY_Controller
     
     public function index()
     {                    
-        $this->session->unset_userdata('dno');
-        $this->data['delivery'] = $this->Delivery_model->get_delivery();
-        $this->data['sup'] = $this->Supplier_model->get_supplier();
+        $this->session->unset_userdata('sano');
+        $this->data['stockadjustment'] = $this->Stockadjustment_model->get_stockadjustmentlist();
 
         $this->render_html('stockadjustment/stockadjustment_view', true); 
     }
     
     //--------------------------------------------------------------------------
 
-    // public function searchdelivery()
-    // { 
-    //     $this->session->unset_userdata('dno');
-    //     $this->data['delivery'] = $this->Delivery_model->get_deliverysearch($this->input->post('search'));
-    //     $this->data['sup'] = $this->Supplier_model->get_supplier();
-
-    //     $this->render_html('delivery/deliverysearch_view', true);
-    // }
+    public function insertstockadjustment()
+    { 
+        $sa = array(
+            'date' => date('Y/m/d'),
+            'user_id' => $this->session->userdata('id'),
+        );
+        $sano = $this->Stockadjustment_model->insertstockadjustment($sa); // insert inverntory line    
+        $this->session->set_userdata(['sano' => $sano]);
+        $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->unset_userdata('sano'));
+        $this->render_html('stockadjustment/stockadjustmentinfo_view', true); 
+    }
     
-    // // //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     
     // public function selectsupplier($s)
     // {                    
@@ -66,15 +68,15 @@ class Stockadjustment_con extends MY_Controller
     //     redirect('Deliveryinfo_con');
     // }
     
-    // // //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
-    // public function deliveryinfo($d)
-    // { 
-    //     $this->session->set_userdata(['dno' => $d]);
-    //     redirect('Deliveryinfo_con');
-    // }
+    public function stockadjustmentinfo($sa)
+    { 
+        // $this->session->set_userdata(['dno' => $d]);
+        // redirect('Deliveryinfo_con');
+    }
     
-    // // //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
     // public function exporttoexcel($d)
     // {
@@ -83,34 +85,34 @@ class Stockadjustment_con extends MY_Controller
     //     $this->load->view('delivery/report/deliveryreport_excel', array('del' => $del, 'delline' => $delline));  
     // }
 
-    //  //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
-    // public function deletedelivery($d)
-    // {         
-    //     $this->Delivery_model->deletedelivery($d);
-    //     redirect('Delivery_con');
-    // }
+    public function deletestockadjustment($sa)
+    {         
+        // $this->Delivery_model->deletedelivery($d);
+        // redirect('Delivery_con');
+    }
     
-    // // //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
-    // public function postdelivery($d)
-    // {         
-    //     $del = array(
-    //         'post' => "YES"
-    //     );
-    //     $desc = "DELIVERY";
-    //     $this->Delivery_model->updatedelivery($d, $del); //update delivery file to post
+    public function poststockadjustment($d)
+    {         
+        // $del = array(
+        //     'post' => "YES"
+        // );
+        // $desc = "DELIVERY";
+        // $this->Delivery_model->updatedelivery($d, $del); //update delivery file to post
 
-    //     $this->Producthistory_model->insert_deliveryproducthistory($d, $desc); //update product history
+        // $this->Producthistory_model->insert_deliveryproducthistory($d, $desc); //update product history
 
-    //     $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
+        // $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
 
-    //     $this->Product_model->updatedeliveryproductqty($d); // update product qty
+        // $this->Product_model->updatedeliveryproductqty($d); // update product qty
 
-    //     redirect('delivery_con');
+        // redirect('delivery_con');
 
-    // }
+    }
     
-    // // //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
 
 }

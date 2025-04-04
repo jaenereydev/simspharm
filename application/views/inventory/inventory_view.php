@@ -7,9 +7,12 @@
                 <span class="glyphicon glyphicon-barcode" ></span> Inventory List
             </h3>     
             
-        <a type="button" href="<?=site_url('Inventory_con/insertinventory')?>" onclick="return confirm('Do youo want to create file?');" class="btn btn-info pull-right" >New</a>               
+            <a 
+                type="button" 
+                href="<?=site_url('Inventory_con/insertinventory')?>" 
+                onclick="return confirm('Do you want to create file?');" 
+                class="btn btn-info pull-right" >New</a>               
         </div> <!-- end of panel heading -->        
-        
         
         <div class="panel-body">              
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
@@ -23,7 +26,7 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($inventory as $key => $item): ?>                      
+                    <?php foreach ($inventory as $key => $item): ?>                      
                     <tr> 
                         <td class="text-center">     
 
@@ -45,7 +48,7 @@
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->post ?></td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
         </div> <!-- end of panel body -->
