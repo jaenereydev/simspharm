@@ -29,15 +29,15 @@ class Inventory_model extends CI_Model
 
   public function get_inventoryline($i) 
   {
-  
-    $sql = "SELECT l.*, p.name as name, p.barcode as barcode, p.qty as oqty 
-            from inventoryline l 
-            join product p on p.p_no = l.product_p_no 
-            where l.inventory_i_no = '$i' 
-            order by l.il_no DESC";
-    $query = $this->db->query($sql);
-    return $query->result();
+      $sql = "SELECT l.*, p.name AS name, p.barcode AS barcode, p.qty AS oqty
+              FROM inventoryline l
+              JOIN product p ON p.p_no = l.product_p_no
+              WHERE l.inventory_i_no = ?
+              ORDER BY l.il_no DESC";
+      $query = $this->db->query($sql, array($i));
+      return $query->result();
   }
+
 
  //----------------------------------------------------------------------
 
@@ -55,10 +55,10 @@ class Inventory_model extends CI_Model
 
  //----------------------------------------------------------------------
 
- public function deleteallinventoryline($u) 
+  public function deleteallinventoryline($u) 
   {                       
       $sql = "DELETE FROM inventoryline WHERE inventory_i_no is null and user_id ='$u' ";
-     return $this->db->query($sql);
+      return $this->db->query($sql);
   }
 
 //   //----------------------------------------------------------------------

@@ -19,14 +19,9 @@ class Stockadjustment_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-  public function get_stockadjustmentinfo($sa) 
+  public function get_stockadjustmentinfo($sa)
   {
-    $sql = "Select d.*, s.name as name
-            from delivery d 
-            join supplier s on s.s_no = d.supplier_s_no 
-            where d.d_no = '$d' ";
-    $query = $this->db->query($sql);
-    return $query->result();
+      return $this->db->get_where('stockadjustment', ['sa_no' => $sa])->result();
   }
 
   //----------------------------------------------------------------------
@@ -41,16 +36,16 @@ class Stockadjustment_model extends CI_Model
 //  //----------------------------------------------------------------------
 
 
-//   public function get_deliveryline($d) 
-//   {
+  public function get_stockadjustmentline($sa) 
+  {
   
-//     $sql = "Select d.*, p.name as name, p.barcode as barcode, p.uom as uom
-//             from deliveryline d 
-//             join product p on p.p_no = d.product_p_no 
-//             where d.delivery_d_no = '$d' ";
-//     $query = $this->db->query($sql);
-//     return $query->result();
-//   }
+    $sql = "Select s.*, p.name as name, p.barcode as barcode, p.uom as uom
+            from stockadjustment s 
+            join product p on p.p_no = s.product_p_no 
+            where s.sa_no = ? ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
 
 //   //----------------------------------------------------------------------
 

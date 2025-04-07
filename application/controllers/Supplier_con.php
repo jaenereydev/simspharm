@@ -10,7 +10,7 @@ class Supplier_con extends MY_Controller
         $this->load->model('User_model');
         $this->load->model('Company_model');
         $this->load->model('Supplier_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";
@@ -40,10 +40,10 @@ class Supplier_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------
-       
+    
     public function insertsupplier()
     {                    
-         $sup = array(
+        $sup = array(
             'name' => $this->input->post('name'),
             'address' => $this->input->post('address'),
             'salesman' => $this->input->post('salesman'),

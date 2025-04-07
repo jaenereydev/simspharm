@@ -369,7 +369,7 @@
                         <div class="form-group row row-offcanvas">
                             <label class="col-sm-3 control-label">Remaining Quantity</label>
                             <div class="col-sm-9">
-                                <input class="form-control input-sm" type="number" min="0" step="any" name="remainingquantity" placeholder="Remaining Quantity" required autocomplete="off" >
+                                <input class="form-control input-sm" type="number" min="0" step="any" name="remainingquantity" placeholder="Remaining Quantity per piece" required autocomplete="off" >
                             </div>
                         </div>
 

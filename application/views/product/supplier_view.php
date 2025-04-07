@@ -9,7 +9,7 @@
             </h3>        
         <div class="panel-toolbar text-right">  
             <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info " >New</button> 
-            <a href="<?php echo site_url('category_con') ?>" type="button" class="btn btn-warning " >Category</a>            
+            <a href="<?php echo site_url('category_con') ?>" type="button" class="btn btn-default " >Category</a>            
         </div>
         </div> <!-- end of panel heading -->        
         
@@ -27,7 +27,7 @@
                     <?php foreach ($sup as $key => $item): ?>                     
                     <tr> 
                         <td class="text-center">
-                           <button title="Edit" 
+                            <button title="Edit" 
                                 data-sno="<?php echo $item->s_no;?>"
                                 data-name="<?php echo $item->name;?>"
                                 data-address="<?php echo $item->address;?>"
@@ -36,8 +36,8 @@
                                 data-toggle="modal" data-target="#sup-edit" 
                                 class="glyphicon glyphicon-pencil btn btn-info sup-edit"></button>
 
-                           <a type="button" title="Delete" href="<?=site_url('supplier_con/delsupplier/'.$item->s_no)?>" onclick="return confirm('Do you want to delete this Supplier?');" class="glyphicon glyphicon-trash btn btn-danger"></a>                           
-                          
+                            <a type="button" title="Delete" href="<?=site_url('supplier_con/delsupplier/'.$item->s_no)?>" onclick="return confirm('Do you want to delete this Supplier?');" class="glyphicon glyphicon-trash btn btn-danger"></a>                           
+                        
                         </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->s_no?></td>                        
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name;?></td>  

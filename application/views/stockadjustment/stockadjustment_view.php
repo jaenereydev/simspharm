@@ -11,7 +11,7 @@
                 type="button" 
                 class="btn btn-info pull-right" 
                 onclick="return confirm('Do you want to create file?');"
-                ref="<?=site_url('Stockadjustment_con/insertstockadjustment')?>"
+                href="<?=site_url('Stockadjustment_con/insertstockadjustment')?>"
                 >New</a> 
 
         </div> <!-- end of panel heading -->     

@@ -10,11 +10,11 @@
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                <span class="glyphicon glyphicon-barcode" ></span> Insert Inventory
+                Insert Stock adjustment
             </h3>            
         </div> <!-- end of panel heading -->        
         
-        <form onsubmit="return insertinventoryform(this);" role="form" method="post" action="<?=site_url('Inventoryinfo_con/updateinventory')?>">             
+        <form onsubmit="return insertstockadjustmentform(this);" role="form" method="post" action="<?=site_url('Stockadjustmentinfo_con/updatestockadjustment')?>">             
         <div class="panel-body">  
 
             <div class="row">
@@ -23,9 +23,9 @@
                     <div class="form-group row ">                        
                         <label class="col-sm-1 control-label">Doc. No.</label>
                         <div class="col-sm-2">
-                            <input class="form-control input-sm " type="text" disabled value="<?php echo $this->session->userdata('ino'); ?>"   />
+                            <input class="form-control input-sm " type="text" disabled value="<?php echo $stockadjustmentinfo[0]->sa_no; ?>"   />
                         </div>    
-                        <?php if($inv[0]->post == 'YES') {}else { ?>
+                        <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>
                             <div class="col-sm-2">
                                 <button type="button" data-toggle="modal" data-target="#addproduct" class="btn btn-success pull-right" >INSERT PRODUCT</button> 
                             </div>   

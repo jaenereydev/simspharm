@@ -15,9 +15,9 @@
                 class="btn btn-info " 
                 data-backdrop="static" 
                 data-keyboard="false">New</button> 
-            <a href="<?php echo site_url('Inventory_con') ?>" type="button" class="btn btn-default " >Inventory</a> 
+            <!-- <a href="<?php echo site_url('Inventory_con') ?>" type="button" class="btn btn-default " >Inventory</a>  -->
             <a href="<?php echo site_url('Category_con') ?>" type="button" class="btn btn-default " >Category</a> 
-            <a href="<?php echo site_url('Stockadjustment_con') ?>" type="button" class="btn btn-default " >Stock Adjustment</a> 
+            <!-- <a href="<?php echo site_url('Stockadjustment_con') ?>" type="button" class="btn btn-default " >Stock Adjustment</a>  -->
         </div>
 
         </div> <!-- end of panel heading -->        

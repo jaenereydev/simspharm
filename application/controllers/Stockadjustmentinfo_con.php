@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Stockadjustment_con extends MY_Controller
+class Stockadjustmentinfo_con extends MY_Controller
 {
     //--------------------------------------------------------------------------
     
@@ -33,23 +33,24 @@ class Stockadjustment_con extends MY_Controller
     
     public function index()
     {                    
-        $this->session->unset_userdata('sano');
-        $this->data['stockadjustment'] = $this->Stockadjustment_model->get_stockadjustmentlist();
-
-        $this->render_html('stockadjustment/stockadjustment_view', true); 
+        $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->unset_userdata('sano'));
+        $this->data['stockadjustmentline'] = $this->Stockadjustment_model->get_stockadjustmentline($this->session->unset_userdata('sano'));
+        $this->data['c'] = $this->Stockadjustment_model->get_countstockadjustmentline($this->session->userdata('sano')); // customer list
+        $this->render_html('stockadjustment/stockadjustmentinfo_view', true); 
     }
     
     //--------------------------------------------------------------------------
 
     public function insertstockadjustment()
     { 
-        $sa = array(
-            'date' => date('Y/m/d'),
-            'user_id' => $this->session->userdata('id'),
-        );
-        $sano = $this->Stockadjustment_model->insertstockadjustment($sa); // insert inverntory line    
-        $this->session->set_userdata(['sano' => $sano]);
-        redirect('Stockadjustmentinfo_con');
+        // $sa = array(
+        //     'date' => date('Y/m/d'),
+        //     'user_id' => $this->session->userdata('id'),
+        // );
+        // $sano = $this->Stockadjustment_model->insertstockadjustment($sa); // insert inverntory line    
+        // $this->session->set_userdata(['sano' => $sano]);
+        // $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->unset_userdata('sano'));
+        // $this->render_html('stockadjustment/stockadjustmentinfo_view', true); 
     }
     
     //--------------------------------------------------------------------------

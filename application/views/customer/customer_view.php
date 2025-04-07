@@ -14,7 +14,7 @@
                     class="btn btn-info" 
                     data-backdrop="static" 
                     data-keyboard="false">New</button>       
-                <a href="<?php echo site_url('Customercategory_con') ?>" type="button" class="btn btn-warning " >Customer Category</a>  
+                <a href="<?php echo site_url('Customercategory_con') ?>" type="button" class="btn btn-default " >  Category</a>  
 
             </div>
         </div> <!-- end of panel heading -->        
@@ -29,7 +29,7 @@
             <?php if($cus == null){ ?>
                 <!-- product search form -->
                 <form role="form" method="post" action="<?=site_url('customer_con/customersearch')?>">                    
-                       
+                    
                     <div class="form-group row row-offcanvas">
                         <label class="col-sm-2 control-label">Customer Search</label>
                         <div class="col-sm-5">
@@ -43,7 +43,7 @@
                 </form>   
             <?php }else { ?>
                 <form role="form" method="post" action="<?=site_url('customer_con/customersearch')?>">                    
-                       
+                    
                     <div class="form-group row row-offcanvas">
                         <label class="col-sm-2 control-label">Customer Search</label>
                         <div class="col-sm-5">
