@@ -113,91 +113,36 @@
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
-            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Product</h4>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Search Product</h4>
         </div>
                         
-        <div class="modal-body">                   
-            <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
-            <thead>
-                <tr class="info">             
-                    <td class="text-center"><strong>Product</strong></td>                           
-                    <td class="text-center"><strong>Lot Number - Expiration date</strong></td>        
-                    <td class="text-center"><strong>Qty</strong></td>  
-                    <td class="text-center"><strong>Action</strong></td>  
-                </tr> 
-            </thead>
-            <tbody>
-                <?php foreach ($prod as $key => $item): ?>                      
-                <tr>         
-                    <td class="text-left" style="text-transform: capitalize"><?php echo $item->name ?></td>                
-                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number.' - '.$item->expiration_date ?></td>
-                    <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->remaining_quantity,2,'.',',') ?></td>
-                    <td class="text-center">                                
-                        <button title="Add QTY" 
-                            data-plhno="<?php echo $item->plh_number;?>"                                
-                            data-name="<?php echo $item->name;?>"
-                            data-oldqty="<?php echo $item->remaining_quantity;?>"
-                            data-unitcost="<?php echo $item->unit_cost;?>"                                
-                            data-toggle="modal" data-target="#addqty" 
-                            class="glyphicon glyphicon-plus btn btn-info addqty"
-                            data-backdrop="static" data-keyboard="false"></button>
-                    </td>
-                </tr>
-                <?php endforeach;  ?>     
-            </tbody>
-            </table>
-        </div>                           
-    </div>
-</div>
-</div> <!-- End of model -->
-
-<!-- Modal -->
-<div id="addqty" class="modal fade" role="dialog">
-<div class="modal-dialog modal-md"> 
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">                    
-            <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
-            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Add Quantity</h4>
-        </div>
-            
-        <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Inventoryinfo_con/insertinventoryline')?>">             
+        <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Stockadjustment_con/insertstockadjustmentline')?>">             
         <div class="modal-body">            
-
-            <input id="pno" class="form-control input-sm hide" type="text" name="pno" />
-            <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
-            <input id="oldqty" class="form-control input-sm hide" type="text" name="oldqty" /> 
         
-            <div class="form-group row row-offcanvas">                                                        
-                <label class="col-sm-4 control-label">Product Name</label>
-                <div class="col-sm-8">
-                    <input id="name" class="form-control input-sm " type="text" name="name" disabled />
-                </div>   
-            </div>
-
             <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Qty</label>
-                <div class="col-sm-8">
+                <label class="col-sm-3 control-label">Lot Number</label>
+                <div class="col-sm-9">
+                    <select id="lot_number" name="lot_number" class="form-control"></select>
+                </div>  
+            </div>
+        
+            <div class="form-group row row-offcanvas">                                       
+                <label class="col-sm-3 control-label">Qty</label>
+                <div class="col-sm-9">
                     <input id="qty" class="form-control input-sm " type="text" name="qty" required autocomplete="off" />
                 </div>   
             </div>
 
-            <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Lot Number</label>
-                <div class="col-sm-8">
-                    <select id="lot_numberinventory" name="lot_number" class="form-control"></select>
-                </div>  
-            </div>
-        
         </div>
         <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
             </div>
-        </form>
-
+        </form>                         
     </div>
 </div>
 </div> <!-- End of model -->
+
+
 
 
 <!-- Modal -->
@@ -251,8 +196,17 @@
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<!-- jQuery (Required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <script type="text/javascript">
 
 function qtyform(formObj) {            
@@ -278,80 +232,18 @@ window.onload = function()
 {                         
 
     $(document).ready(function () {
-        $(document).on('click', '.addqty', function(event) {        
-            var pno = $(this).data('pno');
-            var name = $(this).data('name');
-            var unitcost = $(this).data('unitcost');
-            var oldqty = $(this).data('oldqty');
-
-            $(".modal-body #pno").val( pno );
-            $(".modal-body #name").val( name );
-            $(".modal-body #unitcost").val( unitcost );
-            $(".modal-body #oldqty").val( oldqty );
-
-            // Initialize Select2 with AJAX search
-            $(".modal-body #lot_numberinventory").select2({
-                placeholder: "Search Lot Number...",
-                allowClear: true,
-                minimumInputLength: 1, // Only search when the user types at least 1 character
-                ajax: {
-                    url: "<?= site_url('Sales_con/getLotNumbers') ?>", // Controller URL
-                    type: "POST",
-                    dataType: "json",
-                    delay: 250, // Delay for better performance
-                    data: function (params) {
-                        return {
-                            search: params.term, // Send search term to server
-                            product_no: pno // Send product number to filter results
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (lot) {
-                                return {
-                                    id: lot.plh_number,
-                                    text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
-                                };
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-        });
-    });
-
-    $(document).ready(function () {
-        $(document).on('click', '.editqty', function(event) {        
-            var dlno = $(this).data('dlno');
-            var pno = $(this).data('pno');
-            var name = $(this).data('name');
-            var unitcost = $(this).data('unitcost');
-            var qty = $(this).data('qty');
-            var oldqty = $(this).data('oldqty');
-            var plh = $(this).data('plh');
-
-            $(".modal-body #dlno").val( dlno );
-            $(".modal-body #name").val( name );
-            $(".modal-body #unitcost").val( unitcost );
-            $(".modal-body #qty").val( qty );
-            $(".modal-body #oldqty").val( oldqty );
-            $(".modal-body #plh").val(plh);
-
-            // Initialize Select2 with AJAX search
-        $(".modal-body #lot_number").select2({
+        $('#lot_number').select2({
             placeholder: "Search Lot Number...",
             allowClear: true,
-            minimumInputLength: 1, // Search starts after typing 1 character
+            minimumInputLength: 1,
             ajax: {
-                url: "<?= site_url('Sales_con/getLotNumbers') ?>", 
+                url: "<?= site_url('Product_con/getLotNumbers') ?>",
                 type: "POST",
                 dataType: "json",
-                delay: 250, // Delay for better performance
+                delay: 250,
                 data: function (params) {
                     return {
-                        search: params.term, // Search term typed by user
-                        product_no: pno
+                        search: params.term
                     };
                 },
                 processResults: function (data) {
@@ -359,7 +251,7 @@ window.onload = function()
                         results: $.map(data, function (lot) {
                             return {
                                 id: lot.plh_number,
-                                text: lot.lot_number + " - " + lot.expiration_date + " - " + lot.remaining_quantity
+                                text: lot.name + " - " + lot.lot_number + " - " + lot.expiration_date + " - (" + lot.remaining_quantity + ")"
                             };
                         })
                     };
@@ -367,24 +259,8 @@ window.onload = function()
                 cache: true
             }
         });
-
-        // Pre-select the current lot if it exists
-        if (plh) {
-            $.ajax({
-                url: "<?= site_url('Sales_con/getLotDetails') ?>",
-                type: "POST",
-                data: { plh_number: plh },
-                dataType: "json",
-                success: function (data) {
-                    if (data) {
-                        var option = new Option(data.lot_number + " - " + data.expiration_date + " - " + data.remaining_quantity, data.plh_number, true, true);
-                        $(".modal-body #lot_number").append(option).trigger('change');
-                    }
-                }
-            });
-        }
-        });
     });
+
 }
 
 </script>

@@ -183,6 +183,16 @@ class Product_model extends CI_Model
 
   //----------------------------------------------------------------------
 
+  public function productlothistoryinfo($p) 
+  {
+      $sql = "SELECT * FROM product_lot_history WHERE plh_number = ?";
+      $query = $this->db->query($sql, [$p]);
+      return $query->result();
+  }
+
+  //----------------------------------------------------------------------
+
+
   public function productlothistory($p) 
   {
   

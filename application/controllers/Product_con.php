@@ -200,6 +200,29 @@ class Product_con extends MY_Controller
         redirect('productinfo_con');
     }
     
-    //--------------------------------------------------------------------------        
+    //--------------------------------------------------------------------------       
+    
+    public function getLotNumbers() 
+    {
+        $search = $this->input->post('search');
+
+        $this->db->select('plh_number, lot_number, expiration_date, remaining_quantity, p.name, p.barcode');
+        $this->db->from('product_lot_history');
+        $this->db->join('product p', 'p.p_no = product_lot_history.product_p_no');
+        $this->db->where('remaining_quantity !=', 0);
+        
+        $this->db->group_start();
+        $this->db->like('lot_number', $search);
+        $this->db->or_like('expiration_date', $search);
+        $this->db->group_end();
+
+        $this->db->order_by('expiration_date', 'ASC');
+        $this->db->limit(20);
+
+        $query = $this->db->get();
+        echo json_encode($query->result());
+    }
+
+    //-------------------------------------------------------------------------- 
 
 }

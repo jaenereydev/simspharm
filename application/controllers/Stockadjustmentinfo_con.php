@@ -42,16 +42,17 @@ class Stockadjustmentinfo_con extends MY_Controller
     
     //--------------------------------------------------------------------------
 
-    public function insertstockadjustment()
+    public function insertstockadjustmentline()
     { 
-        // $sa = array(
-        //     'date' => date('Y/m/d'),
-        //     'user_id' => $this->session->userdata('id'),
-        // );
-        // $sano = $this->Stockadjustment_model->insertstockadjustment($sa); // insert inverntory line    
-        // $this->session->set_userdata(['sano' => $sano]);
-        // $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->unset_userdata('sano'));
-        // $this->render_html('stockadjustment/stockadjustmentinfo_view', true); 
+        $lotnumber = $this->Stockadjustment_model->productlothistoryinfo($this->input->post('lot_number'));
+        $sa = array(
+            'date' => date('Y/m/d'),
+            'user_id' => $this->session->userdata('id'),
+        );
+        $sano = $this->Stockadjustment_model->insertstockadjustment($sa); // insert inverntory line    
+        $this->session->set_userdata(['sano' => $sano]);
+        $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->unset_userdata('sano'));
+        $this->render_html('stockadjustment/stockadjustmentinfo_view', true); 
     }
     
     //--------------------------------------------------------------------------
