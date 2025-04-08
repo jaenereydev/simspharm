@@ -140,6 +140,20 @@ class Product_model extends CI_Model
 
   //----------------------------------------------------------------------
 
+  public function get_productstockadjustment($sa) 
+  {  
+    $sql = "SELECT h.*, p.name as name
+            from product_lot_history h
+            join product p ON p.p_no = h.product_p_no
+            where p.active = 'YES' 
+            and plh_number NOT IN (SELECT plh_number from stockadjustmentline where sa_no ='$sa') ";
+    $query = $this->db->query($sql);
+    return $query->result();
+  }
+
+
+  //----------------------------------------------------------------------
+
   public function productinfo($p) 
   {
   

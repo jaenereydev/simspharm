@@ -26,25 +26,27 @@ class Stockadjustment_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-// public function get_totalaccountpayeble() //get sum of account payable
-//   {
-//     $sql = "select sum(totalamount) as ta from delivery where post = 'YES' and status is null";
-//     $query = $this->db->query($sql);
-//     return $query->result();
-//   }
+  public function get_countstockadjustmentline($sa) 
+  {
+  
+    $sql = "SELECT count(sa_no) as sano
+            from stockadjustmentline 
+            where sal_no = ? ";
+    $query = $this->db->query($sql, array($sa));
+    return $query->result();
+  }
 
-//  //----------------------------------------------------------------------
+ //----------------------------------------------------------------------
 
 
   public function get_stockadjustmentline($sa) 
   {
-  
-    $sql = "Select s.*, p.name as name, p.barcode as barcode, p.uom as uom
-            from stockadjustment s 
-            join product p on p.p_no = s.product_p_no 
-            where s.sa_no = ? ";
-    $query = $this->db->query($sql);
-    return $query->result();
+      $sql = "SELECT s.*, p.name AS name, p.barcode AS barcode, p.uom AS uom
+              FROM stockadjustmentline s 
+              JOIN product p ON p.p_no = s.product_p_no
+              WHERE s.sal_no = ?";
+      $query = $this->db->query($sql, array($sa));
+      return $query->result();
   }
 
 //   //----------------------------------------------------------------------

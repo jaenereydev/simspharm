@@ -32,10 +32,11 @@ class Stockadjustmentinfo_con extends MY_Controller
     //--------------------------------------------------------------------------                   
     
     public function index()
-    {                    
-        $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->unset_userdata('sano'));
-        $this->data['stockadjustmentline'] = $this->Stockadjustment_model->get_stockadjustmentline($this->session->unset_userdata('sano'));
-        $this->data['c'] = $this->Stockadjustment_model->get_countstockadjustmentline($this->session->userdata('sano')); // customer list
+    {               
+        $this->data['prod'] = $this->Product_model->get_productstockadjustment($this->session->userdata('sano')); //product list     
+        $this->data['stockadjustmentinfo'] = $this->Stockadjustment_model->get_stockadjustmentinfo($this->session->userdata('sano'));
+        $this->data['stockadjustmentline'] = $this->Stockadjustment_model->get_stockadjustmentline($this->session->userdata('sano'));
+        $this->data['sa'] = $this->Stockadjustment_model->get_countstockadjustmentline($this->session->userdata('sano')); // stock adjustmentline list
         $this->render_html('stockadjustment/stockadjustmentinfo_view', true); 
     }
     

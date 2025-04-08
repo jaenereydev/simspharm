@@ -19,29 +19,37 @@
 
             <div class="row">
 
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group row ">                        
-                        <label class="col-sm-1 control-label">Doc. No.</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-3 control-label">Doc. No.</label>
+                        <div class="col-sm-3">
                             <input class="form-control input-sm " type="text" disabled value="<?php echo $stockadjustmentinfo[0]->sa_no; ?>"   />
                         </div>    
+                        <label class="col-sm-3 control-label">Sign</label>
+                        <div class="col-sm-3">
+                            <input class="form-control input-sm " type="text" disabled value="<?php echo $stockadjustmentinfo[0]->sa_no; ?>"   />
+                        </div> 
+                    </div>
+                </div>  
+                <div class="col-md-6">
+                    <div class="form-group row ">                         
                         <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>
-                            <div class="col-sm-2">
+                            <div class="col-sm-12">
                                 <button type="button" data-toggle="modal" data-target="#addproduct" class="btn btn-success pull-right" >INSERT PRODUCT</button> 
                             </div>   
                         <?php } ?>
                     </div>
-                </div>  
+                </div> 
 
             </div>           
             <table class="table table-hover table-responsive table-bordered table-striped info" 
-                <?php if($c[0]->ilno >= '11'){ ?>
+                <?php if($sa[0]->sano >= '11'){ ?>
                     id="MTable"
                 <?php } ?> 
                 > 
                 <thead>
                     <tr class="info">        
-                        <?php if($inv[0]->post == 'YES') {}else { ?>                                                    
+                        <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>                                                    
                             <td class="text-center"><strong>Action</strong></td>  
                         <?php } ?>                                           
                         <td class="text-center"><strong>Description</strong></td>                        
@@ -51,11 +59,11 @@
                     </tr> 
                 </thead>
                 <tbody>
-                    <?php $ta=0; if(sizeof($invline)):  foreach ($invline as $key => $item):  ?>                      
+                    <?php $ta=0; if(sizeof($stockadjustmentline)):  foreach ($stockadjustmentline as $key => $item):  ?>                      
                     <tr>     
-                        <?php if($inv[0]->post == 'YES') {}else { ?>    
+                        <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>    
                         <td class="text-center" style="text-transform: capitalize">
-                            <a title="Edit QTY" 
+                            <!-- <a title="Edit QTY" 
                             data-dlno="<?php echo $item->il_no;?>"                                
                             data-name="<?php echo $item->name;?>"
                             data-unitcost="<?php echo $item->unitcost;?>"
@@ -66,46 +74,30 @@
                             data-pno="<?php echo $item->product_p_no;?>"
                             data-toggle="modal" data-target="#editqty" 
                             class="glyphicon glyphicon-pencil btn btn-info editqty"
-                            data-backdrop="static" data-keyboard="false"></a>
+                            data-backdrop="static" data-keyboard="false"></a> -->
 
-                            <a title="Edit" href="<?=site_url('Inventoryinfo_con/deleteinventoryline/'.$item->il_no)?>" class="glyphicon glyphicon-trash btn btn-danger" onclick="return confirm('Do you want to delete this product');"></a>
+                            <a title="Edit" href="<?=site_url('Inventoryinfo_con/deleteinventoryline/'.$item->sal_no)?>" class="glyphicon glyphicon-trash btn btn-danger" onclick="return confirm('Do you want to delete this product');"></a>
                         </td>
                         <?php } ?>
                         <td class="text-left" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->lot_number.'<br>'.$item->expiration_date ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->price,2,'.',','); $ta+=$item->price ?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost*$item->qty,2,'.',','); $ta+=$item->unitcost*$item->qty ?></td>
                     </tr>
                     <?php endforeach; else: ?>
                         <tr class="text-center">
-                            <td colspan="6">There are no Data</td>
+                            <td colspan="5">There are no Data</td>
                         </tr>
                     <?php endif?> 
                 </tbody>
             </table>
             <div class="row">
                 <input class="hide" type="text" name="totalamount" value="<?php echo $ta ?>" />
-                <div class="col-md-12">
-                    <div class="form-group row row-offcanvas">                    
-                        <label class="col-sm-2 control-label">Ref. No.</label>
-                        <div class="col-sm-4">
-                            <input class="form-control input-sm " type="textarea" name="refno" value="<?php echo $inv[0]->ref_no ?>" autocomplete="off"   <?php if($inv[0]->post == 'YES') { echo 'disabled'; } ?>   />
-                        </div>                                   
-                    </div>
-                </div>    
-                <div class="col-md-12">
-                    <div class="form-group row row-offcanvas">                    
-                        <label class="col-sm-2 control-label">Remarks</label>
-                        <div class="col-sm-4">
-                            <input class="form-control input-sm " type="text" name="remarks" value="<?php echo $inv[0]->remarks ?>"  autocomplete="off" <?php if($inv[0]->post == 'YES') { echo 'disabled'; } ?>  />
-                        </div>                                   
-                    </div>
-                </div>                    
             </div>
         </div> <!-- end of panel body -->
         <div class="modal-footer">            
             <a title="Close" href="<?=site_url('Inventory_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>    
-            <?php if($inv[0]->post == 'YES') {}else { ?>        
+            <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>        
             <input type="submit" onclick="return confirm('Do you want to save this file?');" class="btn btn-primary" name="insertinventorybtn" value="SUBMIT">
             <?php } ?>
         </div>
@@ -127,25 +119,25 @@
         <div class="modal-body">                   
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
             <thead>
-                <tr class="info">                                        
-                    <td class="text-center"><strong>Barcode</strong></td>                        
-                    <td class="text-center"><strong>Product</strong></td>  
+                <tr class="info">             
+                    <td class="text-center"><strong>Product</strong></td>                           
+                    <td class="text-center"><strong>Lot Number - Expiration date</strong></td>        
                     <td class="text-center"><strong>Qty</strong></td>  
                     <td class="text-center"><strong>Action</strong></td>  
                 </tr> 
             </thead>
             <tbody>
                 <?php foreach ($prod as $key => $item): ?>                      
-                <tr>                         
-                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
-                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
-                    <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->qty,2,'.',',') ?></td>
+                <tr>         
+                    <td class="text-left" style="text-transform: capitalize"><?php echo $item->name ?></td>                
+                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number.' - '.$item->expiration_date ?></td>
+                    <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->remaining_quantity,2,'.',',') ?></td>
                     <td class="text-center">                                
                         <button title="Add QTY" 
-                            data-pno="<?php echo $item->p_no;?>"                                
+                            data-plhno="<?php echo $item->plh_number;?>"                                
                             data-name="<?php echo $item->name;?>"
-                            data-oldqty="<?php echo $item->qty;?>"
-                            data-unitcost="<?php echo $item->unitcost;?>"                                
+                            data-oldqty="<?php echo $item->remaining_quantity;?>"
+                            data-unitcost="<?php echo $item->unit_cost;?>"                                
                             data-toggle="modal" data-target="#addqty" 
                             class="glyphicon glyphicon-plus btn btn-info addqty"
                             data-backdrop="static" data-keyboard="false"></button>

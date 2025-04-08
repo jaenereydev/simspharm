@@ -71,8 +71,8 @@ class Stockadjustment_con extends MY_Controller
 
     public function stockadjustmentinfo($sa)
     { 
-        // $this->session->set_userdata(['dno' => $d]);
-        // redirect('Deliveryinfo_con');
+        $this->session->set_userdata(['sano' => $sa]);
+        redirect('Stockadjustmentinfo_con');
     }
     
     //--------------------------------------------------------------------------
