@@ -53,21 +53,6 @@ class Stockadjustment_con extends MY_Controller
     }
     
     //--------------------------------------------------------------------------
-    
-    // public function selectsupplier($s)
-    // {                    
-    //     $del = array(
-    //         'supplier_s_no' => $s,
-    //         'discount' => '0',
-    //         'user_id' => $this->session->userdata('id'),
-    //         'post' => 'NO'
-    //     );
-    //     $dno = $this->Delivery_model->insertdelivery($del);
-    //     $this->session->set_userdata(['dno' => $dno]);
-    //     redirect('Deliveryinfo_con');
-    // }
-    
-    //--------------------------------------------------------------------------
 
     public function stockadjustmentinfo($sa)
     { 
@@ -75,15 +60,6 @@ class Stockadjustment_con extends MY_Controller
         redirect('Stockadjustmentinfo_con');
     }
     
-    //--------------------------------------------------------------------------
-
-    // public function exporttoexcel($d)
-    // {
-    //     $del = $this->Delivery_model->get_deliveryinfo($d);
-    //     $delline = $this->Delivery_model->get_deliveryline($d);
-    //     $this->load->view('delivery/report/deliveryreport_excel', array('del' => $del, 'delline' => $delline));  
-    // }
-
     //--------------------------------------------------------------------------
 
     public function deletestockadjustment($sa)

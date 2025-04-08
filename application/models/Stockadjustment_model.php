@@ -44,7 +44,7 @@ class Stockadjustment_model extends CI_Model
       $sql = "SELECT s.*, p.name AS name, p.barcode AS barcode, p.uom AS uom
               FROM stockadjustmentline s 
               JOIN product p ON p.p_no = s.product_p_no
-              WHERE s.sal_no = ?";
+              WHERE s.sa_no = ?";
       $query = $this->db->query($sql, array($sa));
       return $query->result();
   }
@@ -71,11 +71,11 @@ class Stockadjustment_model extends CI_Model
 
  //----------------------------------------------------------------------
 
-//   public function updatedelivery($d, $del = null) 
-//   {  
-//       $this->db->where('d_no',$d)
-//               ->update('delivery', $del);
-//   }
+  public function updatestockadjustment($sa = null) 
+  {  
+      $this->db->where('sa_no',$this->session->userdata('sano'))
+              ->update('stockadjustment', $sa);
+  }
 
 //  //    //-------------------------------------------------------------------------- 
 
@@ -87,18 +87,18 @@ class Stockadjustment_model extends CI_Model
 
 //  //-------------------------------------------------------------------------- 
 
-//  public function insertdeliveryline($dl = null) 
-//   {  
-//       return $this->db->insert('deliveryline',$dl);
-//   }
+  public function insertstockadjustmentline($sal = null) 
+  {  
+      return $this->db->insert('stockadjustmentline',$sal);
+  }
 
 //  //----------------------------------------------------------------------
 
 
-//   public function deletedeliveryline($dl) 
-//   {                       
-//        $this->db->delete('deliveryline', array('dl_no' => $dl));
-//   }
+  public function deletestockadjustmentline($sal) 
+  {                       
+      $this->db->delete('stockadjustmentline', array('sal_no' => $sal));
+  }
 
 //   //----------------------------------------------------------------------
 

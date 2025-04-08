@@ -23,8 +23,7 @@
                             
                             <td class="text-center"><strong>Action</strong></td>                
                             <td class="text-center"><strong>#</strong></td>   
-                            <td class="text-center"><strong>Date</strong></td>   
-                            <td class="text-center"><strong>Ref. No.</strong></td>                         
+                            <td class="text-center"><strong>Date</strong></td>                           
                             <td class="text-center"><strong>Status</strong></td>   
                             <td class="text-center"><strong>Posted</strong></td>   
                         </tr> 
@@ -68,8 +67,13 @@
                             </td>
                             <td class="text-center" style="text-transform: capitalize"><?php echo $item->sa_no ?></td>
                             <td class="text-center" style="text-transform: capitalize"><?php echo date_format(date_create($item->date), 'm/d/Y');?></td>
-                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no ?></td>
-                            <td class="text-center" style="text-transform: capitalize"><?php echo $item->status ?></td>
+                            <td class="text-center" style="text-transform: capitalize"><?php 
+                                                                                        if ($item->status == '+') {
+                                                                                            echo "+ Positive Adjustment";
+                                                                                        } else {
+                                                                                            echo "- Negative Adjustment";
+                                                                                        }
+                                                                                        ?></td>
                             <td class="text-center" style="text-transform: capitalize"><?php echo $item->post ?></td>
                             
                         </tr>

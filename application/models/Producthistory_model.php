@@ -5,6 +5,60 @@ class Producthistory_model extends CI_Model
 
   //----------------------------------------------------------------------
   
+  public function insert_stockadjustmentproducthistory($desc) // Insert data from stock adjustment
+  {
+      // Get session sano value
+    $sano = $this->session->userdata('sano');
+
+    // Begin a transaction to ensure both queries succeed together
+    $this->db->trans_start();
+
+    // Insert data into product_history
+    $sql_history = "INSERT INTO product_history(date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price)
+                    SELECT 
+                        o.date, 
+                        o.ref_no, 
+                        ?, 
+                        l.qty, 
+                        (SELECT qty FROM product WHERE p_no = p.p_no) + l.qty, 
+                        l.product_p_no, 
+                        o.user_id, 
+                        l.lot_number, 
+                        l.expiration_date, 
+                        l.unit_cost, 
+                        l.unit_cost * l.qty 
+                    FROM stockadjustmentline l
+                    JOIN stockadjustment o ON o.sa_no = l.sa_no
+                    JOIN product p ON p.p_no = l.product_p_no
+                    WHERE o.sa_no = ?";
+
+    // Execute the insert for product_history
+    $this->db->query($sql_history, array($desc, $sano));
+
+    // After inserting into product_history, update the product table
+    // We will update the quantity in the product table based on the adjusted quantity in the stock adjustment
+    $sql_update_product = "UPDATE product p
+                          JOIN stockadjustmentline l ON p.p_no = l.product_p_no
+                          JOIN stockadjustment o ON o.sa_no = l.sa_no
+                          SET p.qty = p.qty + l.qty
+                          WHERE o.sa_no = ?";
+
+    // Execute the update for the product table
+    $this->db->query($sql_update_product, array($sano));
+
+    // Commit the transaction
+    $this->db->trans_complete();
+
+    // Check if there were any errors and return the result
+    if ($this->db->trans_status() === FALSE) {
+        return false;  // Something went wrong, handle error
+    } else {
+        return true;   // Both operations were successful
+    }
+  }
+
+  //----------------------------------------------------------------------
+
   public function insert_deliveryproducthistory($d, $desc) //insert data from delivery
   {
   

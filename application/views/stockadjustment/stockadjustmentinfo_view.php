@@ -10,28 +10,41 @@
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                Insert Stock adjustment
+                Insert Stock Adjustment
             </h3>            
         </div> <!-- end of panel heading -->        
         
-        <form onsubmit="return insertstockadjustmentform(this);" role="form" method="post" action="<?=site_url('Stockadjustmentinfo_con/updatestockadjustment')?>">             
+        <form onsubmit="return insertstockadjustmentform(this);" role="form" method="post" action="<?=site_url('Stockadjustmentinfo_con/poststockadjustment')?>">             
         <div class="panel-body">  
 
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="form-group row ">                        
-                        <label class="col-sm-3 control-label">Doc. No.</label>
-                        <div class="col-sm-3">
+                        <label class="col-sm-2 control-label">Doc. No.</label>
+                        <div class="col-sm-4">
                             <input class="form-control input-sm " type="text" disabled value="<?php echo $stockadjustmentinfo[0]->sa_no; ?>"   />
                         </div>    
-                        <label class="col-sm-3 control-label">Sign</label>
-                        <div class="col-sm-3">
-                            <input class="form-control input-sm " type="text" disabled value="<?php echo $stockadjustmentinfo[0]->sa_no; ?>"   />
+                        <label class="col-sm-2 control-label">Sign</label>
+                        <div class="col-sm-4">
+                        <?php if($stockadjustmentinfo[0]->post == 'YES') { ?>
+                            <input class="form-control input-sm " type="text" disabled value="<?php 
+                                                                                        if ($stockadjustmentinfo[0]->status == '+') {
+                                                                                            echo "+ Positive Adjustment";
+                                                                                        } else {
+                                                                                            echo "- Negative Adjustment";
+                                                                                        }
+                                                                                        ?>"   />
+                        <?php }else { ?>
+                            <select id="status" name="status" class="form-control" style="width: 100% !important">
+                                <option value="+" <?= ($stockadjustmentinfo[0]->status == '+') ? 'selected' : '' ?>>+ Postive Adjustment</option>
+                                <option value="-" <?= ($stockadjustmentinfo[0]->status == '-') ? 'selected' : '' ?>>- Negative Adjustment</option>
+                            </select>
+                        <?php } ?>
                         </div> 
                     </div>
                 </div>  
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group row ">                         
                         <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>
                             <div class="col-sm-12">
@@ -52,7 +65,9 @@
                         <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>                                                    
                             <td class="text-center"><strong>Action</strong></td>  
                         <?php } ?>                                           
-                        <td class="text-center"><strong>Description</strong></td>                        
+                        <td class="text-center"><strong>Description</strong></td>
+                        <td class="text-center"><strong>Lot Number</strong></td>    
+                        <td class="text-center"><strong>Expiration Date</strong></td>                            
                         <td class="text-center"><strong>Unit Cost</strong></td> 
                         <td class="text-center"><strong>QTY</strong></td> 
                         <td class="text-center"><strong>Amount</strong></td>   
@@ -63,26 +78,15 @@
                     <tr>     
                         <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>    
                         <td class="text-center" style="text-transform: capitalize">
-                            <!-- <a title="Edit QTY" 
-                            data-dlno="<?php echo $item->il_no;?>"                                
-                            data-name="<?php echo $item->name;?>"
-                            data-unitcost="<?php echo $item->unitcost;?>"
-                            data-qty="<?php echo $item->qty;?>"
-                            data-oldqty="<?php echo $item->oqty;?>"
-                            data-ln="<?php echo $item->lot_number;?>"
-                            data-plh="<?php echo $item->plh_number;?>"
-                            data-pno="<?php echo $item->product_p_no;?>"
-                            data-toggle="modal" data-target="#editqty" 
-                            class="glyphicon glyphicon-pencil btn btn-info editqty"
-                            data-backdrop="static" data-keyboard="false"></a> -->
-
-                            <a title="Edit" href="<?=site_url('Inventoryinfo_con/deleteinventoryline/'.$item->sal_no)?>" class="glyphicon glyphicon-trash btn btn-danger" onclick="return confirm('Do you want to delete this product');"></a>
+                            <a title="Edit" href="<?=site_url('Stockadjustmentinfo_con/deletestockadjustmentline/'.$item->sal_no)?>" class="glyphicon glyphicon-trash btn btn-danger" onclick="return confirm('Do you want to delete this product');"></a>
                         </td>
                         <?php } ?>
-                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->lot_number.'<br>'.$item->expiration_date ?> </td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',') ?></td>
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name ?> </td>
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',') ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost*$item->qty,2,'.',','); $ta+=$item->unitcost*$item->qty ?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost*$item->qty,2,'.',','); $ta+=$item->unit_cost*$item->qty ?></td>
                     </tr>
                     <?php endforeach; else: ?>
                         <tr class="text-center">
@@ -96,9 +100,9 @@
             </div>
         </div> <!-- end of panel body -->
         <div class="modal-footer">            
-            <a title="Close" href="<?=site_url('Inventory_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>    
+            <a title="Close" href="<?=site_url('Stockadjustment_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>    
             <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>        
-            <input type="submit" onclick="return confirm('Do you want to save this file?');" class="btn btn-primary" name="insertinventorybtn" value="SUBMIT">
+            <input type="submit" onclick="return confirm('Do you want to save this file?');" class="btn btn-primary" value="SUBMIT AND POST">
             <?php } ?>
         </div>
     </form>
@@ -116,7 +120,7 @@
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Search Product</h4>
         </div>
                         
-        <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Stockadjustment_con/insertstockadjustmentline')?>">             
+        <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Stockadjustmentinfo_con/insertstockadjustmentline')?>">             
         <div class="modal-body">            
         
             <div class="form-group row row-offcanvas">                                       
@@ -144,56 +148,6 @@
 
 
 
-
-<!-- Modal -->
-<div id="editqty" class="modal fade" role="dialog">
-<div class="modal-dialog modal-md"> 
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">                    
-            <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
-            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Edit Quantity</h4>
-        </div>
-            
-        <form onsubmit="return editqtyform(this);" role="form" method="post" action="<?=site_url('Inventoryinfo_con/updateinventoryline')?>">             
-        <div class="modal-body">            
-
-            <input id="dlno" class="form-control input-sm hide" type="text" name="dlno" />
-            <input id="unitcost" class="form-control input-sm hide" type="text" name="unitcost" /> 
-            <input id="oldqty" class="form-control input-sm hide" type="text" name="oldqty" /> 
-        
-            <div class="form-group row row-offcanvas">                                                        
-                <label class="col-sm-4 control-label">Product Name</label>
-                <div class="col-sm-8">
-                    <input id="name" class="form-control input-sm " type="text" name="name" disabled />
-                </div>   
-            </div>
-
-            <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Qty</label>
-                <div class="col-sm-8">
-                    <input id="qty" class="form-control input-sm " type="text" name="qty" required autocomplete="off" />
-                </div>   
-            </div>
-        
-            <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-4 control-label">Lot Number</label>
-                <div class="col-sm-8">
-                    <select id="lot_number" name="lot_number" class="form-control"></select>
-                </div>  
-            </div> 
-
-        </div>
-        <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" name="qtyeditbtn" value="submit">
-            </div>
-        </form>
-
-    </div>
-</div>
-</div> <!-- End of model -->
-
-
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>
 
@@ -214,19 +168,6 @@ function qtyform(formObj) {
         formObj.qtyaddbtn.value = 'Please Wait...';  
         return true;    
     }  
-
-function insertinventoryform(formObj) {            
-        formObj.insertinventorybtn.disabled = true;  
-        formObj.insertinventorybtn.value = 'Please Wait...';  
-        return true;    
-    }      
-
-function editqtyform(formObj) {            
-        formObj.qtyeditbtn.disabled = true;  
-        formObj.qtyeditbtn.value = 'Please Wait...';  
-        return true;    
-    } 
-
 
 window.onload = function()
 {                         
@@ -261,6 +202,28 @@ window.onload = function()
         });
     });
 
+
+    $(document).ready(function() {
+    $('#status').on('change', function() {
+        const status = $(this).val();
+        const sa_no = '<?= $stockadjustmentinfo[0]->sa_no ?>'; // or session if needed
+
+        $.ajax({
+            url: "<?= site_url('Stockadjustmentinfo_con/updatestatus') ?>",
+            type: "POST",
+            data: {
+                status: status,
+                sa_no: sa_no
+            },
+            success: function(response) {
+                alert("Status updated successfully!");
+            },
+            error: function(xhr) {
+                alert("Failed to update status.");
+            }
+        });
+    });
+});
 }
 
 </script>

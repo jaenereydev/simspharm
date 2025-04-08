@@ -195,7 +195,6 @@ class Product_con extends MY_Controller
 
     public function productinfo($p)
     {                            
-
         $this->session->set_userdata(['product' => $p]);  
         redirect('productinfo_con');
     }
@@ -205,23 +204,30 @@ class Product_con extends MY_Controller
     public function getLotNumbers() 
     {
         $search = $this->input->post('search');
+        $sano = $this->session->userdata('sano'); // Get sa_no from session
 
-        $this->db->select('plh_number, lot_number, expiration_date, remaining_quantity, p.name, p.barcode');
-        $this->db->from('product_lot_history');
-        $this->db->join('product p', 'p.p_no = product_lot_history.product_p_no');
-        $this->db->where('remaining_quantity !=', 0);
-        
+        $this->db->select('plh.plh_number, plh.lot_number, plh.expiration_date, plh.remaining_quantity, p.name, p.barcode');
+        $this->db->from('product_lot_history plh');
+        $this->db->join('product p', 'p.p_no = plh.product_p_no');
+        $this->db->where('plh.remaining_quantity !=', 0);
+
+        // Exclude plh_numbers already used in stockadjustmentline for current sa_no
+        $this->db->where("plh.plh_number NOT IN (SELECT sal.plh_number FROM stockadjustmentline sal WHERE sal.sa_no = " . $this->db->escape($sano) . ")", null, false);
+
+        // Search filters
         $this->db->group_start();
-        $this->db->like('lot_number', $search);
-        $this->db->or_like('expiration_date', $search);
+        $this->db->like('plh.lot_number', $search);
+        $this->db->or_like('plh.expiration_date', $search);
+        $this->db->or_like('p.name', $search);
         $this->db->group_end();
 
-        $this->db->order_by('expiration_date', 'ASC');
+        $this->db->order_by('plh.expiration_date', 'ASC');
         $this->db->limit(20);
 
         $query = $this->db->get();
         echo json_encode($query->result());
     }
+
 
     //-------------------------------------------------------------------------- 
 
