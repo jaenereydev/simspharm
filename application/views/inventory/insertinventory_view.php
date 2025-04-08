@@ -19,19 +19,24 @@
 
             <div class="row">
 
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group row ">                        
-                        <label class="col-sm-1 control-label">Doc. No.</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-4 control-label">Doc. No.</label>
+                        <div class="col-sm-8">
                             <input class="form-control input-sm " type="text" disabled value="<?php echo $this->session->userdata('ino'); ?>"   />
                         </div>    
+                    </div>
+                </div>  
+
+                <div class="col-md-6">
+                    <div class="form-group row ">   
                         <?php if($inv[0]->post == 'YES') {}else { ?>
-                            <div class="col-sm-2">
+                            <div class="col-sm-12">
                                 <button type="button" data-toggle="modal" data-target="#addproduct" class="btn btn-success pull-right" >INSERT PRODUCT</button> 
                             </div>   
                         <?php } ?>
                     </div>
-                </div>  
+                </div> 
 
             </div>           
             <table class="table table-hover table-responsive table-bordered table-striped info" 
@@ -85,18 +90,18 @@
             </table>
             <div class="row">
                 <input class="hide" type="text" name="totalamount" value="<?php echo $ta ?>" />
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                     <div class="form-group row row-offcanvas">                    
                         <label class="col-sm-2 control-label">Ref. No.</label>
                         <div class="col-sm-4">
                             <input class="form-control input-sm " type="textarea" name="refno" value="<?php echo $inv[0]->ref_no ?>" autocomplete="off"   <?php if($inv[0]->post == 'YES') { echo 'disabled'; } ?>   />
                         </div>                                   
                     </div>
-                </div>    
+                </div>     -->
                 <div class="col-md-12">
                     <div class="form-group row row-offcanvas">                    
                         <label class="col-sm-2 control-label">Remarks</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-10">
                             <input class="form-control input-sm " type="text" name="remarks" value="<?php echo $inv[0]->remarks ?>"  autocomplete="off" <?php if($inv[0]->post == 'YES') { echo 'disabled'; } ?>  />
                         </div>                                   
                     </div>
