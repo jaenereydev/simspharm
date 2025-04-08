@@ -48,6 +48,19 @@
                                         value="<?php echo $prod[0]->name;?>" 
                                         required autofocus autocomplete="off">
                                     </div>                            
+                                </div>  
+
+                                <div class="form-group row row-offcanvas">
+                                    <label class="col-sm-3 control-label">Brand</label>
+                                    <div class="col-sm-5">
+                                        <input style="text-transform: capitalize;" 
+                                        class="form-control input-sm" 
+                                        type="text" 
+                                        name="brand" 
+                                        placeholder="Product Name" 
+                                        value="<?php echo $prod[0]->brand;?>" 
+                                        required autocomplete="off">
+                                    </div>                            
                                 </div>     
 
                                 <div class="form-group row row-offcanvas">
@@ -110,7 +123,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row row-offcanvas">
+                                <!-- <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Quantity</label>
                                     <div class="col-sm-5">
                                     <input 
@@ -142,7 +155,7 @@
                                         ?>" 
                                         disabled>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group row row-offcanvas">
                                     <label class="col-sm-3 control-label">Track Inventory</label>
@@ -229,7 +242,12 @@
                             </tr> 
                             </thead>
                             <tbody>
-                            <?php foreach ($prodhistory as $key => $item): ?>                    
+                            <?php $bal=0; foreach ($prodhistory as $key => $item): 
+                                $bal+= $item->inqty-$item->outqty;
+                                if($item->description == 'INVENTORY'){
+                                    $bal = $item->inqty;
+                                }
+                            ?>                    
                             <tr>                                     
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ph_no ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->date; ?></td>
@@ -239,7 +257,7 @@
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->inqty; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->outqty; ?></td>
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->bal; ?></td>
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $bal; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->name; ?></td>
                             </tr>
                             <?php endforeach;  ?>
@@ -268,7 +286,7 @@
                         <div class="form-group row row-offcanvas">
                             <label class="col-sm-3 control-label">Category</label>
                             <div class="col-sm-9">
-                                <select name="cno" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                                <select name="cno" class="btn btn-default dropdown-toggle " style="width: 100% !important;" data-toggle="dropdown" aria-expanded="true" required>                             
                                     <option value=""> --Please Select--</option>
                                     <?php for($c=0;$c<count($cat);$c++) { ?>
                                     <option value="<?php echo $cat[$c]->c_no;?>" ><?php echo $cat[$c]->name;?></option>
@@ -301,7 +319,7 @@
                         <div class="form-group row row-offcanvas">
                             <label class="col-sm-3 control-label">Supplier</label>
                             <div class="col-sm-9">
-                                <select name="sno" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                                <select name="sno" class="btn btn-default dropdown-toggle " style="width: 100% !important;" data-toggle="dropdown" aria-expanded="true" required>                             
                                     <option value=""> --Please Select--</option>
                                     <?php for($s=0;$s<count($sup);$s++) { ?>
                                     <option value="<?php echo $sup[$s]->s_no;?>" ><?php echo $sup[$s]->name;?></option>

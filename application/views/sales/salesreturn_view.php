@@ -208,7 +208,6 @@
                     <td class="text-center"><strong>Barcode</strong></td>                        
                     <td class="text-center"><strong>Product</strong></td>  
                     <td class="text-center"><strong>SRP Price</strong></td>  
-                    <td class="text-center"><strong>QTY</strong></td>  
                     <td class="text-center"><strong>Action</strong></td>  
                 </tr> 
             </thead>
@@ -218,7 +217,6 @@
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                     <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->srpprice,2,'.',','); ?></td>
-                    <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
                     <td class="text-center ">                                
                         <button title="Add QTY" 
                             data-pno="<?php echo $item->p_no;?>"                                

@@ -164,37 +164,35 @@
             </div> <!-- end of panel div -->
         </div>
 
-
-        <!-- Customer -->
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">            
                     <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
                         CUSTOMER
                     </h3>  
-                </div> <!-- end of panel heading -->
+                </div> 
                 <div class="panel-body" >   
                     <div class="col-sm-12">
                         <div class="form-group row">               
                             <label class="col-sm-5 control-label"><a href="<?=site_url('Customer_con')?>">Accounts Receivables</a></label>
                             <label class="col-sm-7 control-label">Php <?php echo number_format((float)$totalar[0]->ta,2,'.',','); ?></label>
                         </div> 
-                    </div><!--end of col-sm-6 -->
-                </div> <!-- end of panel body -->
+                    </div>
+                </div> 
                 
-            </div> <!-- end of panel div -->   
-        </div>
+            </div> 
+        </div> -->
 
         <?php } ?>
 
-        <!-- Product -->
-        <div class="col-md-6">
+    
+        <!-- <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">            
                     <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
                         PRODUCT
                     </h3>  
-                </div> <!-- end of panel heading -->
+                </div> 
                 <div class="panel-body" >   
                     <div class="col-sm-12">
 
@@ -220,11 +218,11 @@
                             <label class="col-sm-4 control-label"><?php echo number_format((float)$productnegativequantity[0]->p,0,'.',','); ?></label>     
                         </div>  
                         <?php } ?>
-                    </div><!--end of col-sm-6 -->
-                </div> <!-- end of panel body -->
+                    </div>
+                </div> 
                 
-            </div> <!-- end of panel div -->   
-        </div>
+            </div> 
+        </div> -->
 </div>
 
 </div>

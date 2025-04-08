@@ -36,7 +36,8 @@
                                                                                         }
                                                                                         ?>"   />
                         <?php }else { ?>
-                            <select id="status" name="status" class="form-control" style="width: 100% !important">
+                            <select id="status" name="status" class="form-control" style="width: 100% !important" required>
+                                <option value="">Please select Sign</option>
                                 <option value="+" <?= ($stockadjustmentinfo[0]->status == '+') ? 'selected' : '' ?>>+ Postive Adjustment</option>
                                 <option value="-" <?= ($stockadjustmentinfo[0]->status == '-') ? 'selected' : '' ?>>- Negative Adjustment</option>
                             </select>
@@ -101,8 +102,9 @@
         </div> <!-- end of panel body -->
         <div class="modal-footer">            
             <a title="Close" href="<?=site_url('Stockadjustment_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>    
-            <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>        
-            <input type="submit" onclick="return confirm('Do you want to save this file?');" class="btn btn-primary" value="SUBMIT AND POST">
+            <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { 
+                ?>        
+                <input type="submit" onclick="return confirm('Do you want to save this file?');" class="btn btn-primary" value="SUBMIT AND POST">
             <?php } ?>
         </div>
     </form>

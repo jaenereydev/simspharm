@@ -70,8 +70,7 @@
                         <td class="text-center"><strong>Action</strong></td>
                         <td class="text-center"><strong>#</strong></td>                         
                         <td class="text-center"><strong>Name</strong></td>   
-                        <td class="text-center"><strong>Qty</strong></td>   
-                        <td class="text-center"><strong>SRP</strong></td>  
+                        <td class="text-center"><strong>Brand</strong></td>   
                     </tr> 
                 </thead>
                 <tbody>
@@ -85,8 +84,7 @@
                         </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name;?></td>  
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty;?></td>  
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->srpprice,2,'.',',');?></td>  
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->brand;?></td>   
                     </tr>
                     <?php endforeach;  ?>   
                 </tbody>

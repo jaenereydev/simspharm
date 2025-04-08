@@ -92,11 +92,13 @@ class Stockadjustmentinfo_con extends MY_Controller
         $this->Stockadjustment_model->updatestockadjustment($sa); //update adjustment file to post
         $desc = "ADJUSTMENT";
         if($this->input->post('status') == '+'){
-            $this->Producthistory_model->insert_stockadjustmentproducthistory($desc); //update product history
+            $this->Producthistory_model->insert_stockadjustmentproducthistorypositive($desc); //update product history
 
-        // $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
+            $this->Product_model->updatestockadjustmentproductlothistoryremainingquantity('positive'); //update product lot history
 
-        // $this->Product_model->updatedeliveryproductqty($d); // update product qty
+        }else {
+            $this->Producthistory_model->insert_stockadjustmentproducthistorynegative($desc); //update product history
+            $this->Product_model->updatestockadjustmentproductlothistoryremainingquantity('negative'); //update product lot history
         }
         
 

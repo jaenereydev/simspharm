@@ -328,6 +328,30 @@ class Product_model extends CI_Model
     
   //--------------------------------------------------------------------------
 
+  public function updatestockadjustmentproductlothistoryremainingquantity($type = 'positive')
+  {
+      // Get session sano value
+      $sano = $this->session->userdata('sano');
+      if (!$sano) return false;
+
+      // Determine operator based on adjustment type
+      $operator = ($type === 'negative') ? '-' : '+';
+
+      $sql = "UPDATE product_lot_history ph
+              JOIN (
+                  SELECT plh_number, SUM(qty) AS total_qty
+                  FROM stockadjustmentline
+                  WHERE sa_no = ?
+                  GROUP BY plh_number
+              ) sal ON sal.plh_number = ph.plh_number
+              SET ph.remaining_quantity = ph.remaining_quantity $operator sal.total_qty";
+
+      return $this->db->query($sql, array($sano));
+  }
+
+
+  //--------------------------------------------------------------------------
+
   public function updatesalesproductlothistoryremainingquantityvoid($tno) // update product_lot_history remaining_quantity void from POS
   {
       $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select (product_lot_history.remaining_quantity + transactionline.qty) "

@@ -92,6 +92,7 @@ class Productinfo_con extends MY_Controller
     {                    
         $p = array(        
             'name' => $this->input->post('name'),
+            'brand' => $this->input->post('brand'),
             'unitcost' => $this->input->post('unitcost'),            
             'srpprice' => $this->input->post('price1'),
             'price2' => $this->input->post('price2'),
