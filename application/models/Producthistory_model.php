@@ -69,19 +69,28 @@ class Producthistory_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-  public function insert_deliveryproducthistory($d, $desc) //insert data from delivery
-  {
-  
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id, lot_number, expiration_date, unit_cost, price) "
-          . "select o.date, o.ref_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)+l.qty, "
-          . "l.product_p_no, o.user_id, l.lot_number, l.expiration_date, l.unitcost, l.price  "
-          . "from deliveryline l "
-          . "JOIN delivery o ON o.d_no = l.delivery_d_no "
-          . "JOIN product p ON p.p_no = l.product_p_no "
-          . "where o.d_no = '$d' ";
-        return $this->db->query($sql);
-  }
+  public function insert_deliveryproducthistory($d, $desc)
+{
+    $sql = "INSERT INTO product_history
+            (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price)
+            SELECT 
+                o.date,
+                o.ref_no,
+                ? AS description,
+                l.qty,
+                l.qty AS bal,
+                l.product_p_no,
+                o.user_id,
+                l.lot_number,
+                l.expiration_date,
+                l.unitcost,
+                l.price
+            FROM deliveryline l
+            JOIN delivery o ON o.d_no = l.delivery_d_no
+            WHERE o.d_no = ?";
 
+    return $this->db->query($sql, array($desc, $d));
+}
   //----------------------------------------------------------------------
 
   public function insert_deliveryproductlothistory($d, $desc) //insert data to lot history from delivery
@@ -117,11 +126,11 @@ class Producthistory_model extends CI_Model
   {
   
     $sql = "Insert into product_history(date, ref_no, description, outqty, bal, product_p_no,  user_id, lot_number, expiration_date, plh_number, unit_cost, price) "
-          . "select o.date, o.ref_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)-l.qty, "
+          . "select o.date, o.ref_no, '$desc', l.qty, p.remaining_quantity-l.qty, "
           . "l.product_p_no, o.user_id, l.description, l.expiration_date, l.plh_number, l.delivery_cost, l.price "
           . "from transactionline l "
           . "JOIN transaction o ON o.t_no = l.transaction_t_no "
-          . "JOIN product p ON p.p_no = l.product_p_no "
+          . "JOIN product_lot_history p ON p.plh_number = l.plh_number "
           . "where o.t_no = '$tno' ";
         return $this->db->query($sql);
   }
@@ -180,18 +189,31 @@ class Producthistory_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-  public function insert_inventoryproducthistory($ino, $desc) //insert data from inventory module
+  public function insert_inventoryproducthistory($ino, $desc)
   {
-  
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, plh_number) "
-          . "select o.date, o.i_no, '$desc', l.qty, (p.qty-l.oldqty)+l.qty, l.product_p_no, o.user_id, lot_number, expiration_date, plh_number "
-          . "from inventoryline l "
-          . "JOIN inventory o ON o.i_no = l.inventory_i_no "
-          . "JOIN product p ON p.p_no = l.product_p_no "
-          . "where o.i_no = '$ino' ";
-        return $this->db->query($sql);
-  }
+      // Escape description only (optional if you're using bindings)
+      $desc = $this->db->escape_str($desc);
 
+      $sql = "INSERT INTO product_history
+              (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, plh_number)
+              SELECT 
+                  o.date,
+                  o.i_no,
+                  ? AS description,
+                  l.qty,
+                  (p.remaining_quantity - l.oldqty) + l.qty AS bal,
+                  l.product_p_no,
+                  o.user_id,
+                  l.lot_number,
+                  l.expiration_date,
+                  l.plh_number
+              FROM inventoryline l
+              JOIN inventory o ON o.i_no = l.inventory_i_no
+              JOIN product_lot_history p ON p.plh_number = l.plh_number
+              WHERE o.i_no = ?";
+
+      return $this->db->query($sql, array($desc, $ino));
+  }
 
   //----------------------------------------------------------------------
 

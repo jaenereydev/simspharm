@@ -157,7 +157,7 @@
             </div>
             <?php if($ta == '0' ) {}else { ?>
             <div class="modal-footer">               
-                <a title="Reset" href="<?=site_url('Sales_con/resettransaction')?>"  onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" ></a>
+                <a title="Reset" href="<?=site_url('Sales_con/resettransaction')?>"  onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" > RESET</a>
                 <input title="Process" type="submit" class="btn btn-primary" name="processbtn" value="Process">
             </div>
             <?php } ?>

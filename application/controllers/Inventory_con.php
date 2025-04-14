@@ -86,9 +86,7 @@ class Inventory_con extends MY_Controller
 
         $this->Product_model->updatesalesproductlothistoryremainingquantityinventory($i); // update product_lot_history qty
 
-        $this->Product_model->updateinventoryproductqty($i); // update product qty
-
-        
+        // $this->Product_model->updateinventoryproductqty($i); // update product qty
 
         redirect('Inventory_con');
 
