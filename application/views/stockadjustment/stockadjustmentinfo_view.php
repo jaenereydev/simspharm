@@ -75,7 +75,7 @@
                     </tr> 
                 </thead>
                 <tbody>
-                    <?php $ta=0; if(sizeof($stockadjustmentline)):  foreach ($stockadjustmentline as $key => $item):  ?>                      
+                    <?php $ta=0;$q=0; if(sizeof($stockadjustmentline)):  foreach ($stockadjustmentline as $key => $item):  ?>                      
                     <tr>     
                         <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { ?>    
                         <td class="text-center" style="text-transform: capitalize">
@@ -86,7 +86,7 @@
                         <td class="text-left" style="text-transform: capitalize"><?php echo $item->lot_number?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date ?> </td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',') ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty ?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty; $q+=$item->qty; ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost*$item->qty,2,'.',','); $ta+=$item->unit_cost*$item->qty ?></td>
                     </tr>
                     <?php endforeach; else: ?>
@@ -103,9 +103,10 @@
         <div class="modal-footer">            
             <a title="Close" href="<?=site_url('Stockadjustment_con')?>" onclick="return confirm('Do you want to go back');" type="button" class="btn btn-warning" >BACK</a>    
             <?php if($stockadjustmentinfo[0]->post == 'YES') {}else { 
+                if($q <= 0){}else{
                 ?>        
                 <input type="submit" onclick="return confirm('Do you want to save this file?');" class="btn btn-primary" value="SUBMIT AND POST">
-            <?php } ?>
+            <?php }} ?>
         </div>
     </form>
     </div> <!-- end of panel div -->
@@ -123,24 +124,24 @@
         </div>
                         
         <form onsubmit="return qtyform(this);" role="form" method="post" action="<?=site_url('Stockadjustmentinfo_con/insertstockadjustmentline')?>">             
-        <div class="modal-body">            
-        
-            <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-3 control-label">Lot Number</label>
-                <div class="col-sm-9">
-                    <select id="lot_number" name="lot_number" class="form-control"></select>
-                </div>  
-            </div>
-        
-            <div class="form-group row row-offcanvas">                                       
-                <label class="col-sm-3 control-label">Qty</label>
-                <div class="col-sm-9">
-                    <input id="qty" class="form-control input-sm " type="text" name="qty" required autocomplete="off" />
-                </div>   
-            </div>
+            <div class="modal-body">            
+            
+                <div class="form-group row row-offcanvas">                                       
+                    <label class="col-sm-3 control-label">Lot Number</label>
+                    <div class="col-sm-9">
+                        <select id="lot_number" name="lot_number" class="form-control"></select>
+                    </div>  
+                </div>
+            
+                <div class="form-group row row-offcanvas">                                       
+                    <label class="col-sm-3 control-label">Qty</label>
+                    <div class="col-sm-9">
+                        <input id="qty" class="form-control input-sm " type="text" name="qty" required autocomplete="off" />
+                    </div>   
+                </div>
 
-        </div>
-        <div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" name="qtyaddbtn" value="submit">
             </div>
         </form>                         

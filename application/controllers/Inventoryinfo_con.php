@@ -57,27 +57,17 @@ class Inventoryinfo_con extends MY_Controller
 
     public function insertinventoryline()
     {                 
-        if($this->input->post('lot_number')==null ||$this->input->post('lot_number') == ''){
-            $ln = null;
-            $ed = null;
-            $uc = null;
-            $pn = null;
-        }else {
-            $lotnumber = $this->Sales_model->get_lotnumberinfo($this->input->post('lot_number'));
-            $ln = $lotnumber[0]->lot_number;
-            $ed = $lotnumber[0]->expiration_date;
-            $uc = $lotnumber[0]->unit_cost;
-            $pn = $lotnumber[0]->plh_number;
-        }   
+        
+        $lotnumber = $this->Product_model->productlothistoryinfo($this->input->post('lot_number'));
         $il = array(
-            'lot_number' => $ln,
-            'expiration_date' => $ed,
-            'plh_number' => $pn,
-            'unitcost' => $uc,
+            'lot_number' => $lotnumber[0]->lot_number,
+            'expiration_date' => $lotnumber[0]->expiration_date,
+            'plh_number' =>  $lotnumber[0]->plh_number,
+            'unitcost' => $lotnumber[0]->unit_cost,
             'qty' => $this->input->post('qty'),
             'oldqty' => $lotnumber[0]->remaining_quantity,
             'price' => $uc*$this->input->post('qty'),
-            'product_p_no' => $this->input->post('pno'),
+            'product_p_no' => $lotnumber[0]->product_p_no,
             'inventory_i_no' => $this->session->userdata('ino'),
             'user_id' => $this->session->userdata('id'),
         );
