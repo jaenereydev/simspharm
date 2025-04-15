@@ -257,7 +257,7 @@
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->inqty; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->outqty; ?></td>
-                                <td class="text-center" style="text-transform: capitalize"><?php echo $bal; ?></td>
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->bal; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->name; ?></td>
                             </tr>
                             <?php endforeach;  ?>

@@ -64,28 +64,8 @@ class Stockadjustment_con extends MY_Controller
 
     public function deletestockadjustment($sa)
     {         
-        // $this->Delivery_model->deletedelivery($d);
-        // redirect('Delivery_con');
-    }
-    
-    //--------------------------------------------------------------------------
-
-    public function poststockadjustment($d)
-    {         
-        // $del = array(
-        //     'post' => "YES"
-        // );
-        // $desc = "DELIVERY";
-        // $this->Delivery_model->updatedelivery($d, $del); //update delivery file to post
-
-        // $this->Producthistory_model->insert_deliveryproducthistory($d, $desc); //update product history
-
-        // $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
-
-        // $this->Product_model->updatedeliveryproductqty($d); // update product qty
-
-        // redirect('delivery_con');
-
+        $this->Stockadjustment_model->deletestockadjustment($sa);
+        redirect('Stockadjustment_con');
     }
     
     //--------------------------------------------------------------------------

@@ -77,22 +77,14 @@ class Stockadjustment_model extends CI_Model
               ->update('stockadjustment', $sa);
   }
 
-//  //    //-------------------------------------------------------------------------- 
-
-//   public function updatedeliveryline($dl, $del = null) 
-//   {  
-//       $this->db->where('dl_no',$dl)
-//               ->update('deliveryline', $del);
-//   }
-
-//  //-------------------------------------------------------------------------- 
+ //-------------------------------------------------------------------------- 
 
   public function insertstockadjustmentline($sal = null) 
   {  
       return $this->db->insert('stockadjustmentline',$sal);
   }
 
-//  //----------------------------------------------------------------------
+ //----------------------------------------------------------------------
 
 
   public function deletestockadjustmentline($sal) 
@@ -100,15 +92,27 @@ class Stockadjustment_model extends CI_Model
       $this->db->delete('stockadjustmentline', array('sal_no' => $sal));
   }
 
-//   //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
 
-//   public function deletedelivery($d) 
-//   {                       
-//        $this->db->delete('deliveryline', array('delivery_d_no' => $d));
-//        $this->db->delete('delivery', array('d_no' => $d));
-//   }
+  public function deletestockadjustment($sa)
+  {
+      // Begin transaction to ensure data integrity
+      $this->db->trans_start();
 
-//   //----------------------------------------------------------------------
+      // Delete related stockadjustmentline records
+      $this->db->delete('stockadjustmentline', array('sa_no' => $sa));
+
+      // Delete the main stockadjustment record
+      $this->db->delete('stockadjustment', array('sa_no' => $sa));
+
+      // Complete transaction
+      $this->db->trans_complete();
+
+      // Return transaction status (TRUE if successful, FALSE otherwise)
+      return $this->db->trans_status();
+  }
+  
+  //----------------------------------------------------------------------
 
 
 }

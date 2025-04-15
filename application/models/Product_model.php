@@ -355,15 +355,26 @@ class Product_model extends CI_Model
 
   public function updatesalesproductlothistoryremainingquantityvoid($tno) // update product_lot_history remaining_quantity void from POS
   {
-      $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select (product_lot_history.remaining_quantity + transactionline.qty) "
-                                          . "from transactionline "
-                                          . "where transactionline.plh_number = product_lot_history.plh_number "
-                                          . "and transactionline.transaction_t_no = '$tno') "
-                  . "where product_lot_history.plh_number IN (select transactionline.plh_number "
-                                          . "from transactionline "
-                                          . "where transactionline.plh_number = product_lot_history.plh_number "
-                                          . "and transactionline.transaction_t_no = '$tno')";
-      return $this->db->query($sql);
+      // $sql = "update product_lot_history set product_lot_history.remaining_quantity = (select (product_lot_history.remaining_quantity + transactionline.qty) "
+      //                                     . "from transactionline "
+      //                                     . "where transactionline.plh_number = product_lot_history.plh_number "
+      //                                     . "and transactionline.transaction_t_no = '$tno') "
+      //             . "where product_lot_history.plh_number IN (select transactionline.plh_number "
+      //                                     . "from transactionline "
+      //                                     . "where transactionline.plh_number = product_lot_history.plh_number "
+      //                                     . "and transactionline.transaction_t_no = '$tno')";
+      // return $this->db->query($sql);
+
+      $sql = "UPDATE product_lot_history ph
+            JOIN (
+                SELECT plh_number, SUM(qty) AS returned_qty
+                FROM transactionline
+                WHERE transaction_t_no = ?
+                GROUP BY plh_number
+            ) tl ON ph.plh_number = tl.plh_number
+            SET ph.remaining_quantity = ph.remaining_quantity + tl.returned_qty";
+
+    return $this->db->query($sql, array($tno));
   }
     
   //--------------------------------------------------------------------------

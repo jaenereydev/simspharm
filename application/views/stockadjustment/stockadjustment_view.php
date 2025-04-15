@@ -37,7 +37,7 @@
                                     title="View" 
                                 <?php }else { ?>  
                                     title="Edit"
-                                <?php }?> 
+                                <?php } ?> 
                                 href="<?=site_url('Stockadjustment_con/stockadjustmentinfo/'.$item->sa_no)?>" 
                                 <?php if($item->post == 'YES') { ?>
                                     class="glyphicon glyphicon-eye-open btn btn-info">

@@ -14,22 +14,23 @@ class Producthistory_model extends CI_Model
     $desc = $this->db->escape_str($desc);
 
     $sql = "INSERT INTO product_history
-                (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price)
+                (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price, plh_number)
             SELECT 
                 o.date,
                 o.ref_no,
                 ? AS description,
                 l.qty,
-                (p.qty + l.qty) AS bal,
+                (p.remaining_quantity + l.qty) AS bal,
                 l.product_p_no,
                 o.user_id,
                 l.lot_number,
                 l.expiration_date,
                 l.unit_cost,
-                (l.unit_cost*l.qty)
+                (l.unit_cost*l.qty),
+                p.plh_number
             FROM stockadjustmentline l
             JOIN stockadjustment o ON o.sa_no = l.sa_no
-            JOIN product p ON p.p_no = l.product_p_no
+            JOIN product_lot_history p ON p.plh_number = l.plh_number
             WHERE o.sa_no = ?";
 
     return $this->db->query($sql, array($desc, $sano));
@@ -46,22 +47,23 @@ class Producthistory_model extends CI_Model
     $desc = $this->db->escape_str($desc);
 
     $sql = "INSERT INTO product_history
-                (date, ref_no, description, outqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price)
+                (date, ref_no, description, outqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price, plh_number)
             SELECT 
                 o.date,
                 o.ref_no,
                 ? AS description,
                 l.qty,
-                (p.qty - l.qty) AS bal,
+                (p.remaining_quantity + l.qty) AS bal,
                 l.product_p_no,
                 o.user_id,
                 l.lot_number,
                 l.expiration_date,
                 l.unit_cost,
-                (l.unit_cost*l.qty)
+                (l.unit_cost*l.qty),
+                p.plh_number
             FROM stockadjustmentline l
             JOIN stockadjustment o ON o.sa_no = l.sa_no
-            JOIN product p ON p.p_no = l.product_p_no
+            JOIN product_lot_history p ON p.plh_number = l.plh_number
             WHERE o.sa_no = ?";
 
     return $this->db->query($sql, array($desc, $sano));
@@ -155,20 +157,31 @@ class Producthistory_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-   public function insert_salesreturnproducthistory($tno, $desc) //insert data from POS Sales Return module
+  public function insert_salesreturnproducthistory($tno, $desc)
   {
-  
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no,  user_id, "
-          . "lot_number, expiration_date, plh_number, unit_cost, price) "
-          . "select o.date, o.ref_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)+l.qty, "
-          . "l.product_p_no, o.user_id, l.description, l.expiration_date, l.plh_number, l.delivery_cost, l.price "
-          . "from transactionline l "
-          . "JOIN transaction o ON o.t_no = l.transaction_t_no "
-          . "JOIN product p ON p.p_no = l.product_p_no "
-          . "where o.t_no = '$tno' ";
-        return $this->db->query($sql);
-  }
+      $sql = "INSERT INTO product_history
+              (date, ref_no, description, inqty, bal, product_p_no, user_id,
+                lot_number, expiration_date, plh_number, unit_cost, price)
+              SELECT 
+                  o.date,
+                  o.ref_no,
+                  ? AS description,
+                  l.qty,
+                  p.remaining_quantity+l.qty AS bal,
+                  l.product_p_no,
+                  o.user_id,
+                  l.description AS lot_number,
+                  l.expiration_date,
+                  l.plh_number,
+                  l.delivery_cost,
+                  l.price
+              FROM transactionline l
+              JOIN transaction o ON o.t_no = l.transaction_t_no
+              JOIN product_lot_history p ON p.plh_number = l.plh_number
+              WHERE o.t_no = ?";
 
+      return $this->db->query($sql, array($desc, $tno));
+  }
 
   //----------------------------------------------------------------------
 
@@ -195,7 +208,7 @@ class Producthistory_model extends CI_Model
       $desc = $this->db->escape_str($desc);
 
       $sql = "INSERT INTO product_history
-              (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, plh_number)
+              (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, plh_number, unit_cost, price)
               SELECT 
                   o.date,
                   o.i_no,
@@ -206,7 +219,8 @@ class Producthistory_model extends CI_Model
                   o.user_id,
                   l.lot_number,
                   l.expiration_date,
-                  l.plh_number
+                  l.plh_number,
+                  l.unitcost, l.price
               FROM inventoryline l
               JOIN inventory o ON o.i_no = l.inventory_i_no
               JOIN product_lot_history p ON p.plh_number = l.plh_number
