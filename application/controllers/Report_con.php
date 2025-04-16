@@ -193,7 +193,6 @@ class Report_con extends MY_Controller
         $this->session->set_userdata(['searchdate' => $this->input->post('search')]);
         $this->data['profitreportlist'] = $this->Report_model->get_profitreport(date('Y/m/d', strtotime($this->input->post('search'))));
         $this->render_html('report/profitreport_view', true); 
-
     }
 
     //--------------------------------------------------------------------------
@@ -204,7 +203,23 @@ class Report_con extends MY_Controller
     }
 
     //--------------------------------------------------------------------------
-    
 
+    public function batchdistribution()
+    {   
+        $this->resetsession();     
+        $this->data['batchlist'] = null;
+        $this->render_html('report/batchdistribution_view', true); 
+
+    }
+
+    //--------------------------------------------------------------------------
+
+    public function searchbatchdistributionreport()
+    {        
+        $this->session->set_userdata(['fromsearch' => $this->input->post('fromsearch')]);
+        $this->session->set_userdata(['tosearch' => $this->input->post('tosearch')]);
+        $this->data['batchlist'] = $this->Report_model->get_batchdistributionreport(date('Y/m/d', strtotime($this->input->post('fromsearch'))), date('Y/m/d', strtotime($this->input->post('tosearch'))));
+        $this->render_html('report/batchdistribution_view', true); 
+    }
 
 }

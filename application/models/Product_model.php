@@ -92,18 +92,27 @@ class Product_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-  public function inventorycost() 
+  //connection to reports inventory cost
+  public function inventorycost()
   {
   
-    $sql = "Select * from product where active = 'YES' ";
+    $sql = "Select p.*, r.name, r.brand, r.barcode
+            from product_lot_history p
+            JOIN product r on r.p_no = p.product_p_no
+            where r.active = 'YES' ";
     $query = $this->db->query($sql);
     return $query->result();
   }
 
+  //----------------------------------------------------------------------
+
   public function inventorytotalcost() 
   {
   
-    $sql = "Select sum(qty*unitcost) as tcost, sum(qty) as tqty from product where active = 'YES' ";
+    $sql = "Select sum(p.remaining_quantity*p.unit_cost) as tcost, sum(p.remaining_quantity) as tqty 
+            from product_lot_history p
+            JOIN product r on r.p_no = p.product_p_no
+            where r.active = 'YES' ";
     $query = $this->db->query($sql);
     return $query->result();
   }
@@ -169,13 +178,14 @@ class Product_model extends CI_Model
 
   public function producthistoryinfo($p) 
   {
-  
-    $sql = "Select p.*, u.* 
-      from product_history p 
-      join user u ON u.id = p.user_id 
-      where p.product_p_no = '$p' ";
-    $query = $this->db->query($sql);
-    return $query->result();
+      $sql = "SELECT p.*, u.name AS name, c.name AS cname
+              FROM product_history p 
+              JOIN user u ON u.id = p.user_id 
+              LEFT JOIN customer c ON c.c_no = p.c_no  -- change this if needed
+              WHERE p.product_p_no = ?";
+      
+      $query = $this->db->query($sql, array($p));
+      return $query->result();
   }
 
 
@@ -195,10 +205,10 @@ class Product_model extends CI_Model
   {
   
     $sql = "Select p.*, u.*, s.name as name 
-        from product_lot_history p 
-        join user u ON u.id = p.user_id 
-        join supplier s ON s.s_no = p.supplier_s_no
-        where p.product_p_no = '$p' ";
+          from product_lot_history p 
+          join user u ON u.id = p.user_id 
+          join supplier s ON s.s_no = p.supplier_s_no
+          where p.product_p_no = '$p' ";
     $query = $this->db->query($sql);
     return $query->result();
   }
@@ -455,10 +465,29 @@ class Product_model extends CI_Model
 
   public function get_product_history($product_id)
   {
-      $this->db->select('ph_no, date, ref_no, description, lot_number, expiration_date, inqty, outqty, bal');
-      $this->db->from('product_history');
-      $this->db->where('lot_number', $product_id);
-      return $this->db->get()->result();
+    $this->db->select('product_history.*, customer.name AS cname');
+    $this->db->from('product_history');
+    $this->db->join('customer', 'customer.c_no = product_history.c_no', 'left');
+    $this->db->where('product_history.plh_number', $product_id);
+    return $this->db->get()->result();
   }
+
+  //--------------------------------------------------------------------------
+
+  public function get_nearlyexpired()
+  {
+    $this->db->select('product_lot_history.*, product.name, product.p_no');
+    $this->db->from('product_lot_history');
+    $this->db->join('product', 'product.p_no = product_lot_history.product_p_no');
+
+    // Filter: expiration_date is greater than or equal to today AND less than or equal to 2 months from today
+    $this->db->where('product_lot_history.expiration_date <', date('Y/m/d'));
+    $this->db->where('product_lot_history.expiration_date <=', date('Y/m/d', strtotime('+2 months')));
+    $this->db->where('product_lot_history.remaining_quantity >', 0);
+    $this->db->order_by('product_lot_history.expiration_date', 'DESC');
+
+    return $this->db->get()->result();
+  }
+
 
 }

@@ -226,7 +226,7 @@
                                         type="button" 
                                         data-toggle="modal" 
                                         data-target="#viewhistory" 
-                                        data-productid="<?php echo $item->lot_number?>">
+                                        data-productid="<?php echo $item->plh_number?>">
                                         <strong>View</strong >
                                     </button>
                                 </td>                         
@@ -244,6 +244,7 @@
                                 <td class="text-center"><strong>#</strong></td>       
                                 <td class="text-center"><strong>Date</strong></td>       
                                 <td class="text-center"><strong>Ref No.</strong></td>
+                                <td class="text-center"><strong>Customer</strong></td>
                                 <td class="text-center"><strong>Description</strong></td>
                                 <td class="text-center"><strong>Lot Number</strong></td>
                                 <td class="text-center"><strong>Expiration Date</strong></td>
@@ -259,6 +260,7 @@
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ph_no ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->date; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ref_no; ?></td>
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->cname; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->description; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number; ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>
@@ -426,6 +428,7 @@
                                     <td class="text-center"><strong>#</strong></td>       
                                     <td class="text-center"><strong>Date</strong></td>       
                                     <td class="text-center"><strong>Ref No.</strong></td>
+                                    <td class="text-center"><strong>Customer</strong></td>
                                     <td class="text-center"><strong>Description</strong></td>
                                     <td class="text-center"><strong>Lot Number</strong></td>
                                     <td class="text-center"><strong>Expiration Date</strong></td>
@@ -473,6 +476,7 @@ window.onload = function()
                             <td class="text-center">${index + 1}</td>
                             <td class="text-center">${item.date || ''}</td>
                             <td class="text-center">${item.ref_no || ''}</td>
+                            <td class="text-center">${item.cname || ''}</td>
                             <td class="text-center">${item.description || ''}</td>
                             <td class="text-center">${item.lot_number || ''}</td>
                             <td class="text-center">${item.expiration_date || ''}</td>

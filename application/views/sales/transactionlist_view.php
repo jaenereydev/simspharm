@@ -165,7 +165,7 @@
                             </tr>
                             <tr >                                                                            
                                 <td class="text-center"><strong>Name</strong></td> 
-                                <td class="text-center"><strong>Down payment</strong></td>
+                                <td class="text-center"><strong>Payment</strong></td>
                             </tr> 
                         </thead>
                         <tbody>

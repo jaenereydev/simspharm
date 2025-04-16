@@ -14,8 +14,7 @@ class Report_model extends CI_Model
     $query = $this->db->query($sql);
     return $query->result();
   }
- 
- 
+
   //----------------------------------------------------------------------
 
   public function get_salesreportinfo($s) 
@@ -26,21 +25,20 @@ class Report_model extends CI_Model
     $query = $this->db->query($sql);
     return $query->result();
   }
- 
- 
+
   //----------------------------------------------------------------------
 
   public function get_transactionsalesreport($d) 
   {
-    $sql = "SELECT t.*, u.*
-              from transaction t
+      $sql = "SELECT t.*, u.*
+              FROM transaction t
               JOIN user u ON u.id = t.user_id
-              WHERE date = '$d'";
-    $query = $this->db->query($sql);
-    return $query->result();
+              WHERE t.date = ?";
+              
+      $query = $this->db->query($sql, array($d));
+      return $query->result();
   }
- 
- 
+
   //----------------------------------------------------------------------
 
   public function get_profitreport($d) 
@@ -54,12 +52,27 @@ class Report_model extends CI_Model
             and t.type = 'CASH'
             OR t.date = '$d' 
             AND t.type = 'CREDIT'
-            group by t.t_no;";
+            group by t.t_no";
     $query = $this->db->query($sql);
     return $query->result();
   }
- 
- 
+
   //----------------------------------------------------------------------
- 
+
+  public function get_batchdistributionreport($from, $to) 
+  {
+      $this->db->select('p.*, r.name, r.barcode, r.brand, c.name as cname, s.name as sname');
+      $this->db->from('product_history p');
+      $this->db->join('product r', 'r.p_no = p.product_p_no');
+      $this->db->join('product_lot_history h', 'h.plh_number = p.plh_number', 'left');
+      $this->db->join('supplier s', 's.s_no = h.supplier_s_no', 'left');
+      $this->db->join('customer c', 'c.c_no = p.c_no', 'left');
+      $this->db->where('p.date >=', $from);
+      $this->db->where('p.date <=', $to);
+      $this->db->order_by('p.date', 'ASC');
+      
+      return $this->db->get()->result();
+  }
+  //----------------------------------------------------------------------
+
 }

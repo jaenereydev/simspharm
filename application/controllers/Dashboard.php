@@ -65,6 +65,8 @@ class Dashboard extends MY_Controller
         $this->data['dueamount'] = $this->Repayment_model->get_repaymentthismonth();
         $this->data['payedamount'] = $this->Repayment_model->get_payedthismonth();
 
+        $this->data['prodlothistory'] = $this->Product_model->get_nearlyexpired();
+
         $this->render_html('dashboard_view', true); 
     }
     

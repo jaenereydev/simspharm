@@ -7,11 +7,8 @@
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
                 <span class="glyphicon glyphicon-signal" ></span> Inventory Cost
             </h3>  
-            
-          <!--   <button type="button" data-toggle="modal" data-target="#storeprocess" class="btn btn-info pull-right" data-backdrop="static" data-keyboard="false">Store Process</button>                                          
-           -->
         </div> <!-- end of panel heading -->
-       <div class="panel-body">
+        <div class="panel-body">
 
             <div class="col-sm-12">
                 <div class="form-group row">               
@@ -35,8 +32,8 @@
             <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable"> 
                 <thead>
                     <tr class="info">                                             
-                        <td class="text-center"><strong>Barcode</strong></td>                       
-                        <td class="text-center"><strong>Name</strong></td>   
+                        <td class="text-center"><strong>Description</strong></td>                       
+                        <td class="text-center"><strong>Lot Number / Expiration Date</strong></td>   
                         <td class="text-center"><strong>Qty</strong></td>   
                         <td class="text-center"><strong>Unit Cost</strong></td>  
                         <td class="text-center"><strong>Total Amount</strong></td>  
@@ -45,11 +42,11 @@
                 <tbody>
                     <?php foreach ($product as $key => $item): ?>                     
                     <tr> 
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->barcode ?></td>
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->name;?></td>  
-                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->qty; ?></td>  
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unitcost,2,'.',',');?></td>  
-                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->qty*$item->unitcost,2,'.',',');?></td>  
+                        <td class="text-left" style="text-transform: capitalize"><?php echo $item->barcode.'<br>'.$item->name.'<br>'.$item->brand ?></td>
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->lot_number.'<br>'.$item->expiration_date;?></td>  
+                        <td class="text-center" style="text-transform: capitalize"><?php echo $item->remaining_quantity; ?></td>  
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',');?></td>  
+                        <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->remaining_quantity*$item->unit_cost,2,'.',',');?></td>  
                     </tr>
                     <?php endforeach;  ?>   
                 </tbody>

@@ -75,7 +75,42 @@
         </div>
 
     
-        <div class="col-md-6 ">
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">            
+                    <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
+                        Expiration Date Information (2 months)
+                    </h3>  
+                </div> 
+                <div class="panel-body" >   
+                    <div class="col-sm-12">
+                    <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable">      
+                            <thead>
+                            <tr class="info">             
+                                <td class="text-center"><strong>Expiration Date</strong></td>                      
+                                <td class="text-center"><strong>Description</strong></td>   
+                                <td class="text-center"><strong>Lot Number</strong></td>
+                                <td class="text-center"><strong>Remaining Quantity</strong></td>
+                            </tr> 
+                            </thead>
+                            <tbody>
+                            <?php foreach ($prodlothistory as $key => $item): ?>                    
+                            <tr>                    
+                                <td class="text-center" style="text-transform: capitalize"><?php echo $item->expiration_date; ?></td>       
+                                <td class="text-left" style="text-transform: capitalize"><a href="<?=site_url('product_con/productinfo/'.$item->p_no)?>"><?php echo $item->name ?></a></td> 
+                                <td class="text-left" style="text-transform: capitalize"><?php echo $item->lot_number?></td>   
+                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->remaining_quantity,2,'.',',');?></td>          
+                            </tr>
+                            <?php endforeach;  ?>
+                            </tbody>
+                        </table>                     
+                    </div>
+                </div> 
+                
+            </div> 
+        </div>
+
+        <div class="col-md-5 ">
             <!-- TOTAL Cash SALES PER USER -->
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">            
@@ -164,65 +199,8 @@
             </div> <!-- end of panel div -->
         </div>
 
-        <!-- <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading clearfix">            
-                    <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                        CUSTOMER
-                    </h3>  
-                </div> 
-                <div class="panel-body" >   
-                    <div class="col-sm-12">
-                        <div class="form-group row">               
-                            <label class="col-sm-5 control-label"><a href="<?=site_url('Customer_con')?>">Accounts Receivables</a></label>
-                            <label class="col-sm-7 control-label">Php <?php echo number_format((float)$totalar[0]->ta,2,'.',','); ?></label>
-                        </div> 
-                    </div>
-                </div> 
-                
-            </div> 
-        </div> -->
-
+        
         <?php } ?>
-
-    
-        <!-- <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading clearfix">            
-                    <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                        PRODUCT
-                    </h3>  
-                </div> 
-                <div class="panel-body" >   
-                    <div class="col-sm-12">
-
-                        <?php if($users[0]->position == "Admin" ){ ?>
-                        <div class="form-group row">               
-                            <label class="col-sm-5 control-label"><a href="<?=site_url('Product_con')?>">Inventory cost</a></label>
-                            <label class="col-sm-7 control-label">Php <?php echo number_format((float)$sumcost[0]->tcost,2,'.',','); ?></label>
-                        </div>  
-                        <?php } ?>  
-                        
-                        <?php if( sizeof($productwounitcost)){ ?>
-                        <hr>
-                        <div class="form-group row">               
-                            <label class="col-sm-5 control-label"><a href="<?=site_url('Product_con/productunitcost')?>">Product without Unit Cost</a></label>
-                            <label class="col-sm-4 control-label"><?php echo number_format((float)$productwounitcost[0]->p,0,'.',','); ?></label>     
-                        </div>  
-                        <?php } ?>
-
-                        <?php if( sizeof($productnegativequantity)){ ?>
-                        <hr>
-                        <div class="form-group row">               
-                            <label class="col-sm-5 control-label"><a href="<?=site_url('Product_con/productwithnegativequantity')?>">Product with negative quantity</a></label>
-                            <label class="col-sm-4 control-label"><?php echo number_format((float)$productnegativequantity[0]->p,0,'.',','); ?></label>     
-                        </div>  
-                        <?php } ?>
-                    </div>
-                </div> 
-                
-            </div> 
-        </div> -->
 </div>
 
 </div>

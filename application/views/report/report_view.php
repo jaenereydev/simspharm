@@ -7,30 +7,27 @@
             <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
                 <span class="glyphicon glyphicon-signal" ></span> Reports
             </h3>  
-            
-           <!--  <button type="button" data-toggle="modal" data-target="#storeprocess" class="btn btn-info pull-right" data-backdrop="static" data-keyboard="false">Store Process</button>                  -->                         
-          
         </div> <!-- end of panel heading -->
         <div class="panel-body" >   
 
             <div class="row col-sm-12">
                 <div class="col-sm-4">
                     <div class="form-group row"> 
-                        <a type="button" href="<?=site_url('report_con/inventorycost')?>" class="btn btn-default col-sm-12" >INVENTORY</a>
+                        <a type="button" href="<?=site_url('report_con/inventorycost')?>" class="btn btn-default col-sm-12" >Inventory</a>
                     </div>  
                 </div>
 
                 <div class="col-sm-4">
                     <div class="form-group row"> 
-                        <a type="button" href="<?=site_url('report_con/customersummary')?>" class="btn btn-default col-sm-12" >CUSTOMER</a>
+                        <a type="button" href="<?=site_url('report_con/customersummary')?>" class="btn btn-default col-sm-12" >Customer</a>
                     </div>  
                 </div>
 
-                <!-- <div class="col-sm-4">
+                <div class="col-sm-4">
                     <div class="form-group row"> 
                         <a type="button" href="<?=site_url('Duedate_con')?>" class="btn btn-default col-sm-12" >Due Dates</a>
                     </div>  
-                </div> -->
+                </div>
 
                 <div class="col-sm-4">
                     <div class="form-group row"> 
@@ -49,10 +46,14 @@
                         <a type="button" href="<?=site_url('Report_con/profitreport')?>" class="btn btn-default col-sm-12" >Profit Report</a>
                     </div>  
                 </div>
-             
-                 
+
+                <div class="col-sm-4">
+                    <div class="form-group row"> 
+                        <a type="button" href="<?=site_url('Report_con/batchdistribution')?>" class="btn btn-default col-sm-12" >Batch Distribution Report</a>
+                    </div>  
+                </div>
+
             </div>
-         
         </div> <!-- end of panel body -->
     </div> <!-- end of panel div -->    
 </div> <!-- end of main div -->

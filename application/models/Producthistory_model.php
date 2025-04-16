@@ -124,19 +124,34 @@ class Producthistory_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-  public function insert_salesproducthistory($tno, $desc) //insert data from POS module SALES and CREDIT
+  public function insert_salesproducthistory($tno, $desc) // Insert data from POS module SALES and CREDIT
   {
-  
-    $sql = "Insert into product_history(date, ref_no, description, outqty, bal, product_p_no,  user_id, lot_number, expiration_date, plh_number, unit_cost, price) "
-          . "select o.date, o.ref_no, '$desc', l.qty, p.remaining_quantity-l.qty, "
-          . "l.product_p_no, o.user_id, l.description, l.expiration_date, l.plh_number, l.delivery_cost, l.price "
-          . "from transactionline l "
-          . "JOIN transaction o ON o.t_no = l.transaction_t_no "
-          . "JOIN product_lot_history p ON p.plh_number = l.plh_number "
-          . "where o.t_no = '$tno' ";
-        return $this->db->query($sql);
+      $sql = "INSERT INTO product_history(
+                  date, ref_no, description, outqty, bal, 
+                  product_p_no, user_id, lot_number, expiration_date, 
+                  plh_number, unit_cost, price, c_no
+              )
+              SELECT 
+                  o.date, 
+                  o.ref_no, 
+                  ?, 
+                  l.qty, 
+                  p.remaining_quantity - l.qty, 
+                  l.product_p_no, 
+                  o.user_id, 
+                  l.description, 
+                  l.expiration_date, 
+                  l.plh_number, 
+                  l.delivery_cost, 
+                  l.price, 
+                  o.customer_c_no
+              FROM transactionline l
+              JOIN transaction o ON o.t_no = l.transaction_t_no
+              JOIN product_lot_history p ON p.plh_number = l.plh_number
+              WHERE o.t_no = ?";
+      
+      return $this->db->query($sql, array($desc, $tno));
   }
-
 
   //----------------------------------------------------------------------
 
@@ -161,7 +176,7 @@ class Producthistory_model extends CI_Model
   {
       $sql = "INSERT INTO product_history
               (date, ref_no, description, inqty, bal, product_p_no, user_id,
-                lot_number, expiration_date, plh_number, unit_cost, price)
+                lot_number, expiration_date, plh_number, unit_cost, price, c_no)
               SELECT 
                   o.date,
                   o.ref_no,
@@ -174,7 +189,8 @@ class Producthistory_model extends CI_Model
                   l.expiration_date,
                   l.plh_number,
                   l.delivery_cost,
-                  l.price
+                  l.price,
+                  o.customer_c_no
               FROM transactionline l
               JOIN transaction o ON o.t_no = l.transaction_t_no
               JOIN product_lot_history p ON p.plh_number = l.plh_number
@@ -189,7 +205,7 @@ class Producthistory_model extends CI_Model
   {
       $sql = "INSERT INTO product_history (
         date, ref_no, description, inqty, bal, product_p_no,
-        user_id, lot_number, expiration_date, plh_number
+        user_id, lot_number, expiration_date, plh_number, unit_cost, price, c_no
         )
         SELECT 
             o.date,
@@ -201,9 +217,13 @@ class Producthistory_model extends CI_Model
             o.user_id,
             l.lot_number,
             l.expiration_date,
-            l.plh_number
+            l.plh_number,
+            l.unitcost,
+            l.price,
+            c.customer_c_no
         FROM returntransactionline l
         JOIN returntransaction o ON o.rt_no = l.returntransaction_rt_no
+        JOIN creditduedate c ON c.cdd_no = o.creditduedate_cdd_no
         JOIN product_lot_history p ON p.plh_number = l.plh_number
         WHERE o.rt_no = ?";
 
