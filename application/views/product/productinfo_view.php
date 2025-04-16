@@ -420,7 +420,7 @@
                     </div>
                         
                         <div class="modal-body">   
-                        <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable">      
+                        <table class="table table-hover table-responsive table-bordered table-striped info" >      
                                 <thead>
                                 <tr class="info">                               
                                     <td class="text-center"><strong>#</strong></td>       
@@ -448,6 +448,7 @@
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>  
+
 <script type="text/javascript">
     
 window.onload = function()
