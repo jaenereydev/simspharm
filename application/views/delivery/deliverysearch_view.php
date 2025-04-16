@@ -7,8 +7,6 @@
                 <span class="glyphicon glyphicon-list-alt" ></span> Delvery Search
             </h3>     
             
-               
-           
 
         <button type="button" data-toggle="modal" data-target="#adddelivery" class="btn btn-info pull-right" >New</button>               
         </div> <!-- end of panel heading -->        
@@ -20,7 +18,7 @@
                     <div class="form-stack has-icon col-sm-4">
                         <input type="text" name="search" class="form-control input-sm" placeholder="Search Document" autofocus required>                                     
                     </div>
-                     <button type="submit" class="btn btn-sm btn-info">Search</button>   
+                        <button type="submit" class="btn btn-sm btn-info">Search</button>   
                 </form>
             </div>
             <hr>
@@ -36,13 +34,24 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($delivery as $key => $item): ?>                      
+                        <?php foreach ($delivery as $key => $item): ?>                      
                     <tr> 
-                        <td class="text-center info">     
+                        <td class="text-center">     
 
-                        <a title="Edit" href="<?=site_url('delivery_con/deliveryinfo/'.$item->d_no)?>" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                        <a 
+                            <?php if($item->post == 'YES') { ?>
+                                title="View" 
+                                class="glyphicon glyphicon-eye-open btn btn-info"
+                            <?php }else{ ?>
+                                title="Edit" 
+                                class="glyphicon glyphicon-pencil btn btn-info"
+                            <?php } ?>
+                            href="<?=site_url('delivery_con/deliveryinfo/'.$item->d_no)?>" 
+                            
+                            >
+                        </a>
 
-                         <?php if($item->post == 'YES') {}else{ ?>
+                        <?php if($item->post == 'YES') {}else{ ?>
                         <a type="button" title="Delete" href="<?=site_url('delivery_con/deletedelivery/'. $item->d_no)?>" onclick="return confirm('Do you want to delete this Delivery File?');" class="glyphicon glyphicon-trash btn btn-danger"></a> 
                         <?php } ?>  
 
@@ -59,7 +68,7 @@
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->post ?></td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
         </div> <!-- end of panel body -->
@@ -68,14 +77,14 @@
         
 <!-- Modal -->
 <div id="adddelivery" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-md"> 
+<div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Select Supplier</h4>
         </div>
-                           
+                        
             <div class="modal-body">                   
                 <table class="table table-hover table-responsive table-bordered table-striped info" id="CoTable"> 
                 <thead>
@@ -85,19 +94,19 @@
                     </tr> 
                 </thead>
                 <tbody>
-                      <?php foreach ($sup as $key => $item): ?>                      
+                    <?php foreach ($sup as $key => $item): ?>                      
                     <tr>                         
                         <td class="text-center" style="text-transform: capitalize"><?php echo $item->name ?></td>
                         <td class="text-center info">     
                             <a title="Select" href="<?=site_url('delivery_con/selectsupplier/'.$item->s_no)?>" class=" btn btn-info">SELECT</a>
                         </td>
                     </tr>
-                     <?php endforeach;  ?>     
+                    <?php endforeach;  ?>     
                 </tbody>
             </table>
             </div>                           
     </div>
-  </div>
+</div>
 </div> <!-- End of model -->
 
 

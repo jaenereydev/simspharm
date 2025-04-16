@@ -203,6 +203,7 @@
                                 <td class="text-center"><strong>Delivery Cost</strong></td>
                                 <td class="text-center"><strong>Remaining Quantity</strong></td>
                                 <td class="text-center"><strong>Total Amount</strong></td>
+                                <td class="text-center"><strong>Action</strong></td>
                             </tr> 
                             </thead>
                             <tbody>
@@ -217,7 +218,18 @@
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->delivered_quantity,2,'.',',');?></td>     
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->unit_cost,2,'.',',');?></td>   
                                 <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)$item->remaining_quantity,2,'.',',');?></td>        
-                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)($item->unit_cost*$item->remaining_quantity),2,'.',',');?></td>                                   
+                                <td class="text-center" style="text-transform: capitalize"><?php echo number_format((float)($item->unit_cost*$item->remaining_quantity),2,'.',',');?></td>          
+                                <td class="text-center" style="text-transform: capitalize">
+                                    <button 
+                                        style="text-transform: capitalize" 
+                                        class="form-control input-sm btn btn-info view-history-btn"  
+                                        type="button" 
+                                        data-toggle="modal" 
+                                        data-target="#viewhistory" 
+                                        data-productid="<?php echo $item->lot_number?>">
+                                        <strong>View</strong >
+                                    </button>
+                                </td>                         
                             </tr>
                             <?php endforeach;  ?>
                             </tbody>
@@ -242,12 +254,7 @@
                             </tr> 
                             </thead>
                             <tbody>
-                            <?php $bal=0; foreach ($prodhistory as $key => $item): 
-                                $bal+= $item->inqty-$item->outqty;
-                                if($item->description == 'INVENTORY'){
-                                    $bal = $item->inqty;
-                                }
-                            ?>                    
+                            <?php foreach ($prodhistory as $key => $item): ?>                    
                             <tr>                                     
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->ph_no ?></td>
                                 <td class="text-center" style="text-transform: capitalize"><?php echo $item->date; ?></td>
@@ -340,7 +347,7 @@
 
         <!-- Modal -->
         <div id="lotnumber" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-md"> 
+        <div class="modal-dialog modal-lg"> 
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header"> 
@@ -402,14 +409,85 @@
         </div>
         </div> <!-- End of model -->
 
+        <!-- Modal -->
+        <div id="viewhistory" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg"> 
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header"> 
+                        <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Product Lot History</h4>
+                    </div>
+                        
+                        <div class="modal-body">   
+                        <table class="table table-hover table-responsive table-bordered table-striped info" id="MTable">      
+                                <thead>
+                                <tr class="info">                               
+                                    <td class="text-center"><strong>#</strong></td>       
+                                    <td class="text-center"><strong>Date</strong></td>       
+                                    <td class="text-center"><strong>Ref No.</strong></td>
+                                    <td class="text-center"><strong>Description</strong></td>
+                                    <td class="text-center"><strong>Lot Number</strong></td>
+                                    <td class="text-center"><strong>Expiration Date</strong></td>
+                                    <td class="text-center"><strong>In</strong></td>
+                                    <td class="text-center"><strong>Out</strong></td>
+                                    <td class="text-center"><strong>Balance</strong></td>
+                                </tr> 
+                                </thead>
+                                <tbody id="history-body">
+                                    <!-- Content will be inserted here by JavaScript -->
+                                </tbody>
+                            </table>                       
+                        
+
+                        </div>
+                        
+                </div>
+            </div>
+        </div> <!-- End of model -->
+
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>  
 <script type="text/javascript">
-
+    
 window.onload = function()
 {                         
     setTimeout(function() {
     $('#message').fadeOut();
     }, 3000 );
+
+    $(document).ready(function(){
+        $('.view-history-btn').on('click', function(){
+            var product_id = $(this).data('productid');
+            
+            $.ajax({
+                url: '<?= base_url("Productinfo_con/get_product_lot_history") ?>',
+                type: 'POST',
+                data: { product_id: product_id },
+                dataType: 'json',
+                success: function(data) {
+                    let rows = '';
+                    data.forEach(function(item, index){
+                        rows += `<tr>
+                            <td class="text-center">${index + 1}</td>
+                            <td class="text-center">${item.date || ''}</td>
+                            <td class="text-center">${item.ref_no || ''}</td>
+                            <td class="text-center">${item.description || ''}</td>
+                            <td class="text-center">${item.lot_number || ''}</td>
+                            <td class="text-center">${item.expiration_date || ''}</td>
+                            <td class="text-center">${item.inqty ?? ''}</td>
+                            <td class="text-center">${item.outqty ?? ''}</td>
+                            <td class="text-center">${item.bal ?? ''}</td>
+                        </tr>`;
+                    });
+
+                    $('#history-body').html(rows);
+                },
+                error: function() {
+                    alert('Failed to load history data.');
+                }
+            });
+        });
+    });
 }
 </script>   

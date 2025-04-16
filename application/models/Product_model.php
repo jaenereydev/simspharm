@@ -55,16 +55,14 @@ class Product_model extends CI_Model
 
   public function get_productsearch($p) 
   {
-  
-      $sql = "Select * from product 
-              where active = 'YES' 
-              and barcode LIKE '%$p%'
-              or active = 'YES' 
-              and name LIKE '%$p%'";
-    $query = $this->db->query($sql);
-    return $query->result();
+      $sql = "SELECT * FROM product 
+              WHERE active = 'YES' 
+              AND (barcode LIKE ? OR name LIKE ? OR brand LIKE ?)";
+      
+      $like_param = '%' . $p . '%';
+      $query = $this->db->query($sql, array($like_param, $like_param, $like_param));
+      return $query->result();
   }
-
 
   //----------------------------------------------------------------------
 
@@ -155,16 +153,16 @@ class Product_model extends CI_Model
   //----------------------------------------------------------------------
 
   public function productinfo($p) 
-  {
-  
-    $sql = "Select p.*, s.name as sname, c.name as cname, p.unitcost*p.qty as cost
-            from product p 
-            join supplier s on s.s_no = p.supplier_s_no 
-            join category c on c.c_no = p.category_c_no 
-            where p.p_no = '$p' ";
-    $query = $this->db->query($sql);
+{
+    $sql = "SELECT p.*, s.name AS sname, c.name AS cname, p.unitcost * p.qty AS cost
+            FROM product p 
+            JOIN supplier s ON s.s_no = p.supplier_s_no 
+            JOIN category c ON c.c_no = p.category_c_no 
+            WHERE p.p_no = ?";
+    
+    $query = $this->db->query($sql, array($p));
     return $query->result();
-  }
+}
 
 
   //----------------------------------------------------------------------
@@ -454,5 +452,13 @@ class Product_model extends CI_Model
   }
     
   //--------------------------------------------------------------------------
+
+  public function get_product_history($product_id)
+  {
+      $this->db->select('ph_no, date, ref_no, description, lot_number, expiration_date, inqty, outqty, bal');
+      $this->db->from('product_history');
+      $this->db->where('lot_number', $product_id);
+      return $this->db->get()->result();
+  }
 
 }

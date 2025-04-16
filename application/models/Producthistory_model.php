@@ -185,20 +185,30 @@ class Producthistory_model extends CI_Model
 
   //----------------------------------------------------------------------
 
-   public function insert_creditreturnproducthistory($rtno, $desc) //insert data from Credit Return module
+  public function insert_creditreturnproducthistory($rtno, $desc) //insert data from Credit Return module
   {
-  
-    $sql = "Insert into product_history(date, ref_no, description, inqty, bal, product_p_no, "
-          . "user_id, lot_number, expiration_date, plh_number) "
-          . "select o.date, o.rt_no, '$desc', l.qty, (select qty from product where p_no = p.p_no)+l.qty, "
-          . "l.product_p_no, o.user_id, lot_number, expiration_date, plh_number "
-          . "from returntransactionline l "
-          . "JOIN returntransaction o ON o.rt_no = l.returntransaction_rt_no "
-          . "JOIN product p ON p.p_no = l.product_p_no "
-          . "where o.rt_no = '$rtno' ";
-        return $this->db->query($sql);
-  }
+      $sql = "INSERT INTO product_history (
+        date, ref_no, description, inqty, bal, product_p_no,
+        user_id, lot_number, expiration_date, plh_number
+        )
+        SELECT 
+            o.date,
+            o.rt_no,
+            ?,
+            l.qty,
+            p.remaining_quantity + l.qty,
+            l.product_p_no,
+            o.user_id,
+            l.lot_number,
+            l.expiration_date,
+            l.plh_number
+        FROM returntransactionline l
+        JOIN returntransaction o ON o.rt_no = l.returntransaction_rt_no
+        JOIN product_lot_history p ON p.plh_number = l.plh_number
+        WHERE o.rt_no = ?";
 
+    return $this->db->query($sql, array($desc, $rtno));
+  }
 
   //----------------------------------------------------------------------
 

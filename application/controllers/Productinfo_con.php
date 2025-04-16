@@ -152,4 +152,12 @@ class Productinfo_con extends MY_Controller
     
     //--------------------------------------------------------------------------
 
+    public function get_product_lot_history()
+    {
+        $product_id = $this->input->post('product_id');
+        $this->load->model('Product_model');
+        $data = $this->Product_model->get_product_history($product_id);
+        echo json_encode($data);
+    }
+
 }
