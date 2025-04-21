@@ -74,22 +74,24 @@ class Producthistory_model extends CI_Model
   public function insert_deliveryproducthistory($d, $desc)
 {
     $sql = "INSERT INTO product_history
-            (date, ref_no, description, inqty, bal, product_p_no, user_id, lot_number, expiration_date, unit_cost, price)
+            (date, ref_no, description, inqty, bal, product_p_no, 
+            user_id, lot_number, expiration_date, unit_cost, price, plh_number)
             SELECT 
                 o.date,
                 o.ref_no,
                 ? AS description,
-                l.qty,
-                l.qty AS bal,
+                l.remaining_quantity,
+                l.remaining_quantity AS bal,
                 l.product_p_no,
-                o.user_id,
+                l.user_id,
                 l.lot_number,
                 l.expiration_date,
-                l.unitcost,
-                l.price
-            FROM deliveryline l
-            JOIN delivery o ON o.d_no = l.delivery_d_no
-            WHERE o.d_no = ?";
+                l.unit_cost,
+                (l.remaining_quantity*l.unit_cost),
+                l.plh_number
+            FROM product_lot_history l
+            JOIN delivery o ON o.d_no = l.d_no
+            WHERE l.d_no = ?";
 
     return $this->db->query($sql, array($desc, $d));
 }
@@ -102,7 +104,7 @@ class Producthistory_model extends CI_Model
 
     $sql = "INSERT INTO product_lot_history
                 (expiration_date, ref_number, description, delivered_quantity,
-                lot_number, product_p_no, user_id, unit_cost, date, remaining_quantity, supplier_s_no)
+                lot_number, product_p_no, user_id, unit_cost, date, remaining_quantity, supplier_s_no, d_no)
             SELECT 
                 l.expiration_date,
                 o.ref_no,
@@ -114,7 +116,8 @@ class Producthistory_model extends CI_Model
                 l.unitcost,
                 o.date,
                 l.qty,
-                o.supplier_s_no
+                o.supplier_s_no,
+                o.d_no
             FROM deliveryline l
             JOIN delivery o ON o.d_no = l.delivery_d_no
             WHERE o.d_no = ?";

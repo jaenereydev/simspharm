@@ -104,9 +104,11 @@ class Delivery_con extends MY_Controller
         $desc = "DELIVERY";
         $this->Delivery_model->updatedelivery($d, $del); //update delivery file to post
 
+        $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
+        
         $this->Producthistory_model->insert_deliveryproducthistory($d, $desc); //update product history
 
-        $this->Producthistory_model->insert_deliveryproductlothistory($d, $desc); //update product lot history
+        
 
         $this->Product_model->updatedeliveryproductqty($d); // update product qty
 
