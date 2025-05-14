@@ -3,7 +3,7 @@
 class Receipt_con extends MY_Controller
 {
     //--------------------------------------------------------------------------
-      
+    
     public function __construct() 
     {
         parent::__construct();
@@ -12,7 +12,7 @@ class Receipt_con extends MY_Controller
         $this->load->model('Sales_model');
         $this->load->model('Customer_model');
         $this->load->model('Creditloan_model');
-       
+    
         $this->user = $this->User_model->get_users( $this->session->userdata('id'));
         $this->com = $this->Company_model->get_companyinfo();
         $this->active = "1";

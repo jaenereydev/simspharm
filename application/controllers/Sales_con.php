@@ -327,6 +327,9 @@ class Sales_con extends MY_Controller
         $this->session->set_userdata(['cashonhand' => $this->input->post('cashonhand')]);
         $this->session->set_userdata(['change' => $change]);
         $this->session->set_userdata(['type' => $this->input->post('type')]);
+        $this->session->set_userdata(['checkdate' => $this->input->post('check_date')]);
+        $this->session->set_userdata(['checknumber' => $this->input->post('check_number')]);
+        $this->session->set_userdata(['bank' => $this->input->post('bank')]);
 
         if($this->session->userdata('customer') == null)
         {
@@ -354,8 +357,11 @@ class Sales_con extends MY_Controller
             'cashonhand' => $this->session->userdata('cashonhand'),
             'change' => $this->session->userdata('change'),
             'type' => $this->session->userdata('type'),
+            'checkdate' => $this->session->userdata('checkdate'),
+            'checknumber' => $this->session->userdata('checknumber'),
+            'checkbank' => $this->session->userdata('bank'),
             'user_id' => $this->session->userdata('id'),
-            'customer_c_no' => $this->session->userdata('customer'),               
+            'customer_c_no' => $this->session->userdata('customer'),
         );
         $tno = $this->Sales_model->inserttransaction($t); //insert data to transaction        
         $this->Sales_model->updatetransactionline($tno, $this->session->userdata('id')); //update t_no to transactionline 

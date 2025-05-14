@@ -22,16 +22,16 @@
         </script>
     </head>
     <body>          
-           
+        
         <div>
             <div style="font-family: arial;text-align: left;  text-transform: capitalize;font-size: 10pt; padding-top: 30px; padding-left: 20px; margin-top: 50px"><strong><?php echo $t[0]->type.' - '.$t[0]->user_id; ?></strong></div>
             <div style="font-family: arial;text-align: left;  text-transform: capitalize;font-size: 9pt; padding-left: 100px; padding-top:10px;"><strong><?php echo $t[0]->date.' - #'.$t[0]->t_no; ?></strong></div>
             <div style="font-family: arial;text-align: left; margin-left: 100px; text-transform: capitalize;font-size: 10pt;" >
-               <?php if($customer == null){ ?>
-                <strong>Walk-In Customer</strong>
-               <?php }else { ?>   
-                  <strong><?php echo $customer[0]->name ?></strong>
-              <?php } ?>
+                <?php if($customer == null){ ?>
+                    <strong>Walk-In Customer</strong>
+                <?php }else { ?>   
+                    <strong><?php echo $customer[0]->name ?></strong>
+                <?php } ?>
             </div>            
         </div>
         <div>
@@ -66,16 +66,33 @@
                     <td style="text-align: right;width: 40%" colspan="3">TOTAL:</td>            
                     <td style="text-align: center;width: 10%"><?php echo number_format((float)$t[0]->totalamount,2,'.',',') ?></td>
                 </tr> 
-                <?php if($t[0]->type == "CREDIT"){}else{ ?>
-                <tr>
-                    <td style="text-align: right;width: 40%" colspan="3">CASH</td>            
-                    <td style="text-align: center;width: 10%"><?php echo number_format((float)$t[0]->cashonhand,2,'.',',') ?></td>
-                </tr>  
-                 <tr>
-                    <td style="text-align: right;width: 40%" colspan="3">CHANGE</td>            
-                    <td style="text-align: center;width: 10%"><strong><?php echo number_format((float)$t[0]->change,2,'.',',') ?></strong></td>
-                </tr>   
-                <?php } ?>               
+                <?php if($t[0]->type == "CREDIT"){}elseif($t[0]->type == "CASH"){ ?>
+                    <tr>
+                        <td style="text-align: right;width: 40%" colspan="3">CASH</td>            
+                        <td style="text-align: center;width: 10%"><?php echo number_format((float)$t[0]->cashonhand,2,'.',',') ?></td>
+                    </tr>  
+                    <tr>
+                        <td style="text-align: right;width: 40%" colspan="3">CHANGE</td>            
+                        <td style="text-align: center;width: 10%"><strong><?php echo number_format((float)$t[0]->change,2,'.',',') ?></strong></td>
+                    </tr>   
+                <?php }elseif($t[0]->type == "CHECK"){ ?>  
+                    <tr>
+                        <td style="text-align: right;width: 40%" colspan="3">Check Amount</td>            
+                        <td style="text-align: center;width: 10%"><?php echo number_format((float)$t[0]->cashonhand,2,'.',',') ?></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;width: 40%" colspan="3">Check Date</td>            
+                        <td style="text-align: center;width: 10%"><?php echo $t[0]->checkdate ?></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;width: 40%" colspan="3">Check Number</td>            
+                        <td style="text-align: center;width: 10%"><?php echo $t[0]->checknumber ?></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;width: 40%" colspan="3">Bank Name</td>            
+                        <td style="text-align: center;width: 10%"><?php echo $t[0]->checkbank ?></td>
+                    </tr>
+                <?php } ?>             
             </table> 
             <?php } ?>
         </div>                                                   

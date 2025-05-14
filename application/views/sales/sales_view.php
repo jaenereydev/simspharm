@@ -128,7 +128,14 @@
                 <div class="form-group row">                  
                     <div class="col-md-12">
                         <label for="customer">S.I.#</label>
-                        <input type="text"  name="refno" class="form-control input-sm text-center" value="<?php if($refno == null){ echo ''; } else { echo $this->session->userdata('refno'); } ?>" placeholder="Sales Invoice Number" required autocomplete="off" >
+                        <input
+                            type="text"  
+                            name="refno" 
+                            class="form-control input-sm text-center" 
+                            value="<?php if($refno == null){ echo ''; } else { echo $this->session->userdata('refno'); } ?>" 
+                            placeholder="Sales Invoice Number" 
+                            required 
+                            autocomplete="off" >
                     </div>
                 </div>
                 <div class="form-group row">
@@ -140,25 +147,57 @@
 
                     <div class="col-md-12">
                         <label for="customer">Discount Amount</label>
-                        <input type="number" step="any" name="discount" class="form-control input-sm text-center" value="<?php if($discount == null){ echo '0'; } else { echo $this->session->userdata('discount'); } ?>" placeholder="Discount amount" autocomplete="off" >
+                        <input 
+                            type="number" 
+                            step="any" 
+                            name="discount" 
+                            class="form-control input-sm text-center" 
+                            value="<?php if($discount == null){ echo '0'; } else { echo $this->session->userdata('discount'); } ?>" 
+                            placeholder="Discount amount" 
+                            autocomplete="off" >
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-md-12">                        
-                        <label for="customer">Cash on Hand</label>
-                        <select name="type" class="input-sm dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                        <label for="type">Cash on Hand</label>
+                        <select id="type" name="type" class="input-sm dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
                                     <option value="CASH" <?php if($this->session->userdata('type') == 'CASH'){ echo 'selected'; } ?>> CASH</option>
                                     <option value="CHECK" <?php if($this->session->userdata('type') == 'CHECK'){ echo 'selected'; } ?>> CHECK</option>                                    
                                 </select>  
-                        <input type="number" step="any" name="cashonhand" class="form-control input-sm text-center"  value="<?php if($cashonhand == null){ echo ''; } else { echo $this->session->userdata('cashonhand'); } ?>" placeholder="Amount" required autocomplete="off" >                       
+                        <input 
+                            type="number" 
+                            step="any" 
+                            name="cashonhand" 
+                            class="form-control input-sm text-center"  
+                            value="<?php if($cashonhand == null){ echo ''; } else { echo $this->session->userdata('cashonhand'); } ?>" 
+                            placeholder="Amount" 
+                            required 
+                            autocomplete="off" >   
+                            
+                        <!-- Hidden fields for CHECK -->
+                        <div id="checkFields" style="display: none;" class="mt-2">
+                            <input type="date" name="check_date" class="form-control input-sm mb-2" placeholder="Check Date" />
+                            <input type="text" name="check_number" class="form-control input-sm mb-2" placeholder="Check Number" />
+                            <input type="text" name="bank" class="form-control input-sm" placeholder="Bank" />
+                        </div>
                     </div>
                 </div>
                 <?php } ?>
             </div>
             <?php if($ta == '0' ) {}else { ?>
             <div class="modal-footer">               
-                <a title="Reset" href="<?=site_url('Sales_con/resettransaction')?>"  onclick="return confirm('Do you want to reset this transaction');" type="button" class="btn btn-warning glyphicon glyphicon-floppy-remove" > RESET</a>
-                <input title="Process" type="submit" class="btn btn-primary" name="processbtn" value="Process">
+                <a 
+                    title="Reset" 
+                    href="<?=site_url('Sales_con/resettransaction')?>"  
+                    onclick="return confirm('Do you want to reset this transaction');" 
+                    type="button" 
+                    class="btn btn-warning glyphicon glyphicon-floppy-remove" > RESET</a>
+                <input 
+                    title="Process" 
+                    type="submit" 
+                    class="btn btn-primary" 
+                    name="processbtn" 
+                    value="Process">
             </div>
             <?php } ?>
         </form>
@@ -283,7 +322,7 @@
             <div class="form-group row row-offcanvas">                                       
                 <label class="col-sm-4 control-label">Lot Number</label>
                 <div class="col-sm-8">
-                    <select id="lot_numbersales" name="lot_number" class="form-control"></select>
+                    <select id="lot_numbersales" name="lot_number" class="form-control" required></select>
                 </div>  
             </div>
 
@@ -467,7 +506,25 @@ function editproductpriceform(formObj) {
 
 
 window.onload = function()
-{                         
+{                
+    $(document).ready(function () {
+        function toggleCheckFields() {
+            var selected = $('#type').val();
+            if (selected === 'CHECK') {
+                $('#checkFields').slideDown();
+            } else {
+                $('#checkFields').slideUp();
+            }
+        }
+
+        // Initial check on page load
+        toggleCheckFields();
+
+        // On change event
+        $('#type').change(function () {
+            toggleCheckFields();
+        });
+    });         
 
     $(document).ready(function () {
         $(document).on('click', '.addqty', function(event) {        

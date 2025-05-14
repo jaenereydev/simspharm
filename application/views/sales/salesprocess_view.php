@@ -64,12 +64,31 @@
                     <?php }else { ?>
                     
                     <input type="text" class="hide" name="cno" value="<?php echo $this->session->userdata('customer') ?>" >
-                    <input type="text" style="text-transform: capitalize" class="form-control input-sm text-center" value="<?php echo $customer[0]->name ?>" disabled >
+                    <input 
+                        type="text" 
+                        style="text-transform: capitalize" 
+                        class="form-control input-sm text-center" 
+                        value="<?php echo $customer[0]->name ?>" disabled >
                 
                     <?php } ?>     
                                     
                 </div>
             </div>
+            
+            <?php if($this->session->userdata('type') == "CHECK") { ?>
+                <div class="form-group row">
+                    <label class="col-md-3">Check Details</label>
+                    <div class="col-md-9"> 
+                        <input 
+                            type="text" 
+                            class="form-control input-sm text-center"  
+                            name="check_date" 
+                            value="<?php echo $this->session->userdata('checkdate').' - '.$this->session->userdata('checknumber').' - '.$this->session->userdata('bank'); ?>" 
+                            disabled>
+                    </div>
+                </div> 
+            <?php } ?>
+
             <table class="table table-hover table-responsive table-bordered table-striped info" > 
                 <thead>
                     <tr class="info">                                            
