@@ -66,6 +66,7 @@ class Sales_con extends MY_Controller
         }else {
             $this->data['cashonhand'] =  $this->session->userdata('cashonhand');
         } 
+
         if( $this->session->userdata('type') == null)
         {
             $this->data['type'] = null;
@@ -73,6 +74,26 @@ class Sales_con extends MY_Controller
             $this->data['type'] =  $this->session->userdata('type');
         } 
 
+        if( $this->session->userdata('checkdate') == null)
+        {
+            $this->data['checkdate'] = null;
+        }else {
+            $this->data['checkdate'] =  $this->session->userdata('checkdate');
+        } 
+
+        if( $this->session->userdata('checknumber') == null)
+        {
+            $this->data['checknumber'] = null;
+        }else {
+            $this->data['checknumber'] =  $this->session->userdata('checknumber');
+        } 
+
+        if( $this->session->userdata('bank') == null)
+        {
+            $this->data['bank'] = null;
+        }else {
+            $this->data['bank'] =  $this->session->userdata('bank');
+        } 
 
         $this->data['prod'] = $this->Product_model->get_productfortransaction($this->session->userdata('id')); //product list
         $this->data['cus'] = $this->Customer_model->get_customer(); // customer list
@@ -342,6 +363,13 @@ class Sales_con extends MY_Controller
         $this->render_html('sales/salesprocess_view', false); 
     }
     
+    //--------------------------------------------------------------------------  
+
+    public function clear_check_session()
+    {
+        $this->session->unset_userdata(['checknumber', 'checkdate', 'bank']);
+    }
+
     //--------------------------------------------------------------------------  
 
     public function submitsales()

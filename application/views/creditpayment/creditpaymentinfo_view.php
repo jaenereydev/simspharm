@@ -21,12 +21,26 @@
                         </div>  
                         <label class="col-sm-1 control-label">Date</label>
                         <div class="col-sm-2">
-                            <input id="mbirthday" class="form-control input-sm text-center" type="text" name="date" value="<?php echo date_format(date_create($cp[0]->date), 'm/d/Y');?>" autocomplete="off" <?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?>/>
+                            <input 
+                                id="mbirthday" 
+                                class="form-control input-sm text-center" 
+                                type="text" 
+                                name="date" 
+                                value="<?php echo date_format(date_create($cp[0]->date), 'm/d/Y');?>" 
+                                autocomplete="off" <?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?>/>
                         </div>                                                                
 
                         <label class="col-sm-2 control-label">Customer Name</label>
                         <div class="col-sm-4">
-                            <button style="text-transform: capitalize" class="form-control input-sm"  type="button" data-toggle="modal" data-target="#changecustomer"<?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?> ><strong><?php echo $cp[0]->name ?><?php if($cp[0]->post == 'YES'){ }else { ?> - <span class="text-danger"><strong>Php<?php echo number_format((float)$cp[0]->balance,2,'.',','); ?></strong></span> ...</strong ><?php } ?></button>
+                            <button 
+                                style="text-transform: capitalize" 
+                                class="form-control input-sm"  
+                                type="button" 
+                                data-toggle="modal" 
+                                data-target="#changecustomer"<?php if($cp[0]->post == 'YES'){ echo 'disabled'; }else {} ?> >
+                                <strong><?php echo $cp[0]->name ?><?php if($cp[0]->post == 'YES'){ }else { ?> - <span class="text-danger">
+                                    <strong>Php<?php echo number_format((float)$cp[0]->balance,2,'.',','); ?></strong></span> ...</strong ><?php } ?>
+                                </button>
                         </div>  
                                         
                     </div>
@@ -256,23 +270,23 @@
 
 <!-- Modal -->
 <div id="insertpayment" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm"> 
+    <div class="modal-dialog modal-md"> 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">                    
             <button title="Close" class="close" data-dismiss="modal" data-toggle="modal" >&times;</button>                 
             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" style="font-size: 20px;padding-right: 10px;"></span>Insert Payment</h4>
-        </div>
-               
+    </div>
+            
         <form onsubmit="return paymentform(this);" role="form" method="post" action="<?=site_url('Creditpaymentinfo_con/insertpayment')?>">             
         <div class="modal-body">     
 
             <input class="hide " type="number" step="any" name="totalpayment" value="<?php echo $cp[0]->totalpayment; ?>" />
 
-           <div class="form-group row row-offcanvas">
+            <div class="form-group row row-offcanvas">
                 <label class="col-sm-6 control-label">Type</label>
                 <div class="col-sm-6">
-                     <select name="type" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
+                    <select id="type" name="type" class="btn btn-default dropdown-toggle " style="width: 100% !important;" required>                             
                         <option value="Cash"> Cash</option>   
                         <option value="Check"> Check</option>                            
                     </select>  
@@ -284,37 +298,73 @@
                 <div class="col-sm-6">
                     <input class="form-control input-sm " type="number" step="any" name="amount" required autocomplete="off" />
                 </div>   
-
             </div>
 
-         
+            <!-- Hidden Fields (appear only for Check) -->
+            <div id="check-fields" style="display: none;">
+                <div class="form-group row row-offcanvas">
+                    <label class="col-sm-6 control-label">Check Number</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="check_number" class="form-control input-sm" placeholder="Check Number" />
+                    </div>
+                </div>
+                <div class="form-group row row-offcanvas">
+                    <label class="col-sm-6 control-label">Check Date</label>
+                    <div class="col-sm-6">
+                        <input type="date" name="check_date" class="form-control input-sm" />
+                    </div>
+                </div>
+                <div class="form-group row row-offcanvas">
+                    <label class="col-sm-6 control-label">Bank Name</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="bank_name" class="form-control input-sm" placeholder="Bank Name" />
+                    </div>
+                </div>
+            </div>
+        
         </div>
         <div class="modal-footer">
                 <a title="Close"   class="close" data-dismiss="modal" data-toggle="modal" type="button" class="btn btn-danger glyphicon glyphicon-floppy-remove" ></a>
-              <input type="submit" class="btn btn-primary" name="paymentbtn" value="submit">
+                <input type="submit" class="btn btn-primary" name="paymentbtn" value="submit">
             </div>
         </form>
 
     </div>
-  </div>
+    </div>
 </div> <!-- End of model -->
 
 
 <script type="text/javascript" src="<?=base_url()?>public/js/datatables.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>public/js/product.js"></script>
-
+<!-- jQuery to Show/Hide Fields -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-function paymentform(formObj) {            
-        formObj.paymentbtn.disabled = true;  
-        formObj.paymentbtn.value = 'Please Wait...';  
-        return true;    
-    } 
+    $(document).ready(function () {
+            function toggleCheckFields() {
+                var type = $('#type').val();
+                if (type === 'Check') {
+                    $('#check-fields').slideDown();
+                } else {
+                    $('#check-fields').slideUp();
+                }
+            }
 
-function updatecreditpaymentform(formObj) {            
-        formObj.updatecreditpaymentbtn.disabled = true;  
-        formObj.updatecreditpaymentbtn.value = 'Please Wait...';  
-        return true;    
-    } 
+            // Run on page load and on change
+            toggleCheckFields();
+            $('#type').change(toggleCheckFields);
+        });
+
+    function paymentform(formObj) {            
+            formObj.paymentbtn.disabled = true;  
+            formObj.paymentbtn.value = 'Please Wait...';  
+            return true;    
+        } 
+
+    function updatecreditpaymentform(formObj) {            
+            formObj.updatecreditpaymentbtn.disabled = true;  
+            formObj.updatecreditpaymentbtn.value = 'Please Wait...';  
+            return true;    
+        } 
 
 </script>

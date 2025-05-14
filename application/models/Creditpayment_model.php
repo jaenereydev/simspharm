@@ -65,7 +65,7 @@ class Creditpayment_model extends CI_Model
 
  //----------------------------------------------------------------------
 
-   public function get_customerwithbalance() 
+  public function get_customerwithbalance() 
   {
   
     $sql = "Select * from customer where balance != '0' ";
@@ -78,23 +78,23 @@ class Creditpayment_model extends CI_Model
   public function insertcreditpayment($c = null) 
   {  
       $this->db->insert('customerpayment',$c);
-     return $this->db->insert_id();
+      return $this->db->insert_id();
   }
 
  //----------------------------------------------------------------------
 
-   public function insertcustomerpaymentline($c = null) 
+  public function insertcustomerpaymentline($c = null) 
   {  
       $this->db->insert('customerpaymentline',$c);
-     return $this->db->insert_id();
+      return $this->db->insert_id();
   }
 
  //----------------------------------------------------------------------
 
-   public function insertcreditduedateline($c = null) 
+  public function insertcreditduedateline($c = null) 
   {  
       $this->db->insert('creditduedateline',$c);
-     return $this->db->insert_id();
+      return $this->db->insert_id();
   }
 
  //----------------------------------------------------------------------
@@ -125,7 +125,7 @@ class Creditpayment_model extends CI_Model
 
  //----------------------------------------------------------------------
 
-   public function get_creditduedate($c, $cp) 
+  public function get_creditduedate($c, $cp) 
   {
   
     $sql = "SELECT * 
@@ -137,7 +137,6 @@ class Creditpayment_model extends CI_Model
     return $query->result();
   }
 
- 
   //----------------------------------------------------------------------
 
 
@@ -154,7 +153,7 @@ class Creditpayment_model extends CI_Model
 
  //----------------------------------------------------------------------
 
-   public function get_customerpaymentline($c)
+  public function get_customerpaymentline($c)
   {
   
     $sql = "Select d.*
@@ -178,7 +177,7 @@ public function updatecreditpayment($cpno, $c =null)
 
 public function deletecustomerpaymentline($c) 
   {                       
-       $this->db->delete('customerpaymentline', array('cpl_no' => $c));
+      $this->db->delete('customerpaymentline', array('cpl_no' => $c));
   }
 
   //----------------------------------------------------------------------

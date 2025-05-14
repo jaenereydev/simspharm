@@ -161,9 +161,10 @@
                     <div class="col-md-12">                        
                         <label for="type">Cash on Hand</label>
                         <select id="type" name="type" class="input-sm dropdown-toggle " data-toggle="dropdown" aria-expanded="true" required>                             
-                                    <option value="CASH" <?php if($this->session->userdata('type') == 'CASH'){ echo 'selected'; } ?>> CASH</option>
-                                    <option value="CHECK" <?php if($this->session->userdata('type') == 'CHECK'){ echo 'selected'; } ?>> CHECK</option>                                    
-                                </select>  
+                            <option value="CASH" <?php if($this->session->userdata('type') == 'CASH'){ echo 'selected'; } ?>> CASH</option>
+                            <option value="CHECK" <?php if($this->session->userdata('type') == 'CHECK'){ echo 'selected'; } ?>> CHECK</option>                                    
+                        </select>  
+
                         <input 
                             type="number" 
                             step="any" 
@@ -174,14 +175,49 @@
                             required 
                             autocomplete="off" >   
                             
-                        <!-- Hidden fields for CHECK -->
-                        <div id="checkFields" style="display: none;" class="mt-2">
-                            <input type="date" name="check_date" class="form-control input-sm mb-2" placeholder="Check Date" />
-                            <input type="text" name="check_number" class="form-control input-sm mb-2" placeholder="Check Number" />
-                            <input type="text" name="bank" class="form-control input-sm" placeholder="Bank" />
+                    </div>
+                </div>
+
+                <!-- Hidden fields for CHECK -->
+                <div id="checkFields" style="display: none;" class="mt-2">
+                    <div class="form-group row">
+                        <div class="col-md-12">                        
+                            <label for="type">Check Date</label>
+                            <input 
+                                type="date" 
+                                name="check_date" 
+                                class="form-control input-sm mb-2" 
+                                placeholder="Check Date" 
+                                value="<?php if($checkdate == null){ echo ''; } else { echo $this->session->userdata('checkdate'); } ?>"
+                                />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">                        
+                            <label for="type">Check Number</label>
+                            <input 
+                                type="text" 
+                                name="check_number" 
+                                class="form-control input-sm mb-2" 
+                                placeholder="Check Number" 
+                                value="<?php if($checknumber == null){ echo ''; } else { echo $this->session->userdata('checknumber'); } ?>"
+                                />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">                        
+                            <label for="type">Bank Name</label>
+                            <input 
+                                type="text" 
+                                name="bank" 
+                                class="form-control input-sm" 
+                                placeholder="Bank" 
+                                value="<?php if($bank == null){ echo ''; } else { echo $this->session->userdata('bank'); } ?>"
+                                />
                         </div>
                     </div>
                 </div>
+
                 <?php } ?>
             </div>
             <?php if($ta == '0' ) {}else { ?>
@@ -514,6 +550,10 @@ window.onload = function()
                 $('#checkFields').slideDown();
             } else {
                 $('#checkFields').slideUp();
+                // Clear the input values
+            $('input[name="check_date"]').val('');
+            $('input[name="check_number"]').val('');
+            $('input[name="bank"]').val('');
             }
         }
 
