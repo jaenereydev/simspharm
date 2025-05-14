@@ -79,7 +79,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading clearfix">            
                     <h3 class="panel-title pull-left" style="padding-top: 8px;font-size: 20px;">
-                        Expiration Date Information (2 months)
+                        Expiration Date Information (6 months)
                     </h3>  
                 </div> 
                 <div class="panel-body" >   

@@ -482,7 +482,7 @@ class Product_model extends CI_Model
 
     // Filter: expiration_date is greater than or equal to today AND less than or equal to 2 months from today
     $this->db->where('product_lot_history.expiration_date <', date('Y/m/d'));
-    $this->db->where('product_lot_history.expiration_date <=', date('Y/m/d', strtotime('+2 months')));
+    $this->db->where('product_lot_history.expiration_date <=', date('Y/m/d', strtotime('+6 months')));
     $this->db->where('product_lot_history.remaining_quantity >', 0);
     $this->db->order_by('product_lot_history.expiration_date', 'DESC');
 
